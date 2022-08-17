@@ -1,11 +1,16 @@
 Package: stxplore
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Title: Exploration of Spatio-Temporal Data
+Version: 0.0.0.9000
+Authors@R: c(
+  person("Sevvandi", "Kandanaarachchi", email = "sevvandik@gmail.com",
+  role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0337-0395")),
+  person("Petra", "Kunhert", email = "Petra.Kuhnert@data61.csiro.au>",
+  role = c("aut"), comment = c(ORCID = "0000-0001-9070-0091")) 
+ )
+Maintainer: Sevvandi Kandanaarachchi <sevvandik@gmail.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
