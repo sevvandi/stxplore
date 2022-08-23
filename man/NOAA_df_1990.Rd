@@ -24,6 +24,7 @@ A data frame with 53940 rows and 10 variables:
 NOAA_df_1990
 }
 \description{
-A dataset containing the precipitation, maximum and minimum temperatures
+A dataset containing the precipitation, maximum and minimum temperatures taken from
+the STRbook R package.
 }
 \keyword{datasets}

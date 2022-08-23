@@ -1,6 +1,7 @@
 #' NOAA maximum recorded temperature between May 1993 and September 1993
 #'
-#' A dataset containing the precipitation, maximum and minimum temperatures
+#' A dataset containing the precipitation, maximum and minimum temperatures taken from
+#' the STRbook R package.
 #'
 #' @format A data frame with 53940 rows and 10 variables:
 #' \describe{

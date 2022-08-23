@@ -20,25 +20,28 @@
 #' @examples
 #' library(dplyr)
 #' data(NOAA_df_1990)
-#' Tmax <- filter(NOAA_df_1990,        # subset the data
-#'   proc == "Tmax" &      # only max temperature
-#'   month %in% 5:9 &    # May to July
-#'   year == 1993)       # year of 1993
+#' Tmax <- filter(NOAA_df_1990,
+#'   proc == "Tmax" &
+#'   month %in% 5:9 &
+#'   year == 1993)
 #' Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
 #' Tmax_days <- subset(Tmax, t %in% c(1, 15, 30))
-#' st_ssnap(Tmax_days, title = "Maximum Temperature for 3 days ")
+#' st_ssnap(Tmax_days, lat_col = 'lat', lon_col = 'lon', t_col = 't', z_col = 'z',  title = "Maximum Temperature for 3 days ")
 #' @export
 #' @importFrom ggplot2 aes coord_fixed facet_wrap geom_path geom_point ggplot ggtitle
-#' @importFrom ggplot2 map_data scale_colour_distiller theme_bw xlab ylab
+#' @importFrom ggplot2 map_data scale_colour_distiller theme_bw xlab ylab geom_line theme unit
 #' @importFrom rlang .data
 st_ssnap <- function(df, lat_col, lon_col, t_col, z_col, xlab = "Longitude", ylab = "Latitude", ifxy = FALSE, title = "", palette = "Spectral"){
   lat <- df[ ,lat_col]
   lon <- df[ ,lon_col]
   z <- df[ ,z_col]
   t <- df[ ,t_col]
-  bbox <- ggmap::make_bbox(lat = lat, lon = lon, data = df)
+
+  df2 <- data.frame(lat = lat, lon = lon, z = z, t = t)
+
+  bbox <- ggmap::make_bbox(lat = lat, lon = lon, data = df2)
   if(!ifxy){
-    ggplot(data = df) +                     # plot points
+    ggplot(data = df2) +                                      # plot points
       geom_point(aes(x = lon, y = lat,                       # lon and lat with colour defined by z
                      colour = z),size = 2) +                 # and size of points larger
       scale_colour_distiller(palette = palette, guide = "colourbar") +
@@ -51,7 +54,7 @@ st_ssnap <- function(df, lat_col, lon_col, t_col, z_col, xlab = "Longitude", yla
       theme_bw() +                                           # black and white theme
       ggtitle(title)
   }else{
-    ggplot(data = df) +                     # plot points
+    ggplot(data = df2) +                                      # plot points
       geom_point(aes(x = lon, y = lat,                       # lon and lat with colour defined by z
                      colour = z),size = 2) +                 # and size of points larger
       scale_colour_distiller(palette = palette, guide = "colourbar") +

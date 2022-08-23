@@ -49,11 +49,11 @@ y are given instead of longitude and latitude, the country borders will not be s
 \examples{
 library(dplyr)
 data(NOAA_df_1990)
-Tmax <- filter(NOAA_df_1990,        # subset the data
-  proc == "Tmax" &      # only max temperature
-  month \%in\% 5:9 &    # May to July
-  year == 1993)       # year of 1993
+Tmax <- filter(NOAA_df_1990,
+  proc == "Tmax" &
+  month \%in\% 5:9 &
+  year == 1993)
 Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
 Tmax_days <- subset(Tmax, t \%in\% c(1, 15, 30))
-st_ssnap(Tmax_days, title = "Maximum Temperature for 3 days ")
+st_ssnap(Tmax_days, lat_col = 'lat', lon_col = 'lon', t_col = 't', z_col = 'z',  title = "Maximum Temperature for 3 days ")
 }
