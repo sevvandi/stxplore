@@ -3,7 +3,10 @@
 
 # stxplore
 
-The goal of stxplore is to …
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/sevvandi/stxplore/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sevvandi/stxplore/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end --> The goal of stxplore is to …
 
 ## Installation
 
@@ -23,3 +26,5 @@ This is a basic example which shows you how to solve a common problem:
 library(stxplore)
 ## basic example code
 ```
+
+To do

@@ -62,4 +62,5 @@ st_ssnap <- function(df, lat_col, lon_col, t_col, z_col, xlab = "Longitude", yla
       theme_bw() +                                           # black and white theme
       ggtitle(title)
   }
+
 }
