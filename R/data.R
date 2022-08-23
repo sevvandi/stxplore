@@ -1,0 +1,20 @@
+#' NOAA maximum recorded temperature between May 1993 and September 1993
+#'
+#' A dataset containing the precipitation, maximum and minimum temperatures
+#'
+#' @format A data frame with 53940 rows and 10 variables:
+#' \describe{
+#'   \item{julian}{Day in Julian time}
+#'   \item{year}{The year}
+#'   \item{month}{The month}
+#'   \item{day}{The day}
+#'   \item{id}{The location id}
+#'   \item{z}{The value}
+#'   \item{proc}{The type of observation}
+#'   \item{lat}{Latitude}
+#'   \item{lon}{Longitude}
+#'   \item{date}{The date}
+#'   ...
+#' }
+#'
+"NOAA_df_1990"

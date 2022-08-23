@@ -17,6 +17,7 @@ LazyData: true
 Imports: 
     ggmap,
     ggplot2,
+    maps,
     rlang
 RoxygenNote: 7.2.1
 Depends: 
