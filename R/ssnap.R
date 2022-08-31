@@ -14,6 +14,7 @@
 #' @param ifxy If \code{TRUE} then the country borders are not drawn as longitude and latitude are unknown.
 #' @param title The graph title.
 #' @param palette The color palette. Default is \code{Spectral}.
+#' @param legend_title The title for the legend.
 #'
 #' @return A ggplot object.
 #'
@@ -28,10 +29,42 @@
 #' Tmax_days <- subset(Tmax, t %in% c(1, 15, 30))
 #' st_ssnap(Tmax_days, lat_col = 'lat', lon_col = 'lon', t_col = 't', z_col = 'z',  title = "Maximum Temperature for 3 days ")
 #' @export
-#' @importFrom ggplot2 aes coord_fixed facet_wrap geom_path geom_point ggplot ggtitle
+#' @importFrom ggplot2 aes coord_fixed facet_wrap geom_path geom_point ggplot ggtitle geom_tile scale_y_reverse
+#' @importFrom ggplot2 scale_fill_distiller guides guide_legend labs
 #' @importFrom ggplot2 map_data scale_colour_distiller theme_bw xlab ylab geom_line theme unit
 #' @importFrom rlang .data
-st_ssnap <- function(df, lat_col, lon_col, t_col, z_col, xlab = "Longitude", ylab = "Latitude", ifxy = FALSE, title = "", palette = "Spectral"){
+st_ssnap <- function(df,
+                     lat_col,
+                     lon_col,
+                     t_col,
+                     z_col,
+                     xlab = "Longitude",
+                     ylab = "Latitude",
+                     ifxy = FALSE,
+                     title = "",
+                     palette = "Spectral",
+                     legend_title = "z"){
+  if(missing(df)){
+    stop("Empty dataframe df. Please give a proper input.")
+  }
+
+
+  if(missing(lat_col)){
+    stop("Latitude column not specified. Use lat_col to specify latitude.")
+  }
+
+  if(missing(lon_col)){
+    stop("Longitude column not specified. Use lon_col to specify longitude.")
+  }
+
+  if(missing(t_col)){
+    stop("Time column not specified. Use t_col to specify time.")
+  }
+
+  if(missing(z_col)){
+    stop("Variable to plot is not specified. Use z_col to specify variable.")
+  }
+
   lat <- df[ ,lat_col]
   lon <- df[ ,lon_col]
   z <- df[ ,z_col]
@@ -52,6 +85,7 @@ st_ssnap <- function(df, lat_col, lon_col, t_col, z_col, xlab = "Longitude", yla
       coord_fixed(xlim = c(bbox[1], bbox[3]),                # zoom in to the bounding box
                   ylim = c(bbox[2], bbox[4])) +
       theme_bw() +                                           # black and white theme
+      labs(color=legend_title) +
       ggtitle(title)
   }else{
     ggplot(data = df2) +                                      # plot points
@@ -63,6 +97,7 @@ st_ssnap <- function(df, lat_col, lon_col, t_col, z_col, xlab = "Longitude", yla
       coord_fixed(xlim = c(bbox[1], bbox[3]),                # zoom in to the bounding box
                   ylim = c(bbox[2], bbox[4])) +
       theme_bw() +                                           # black and white theme
+      labs(color=legend_title) +
       ggtitle(title)
   }
 

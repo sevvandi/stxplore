@@ -14,7 +14,8 @@ st_ssnap(
   ylab = "Latitude",
   ifxy = FALSE,
   title = "",
-  palette = "Spectral"
+  palette = "Spectral",
+  legend_title = "z"
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ st_ssnap(
 \item{title}{The graph title.}
 
 \item{palette}{The color palette. Default is \code{Spectral}.}
+
+\item{legend_title}{The title for the legend.}
 }
 \value{
 A ggplot object.

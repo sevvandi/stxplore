@@ -20,8 +20,34 @@
 #'st_tsnap(Tmax, 't', 'z', 'id', ids)
 #'@export
 
-st_tsnap <- function(df, t_col, z_col, id_col, id_sample,  xlab="Time", ylab ="Value", title = ""){
+st_tsnap <- function(df,
+                     t_col,
+                     z_col,
+                     id_col,
+                     id_sample,
+                     xlab="Time",
+                     ylab ="Value",
+                     title = ""){
 
+  if(missing(df)){
+    stop("Empty dataframe df. Please give a proper input.")
+  }
+
+  if(missing(t_col)){
+    stop("Time column not specified. Use t_col to specify time.")
+  }
+
+  if(missing(z_col)){
+    stop("Variable to plot is not specified. Use z_col to specify variable.")
+  }
+
+  if(missing(id_col)){
+    stop("Location id column is not specified. Use id_col to specify location id.")
+  }
+
+  if(missing(id_sample)){
+    stop("Location id sample is not specified. Use id_sample to specify a sample of location ids.")
+  }
 
   id <- df[ ,id_col]
   rows <- which(id %in% id_sample)
