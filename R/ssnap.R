@@ -30,7 +30,7 @@
 #' st_ssnap(Tmax_days, lat_col = 'lat', lon_col = 'lon', t_col = 't', z_col = 'z',  title = "Maximum Temperature for 3 days ")
 #' @export
 #' @importFrom ggplot2 aes coord_fixed facet_wrap geom_path geom_point ggplot ggtitle geom_tile scale_y_reverse
-#' @importFrom ggplot2 scale_fill_distiller guides guide_legend labs
+#' @importFrom ggplot2 scale_fill_distiller guides guide_legend labs scale_color_manual
 #' @importFrom ggplot2 map_data scale_colour_distiller theme_bw xlab ylab geom_line theme unit
 #' @importFrom rlang .data
 st_ssnap <- function(df,
