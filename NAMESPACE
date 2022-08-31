@@ -2,6 +2,7 @@
 
 export("%>%")
 export(st_hov)
+export(st_sem)
 export(st_ssnap)
 export(st_tsnap)
 importFrom(ggplot2,aes)

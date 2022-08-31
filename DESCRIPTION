@@ -17,6 +17,7 @@ LazyData: true
 Imports: 
     ggmap,
     ggplot2,
+    gridExtra,
     magrittr,
     maps,
     rlang
