@@ -5,6 +5,9 @@
 #' @inheritParams st_semiv
 #' @inheritParams st_ssnap
 #' @param EOF_num The Empirical Orthogonal Function (EOF) to plot.
+#' @param only_EOF If \code{TRUE}, only the spatial EOF function would be plotted.
+#' @param only_TS If \code{TRUE}, only the PC time series would be plotted. If both are set to \code{FALSE},
+#'                 both plots would be displayed. Both cannot be set to \code{TRUE}.
 #'
 #' @examples
 #' data(SSTlonlatshort)
@@ -17,11 +20,34 @@
 #'        SSTdatashort,
 #'        EOF_num = 3)
 #'
+#' g1 <- st_eof(SSTlonlatshort[-delete_rows, ],
+#'              SSTdatashort,
+#'              EOF_num = 1,
+#'              only_EOF = TRUE)
+#' g2 <- st_eof(SSTlonlatshort[-delete_rows, ],
+#'              SSTdatashort,
+#'              EOF_num = 2,
+#'              only_EOF = TRUE)
+#' g3 <- st_eof(SSTlonlatshort[-delete_rows, ],
+#'              SSTdatashort,
+#'              EOF_num = 3,
+#'              only_EOF = TRUE)
+#' gridExtra::grid.arrange(g1, g2, g3)
 #' @export st_eof
 st_eof <- function(locations_df,
                    values_df,
                    EOF_num = 1,
-                   palette = "Spectral"){
+                   palette = "Spectral",
+                   only_EOF = FALSE,
+                   only_TS = FALSE){
+
+  if(missing(locations_df)){
+    stop("Empty dataframe locations_df. Please give a dataframe with latitude and longitude.")
+  }
+
+  if(missing(values_df)){
+    stop("Empty dataframe values_df. Please give an N x T dataframe with values of the quantity you are interested in.  ")
+  }
 
   EOF <- nPC <- NULL
 
@@ -72,5 +98,12 @@ st_eof <- function(locations_df,
     ylab("Normalized Principal Component") +
     ggtitle(paste('PC Time series for EOF_', EOF_num, sep=""))
 
-  gridExtra::grid.arrange(eof_p, pcts_eof)
+  if(only_EOF){
+    eof_p
+  }else if(only_TS){
+    pcts_eof
+  }else{
+    gridExtra::grid.arrange(eof_p, pcts_eof)
+  }
+
 }

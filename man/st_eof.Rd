@@ -4,7 +4,14 @@
 \alias{st_eof}
 \title{Plots empirical orthogonal functions}
 \usage{
-st_eof(locations_df, values_df, EOF_num = 1, palette = "Spectral")
+st_eof(
+  locations_df,
+  values_df,
+  EOF_num = 1,
+  palette = "Spectral",
+  only_EOF = FALSE,
+  only_TS = FALSE
+)
 }
 \arguments{
 \item{locations_df}{The dataframe containing latitude and longitude (colnames lat and lon).}
@@ -14,6 +21,11 @@ st_eof(locations_df, values_df, EOF_num = 1, palette = "Spectral")
 \item{EOF_num}{The Empirical Orthogonal Function (EOF) to plot.}
 
 \item{palette}{The color palette. Default is \code{Spectral}.}
+
+\item{only_EOF}{If \code{TRUE}, only the spatial EOF function would be plotted.}
+
+\item{only_TS}{If \code{TRUE}, only the PC time series would be plotted. If both are set to \code{FALSE},
+both plots would be displayed. Both cannot be set to \code{TRUE}.}
 }
 \description{
 Plots empirical orthogonal functions of the data.
@@ -29,4 +41,17 @@ st_eof(SSTlonlatshort[-delete_rows,  ],
        SSTdatashort,
        EOF_num = 3)
 
+g1 <- st_eof(SSTlonlatshort[-delete_rows, ],
+             SSTdatashort,
+             EOF_num = 1,
+             only_EOF = TRUE)
+g2 <- st_eof(SSTlonlatshort[-delete_rows, ],
+             SSTdatashort,
+             EOF_num = 2,
+             only_EOF = TRUE)
+g3 <- st_eof(SSTlonlatshort[-delete_rows, ],
+             SSTdatashort,
+             EOF_num = 3,
+             only_EOF = TRUE)
+gridExtra::grid.arrange(g1, g2, g3)
 }
