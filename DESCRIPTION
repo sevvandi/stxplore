@@ -19,9 +19,14 @@ Imports:
     ggmap,
     ggplot2,
     gridExtra,
+    gstat,
+    lubridate,
     magrittr,
     maps,
+    RColorBrewer,
     rlang,
+    sp,
+    spacetime,
     tidyr
 RoxygenNote: 7.2.1
 Depends: 
