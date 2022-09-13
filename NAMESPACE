@@ -2,6 +2,7 @@
 
 export("%>%")
 export(st_ecov)
+export(st_eof)
 export(st_hov)
 export(st_sem)
 export(st_semiv)
