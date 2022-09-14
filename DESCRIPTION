@@ -19,6 +19,7 @@ Imports:
     fields,
     ggmap,
     ggplot2,
+    ggridges,
     gridExtra,
     gstat,
     lubridate,
