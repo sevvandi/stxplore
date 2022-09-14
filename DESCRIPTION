@@ -8,7 +8,7 @@ Authors@R: c(
   person("Petra", "Kunhert", email = "Petra.Kuhnert@data61.csiro.au>",
   role = c("aut"), comment = c(ORCID = "0000-0001-9070-0091")),
   person("Andrew", "Zammit-Mangion", email = "azm@uow.edu.au>",
-  role = c("ctb"), comment = c(ORCID = "0000-0002-4164-6866")),
+  role = c("ctb"), comment = c(ORCID = "0000-0002-4164-6866"))
  )
 Maintainer: Sevvandi Kandanaarachchi <sevvandik@gmail.com>
 Description: More about what it does (maybe more than one line)
