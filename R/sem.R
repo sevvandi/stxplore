@@ -71,7 +71,6 @@ st_sem <- function(df,
 
   ## Spatial Empirical Means
 
-  ll_means <- gridExtra::grid.arrange(lat_means, lon_means, nrow = 1,       # uses the gridExtra package
-                           ncol = 2, top = "Spatial Empirical Means")
+  ll_means <- gridExtra::grid.arrange(lat_means, lon_means, nrow = 1, ncol = 2, top = "Spatial Empirical Means")
   ll_means
 }

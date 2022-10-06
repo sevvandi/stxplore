@@ -58,5 +58,10 @@ Tmax <- filter(NOAA_df_1990,
   year == 1993)
 Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
 Tmax_days <- subset(Tmax, t \%in\% c(1, 15, 30))
-st_ssnap(Tmax_days, lat_col = 'lat', lon_col = 'lon', t_col = 't', z_col = 'z',  title = "Maximum Temperature for 3 days ")
+st_ssnap(Tmax_days,
+  lat_col = 'lat',
+  lon_col = 'lon',
+  t_col = 't',
+  z_col = 'z',
+  title = "Maximum Temperature for 3 days ")
 }

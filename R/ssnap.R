@@ -27,7 +27,12 @@
 #'   year == 1993)
 #' Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
 #' Tmax_days <- subset(Tmax, t %in% c(1, 15, 30))
-#' st_ssnap(Tmax_days, lat_col = 'lat', lon_col = 'lon', t_col = 't', z_col = 'z',  title = "Maximum Temperature for 3 days ")
+#' st_ssnap(Tmax_days,
+#'   lat_col = 'lat',
+#'   lon_col = 'lon',
+#'   t_col = 't',
+#'   z_col = 'z',
+#'   title = "Maximum Temperature for 3 days ")
 #' @export
 #' @importFrom ggplot2 aes coord_fixed facet_wrap geom_path geom_point ggplot ggtitle geom_tile scale_y_reverse
 #' @importFrom ggplot2 scale_fill_distiller guides guide_legend labs scale_color_manual
@@ -77,7 +82,9 @@ st_ssnap <- function(df,
     ggplot(data = df2) +                                      # plot points
       geom_point(aes(x = lon, y = lat,                       # lon and lat with colour defined by z
                      colour = z),size = 2) +                 # and size of points larger
-      scale_colour_distiller(palette = palette, guide = "colourbar") +
+      scale_colour_distiller(palette = palette,
+                             guide = "colourbar",
+                             legend_title) +
       xlab(xlab) +  ylab(ylab) +                             # label x and y axes
       geom_path(aes(x = .data$long, y = .data$lat, group = .data$group),       # add in a map of the world
                 data = map_data("world")) +
@@ -85,20 +92,23 @@ st_ssnap <- function(df,
       coord_fixed(xlim = c(bbox[1], bbox[3]),                # zoom in to the bounding box
                   ylim = c(bbox[2], bbox[4])) +
       theme_bw() +                                           # black and white theme
-      labs(color=legend_title) +
+      labs(color=z_col) +
       ggtitle(title)
   }else{
     ggplot(data = df2) +                                      # plot points
       geom_point(aes(x = lon, y = lat,                       # lon and lat with colour defined by z
                      colour = z),size = 2) +                 # and size of points larger
-      scale_colour_distiller(palette = palette, guide = "colourbar") +
+      scale_colour_distiller(palette = palette,
+                             guide = "colourbar",
+                             legend_title) +
       xlab(xlab) +  ylab(ylab) +                             # label x and y axes
       facet_wrap(~t) +                                       # separate plots based on time (facets)
       coord_fixed(xlim = c(bbox[1], bbox[3]),                # zoom in to the bounding box
                   ylim = c(bbox[2], bbox[4])) +
       theme_bw() +                                           # black and white theme
-      labs(color=legend_title) +
-      ggtitle(title)
+      labs(color=z_col) +
+      ggtitle(title)+
+      guides(fill = guide_legend(title = legend_title))
   }
 
 }

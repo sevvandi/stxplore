@@ -1,0 +1,155 @@
+---
+title: "Vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(stxplore)
+library(dplyr)
+```
+
+## The dataset
+We are using the NOAA dataset used in the book **Spatio-Temporal Statistics with R** by **Christopher K. Wikle, Andrew Zammit-Mangion** and **Noel Cressie**. The dataset we're using contains precipitation, maximum and minimum temperatures for the years 1990 to 1993 for some regions in the United States. Let's have a look at the dataset.
+
+```{r lookatdata}
+data("NOAA_df_1990")
+head(NOAA_df_1990)
+```
+
+## Initial explorations
+
+First we're going to explore this dataset using simple methods. 
+
+### Spatial snapshots through time
+We will focus on the maximum temperature and see how it changes over time in 1993. First we will filter the data for Tmax for year 1993 and months 5 to 9. The the field *julian* has a unique number for each day. We will make a new column to represent the days starting from 1 and select certain days.
+
+```{r filterdata}
+Tmax <- filter(NOAA_df_1990,
+  proc == "Tmax" &
+  month %in% 5:9 &
+  year == 1993)
+Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
+Tmax_days <- subset(Tmax, t %in% c(1, 15, 30))
+```
+
+Now we can use the *st_ssnap* function. For this function we need to give the data frame and the columns which are used for latitude, longitude, time and the column which has the quantity we want to plot. You can also give the main and legend title for the plot. 
+```{r ssnap1}
+st_ssnap(Tmax_days, 
+         lat_col = 'lat', 
+         lon_col = 'lon', 
+         t_col = 't', 
+         z_col = 'z',  
+         title = "Maximum Temperature for 3 days",
+         legend_title = 'Temp')
+
+```
+
+Suppose we want to plot the maximum temperature for days 1 to 12.
+```{r ssnap2}
+Tmax_days <- subset(Tmax, t %in% c(1:12))
+
+st_ssnap(Tmax_days, 
+         lat_col = 'lat', 
+         lon_col = 'lon', 
+         t_col = 't', 
+         z_col = 'z',  
+         title = "Maximum Temperature for 12 days",
+         legend_title = 'Temp')
+
+```
+
+### Time series snapshots for different locations
+We have looked at spatial snapshots over time. Now let's look at temporal snapshots for given spatial locations. First let's look at the location ids and sample 12 of them.   
+
+```{r tsnap0}
+set.seed(148)                                          
+Tmax_ID <- unique(Tmax$id)                               
+ids <- sample(Tmax_ID, 12)
+ids
+```
+
+Then we use the *st_tsnap* function to plot the temporal snapshots at those locations. Similar to the previous function, we need to specify the dataframe, time column, value column, the id column and the id samples. You can specify the x and y labels and the title. 
+
+```{r tsnap1}
+st_tsnap(Tmax, 
+         t_col = 't', 
+         z_col = 'z', 
+         id_col = 'id', 
+         id_sample = ids, 
+         xlab = "Days", 
+         ylab="Temperature",
+         title = "Temperature Selected Days")
+```
+
+
+### Spatial empirical means (averaged over time)
+
+Suppose we want to explore the average value for the time period. That is, for every location we average the values over time. We can see how the average value changes for different latitude and longitude values. As our quantity of interest is Maximum Temperature, we get the Mean Maximum Temperature in these plots. We can also see that there is a relationship between Mean Maximum Temperature and the Latitude, but not the Longitude, which is expected. 
+
+```{r sem1, message=FALSE}
+st_sem(Tmax, 
+       lat_col = "lat", 
+       lon_col = "lon", 
+       t_col = "t", 
+       z_col = "z", 
+       ylab="Mean Max Temp")
+
+```
+
+
+### Temporal empirical means (averaged over space)
+Similarly, we can plot the averages over space and see their fluctuations over time. In this case, we're computing the average for each date over all the latitude and longitude values. We see a graph with the observed and the average values for each date. 
+
+```{r tem1}
+
+st_tem(Tmax,
+       t_col = 'date',
+       z_col = 'z',
+       id_col = 'id',
+       ylab = "Mean Maximum Temperature")
+
+
+```
+
+We finish the initial explorations with the Hovmoller plots.
+
+### Hovmoller plots
+Hovmollet plots are generally used to reduce spatial dimensions. It is sometimes called a cross between a map and a graph. It is commmonly used to collapse one of the spatial dimensions. In our example we have the maximum temperature for different latitude, longitude and time values. We can average by lattitude and see how the maximum temperature changes with time and longitude. Or we can average by longitude and explore the changes in maximum temperature with respect to lattitude and time. 
+
+The function *st_hov* takes similar arguments to the other functions with the exception of *lat_or_lon*  and *lat_or_lon_col* arguments. The argument *lat_or_lon* specifies, which spatial component we will see in the plot. If we specify *lat*, then we will see a plot of the quantity of interest (Max Temp in our case) with latitude and time as the two axes. If we specify *lon*, then we will see longitude on the x-axis. The argument *lat_or_lon_col* is used to specify the column corresponding to the spatial variable. 
+
+
+To average by longitude, we need to specify *lat_or_lon = 'lat'*. That is, if you want to see latitude on the x-axis, then specify *lat*. 
+```{r hovm1}
+st_hov(lat_or_lon = "lat",
+       df = Tmax,
+       lat_or_lon_col = 'lat',
+       t_col = 't',
+       z_col = 'z')
+```
+
+The above graph gives valuable information.  We see that at higher lattitudes the maximum temperature is low compared to lower lattitudes. There is another interesting bit of information.  The dataset Tmax spans 150 days from May to September. This is from Spring to Autumn in the Northern Hemisphere. Generally, the maximum daily temperature would go up from May to July/August and then it would go down. This is confirmed by the parabolic pattern of dark red/orange squares we see over time. 
+
+If we want to see longitude on the x-axis (average by latitude), then we need to specify *lat_or_lon = 'lon'*. but this plot is not so interesting.
+
+```{r hovm2}
+st_hov(lat_or_lon = "lon",
+       df = Tmax,
+       lat_or_lon_col = 'lon',
+       t_col = 't',
+       z_col = 'z')
+```
+
+<!-- ## Empirical covarainces -->
+
