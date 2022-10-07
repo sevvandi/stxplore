@@ -41,8 +41,8 @@ st_ecov <- function(df,
                     t_col,
                     z_col,
                     lat_or_lon_strips = "lon",
-                    quadratic_time = TRUE,
-                    quadratic_space = TRUE,
+                    quadratic_time = FALSE,
+                    quadratic_space = FALSE,
                     lag = 0,
                     num_strips = 1,
                     xlab = "Latitude"){
@@ -139,13 +139,15 @@ st_ecov <- function(df,
   if(num_strips == 1){
     plot_cov_strips(Lag_cov, spat_df, xlab = xlab)
   }else if(num_strips == 2){
-    par(mfrow = c(1,2))
+    op <- par(mfrow = c(1,2))
+    on.exit(par(op))
     plot_cov_strips(Lag_cov, spat_df, xlab = xlab)
   }else if(num_strips == 3){
-    par(mfrow = c(1,3))
+    op <- par(mfrow = c(1,3))
+    on.exit(par(op))
     plot_cov_strips(Lag_cov, spat_df, xlab = xlab)
   }else if(num_strips == 4){
-    op <- par(mfrow = c(2,2))
+    op <- par(mfrow = c(2,2), mai = c(0.8, 0.8, 0.1, 0.3))
     on.exit(par(op))
     plot_cov_strips(Lag_cov, spat_df, xlab = xlab)
   }

@@ -136,7 +136,12 @@ y are given instead of longitude and latitude, the country borders will not be s
 <span class="r-in"><span>  <span class="va">year</span> <span class="op">==</span> <span class="fl">1993</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">Tmax</span><span class="op">$</span><span class="va">t</span> <span class="op">&lt;-</span> <span class="va">Tmax</span><span class="op">$</span><span class="va">julian</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">Tmax</span><span class="op">$</span><span class="va">julian</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span><span class="va">Tmax_days</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">Tmax</span>, <span class="va">t</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">15</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">st_ssnap</span><span class="op">(</span><span class="va">Tmax_days</span>, lat_col <span class="op">=</span> <span class="st">'lat'</span>, lon_col <span class="op">=</span> <span class="st">'lon'</span>, t_col <span class="op">=</span> <span class="st">'t'</span>, z_col <span class="op">=</span> <span class="st">'z'</span>,  title <span class="op">=</span> <span class="st">"Maximum Temperature for 3 days "</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">st_ssnap</span><span class="op">(</span><span class="va">Tmax_days</span>,</span></span>
+<span class="r-in"><span>  lat_col <span class="op">=</span> <span class="st">'lat'</span>,</span></span>
+<span class="r-in"><span>  lon_col <span class="op">=</span> <span class="st">'lon'</span>,</span></span>
+<span class="r-in"><span>  t_col <span class="op">=</span> <span class="st">'t'</span>,</span></span>
+<span class="r-in"><span>  z_col <span class="op">=</span> <span class="st">'z'</span>,</span></span>
+<span class="r-in"><span>  title <span class="op">=</span> <span class="st">"Maximum Temperature for 3 days "</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="st_ssnap-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>

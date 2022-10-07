@@ -40,3 +40,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL:  https://sevvandi.github.io/stxplore/

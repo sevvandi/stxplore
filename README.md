@@ -6,8 +6,10 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/sevvandi/stxplore/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sevvandi/stxplore/actions/workflows/R-CMD-check.yaml)
-<!-- badges: end --> The goal of stxplore is to explore spatio-temporal
-data. It is not a modelling tool.
+<!-- badges: end -->
+
+The goal of stxplore is to explore spatio-temporal data. It is not a
+modelling tool.
 
 ## Installation
 

@@ -11,8 +11,8 @@ st_ecov(
   t_col,
   z_col,
   lat_or_lon_strips = "lon",
-  quadratic_time = TRUE,
-  quadratic_space = TRUE,
+  quadratic_time = FALSE,
+  quadratic_space = FALSE,
   lag = 0,
   num_strips = 1,
   xlab = "Latitude"
