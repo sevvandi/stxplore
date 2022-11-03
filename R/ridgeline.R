@@ -13,7 +13,7 @@
 #'                  proc == "Tmax" &
 #'                  year == 1993 &
 #'                  month == 1)
-#' st_rl(TmaxJan,
+#' ridgeline(TmaxJan,
 #'       group_col = 'lat',
 #'       z_col = 'z',
 #'       xlab = 'Maximum Temperature',
@@ -21,8 +21,8 @@
 #'
 #' @importFrom ggplot2 scale_fill_viridis_c stat
 #' @importFrom ggridges geom_density_ridges_gradient
-#' @export st_rl
-st_rl <- function(df,
+#' @export ridgeline
+ridgeline <- function(df,
                   group_col,
                   z_col,
                   num_grps = 10,
