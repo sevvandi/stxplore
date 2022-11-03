@@ -2,7 +2,7 @@
 #'
 #' This function creates a Hovmoller plot for either latitude or longitude.
 #'
-#' @inheritParams st_ssnap
+#' @inheritParams spatial_snapshots
 #' @param lat_or_lon Needs to be either \code{lat} or \code{lon}. \code{lat} plots the latitudinal
 #' Hovmoller plat, while \code{lon} plots the longitudinal Hovmoller plot.
 #' @param lat_or_lon_col The column or the column name corresponding to the latitude/longitude.

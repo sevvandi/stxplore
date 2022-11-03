@@ -4,7 +4,7 @@
 #' empirical covariance either by latitude or longitude. You can split up the spatial domain by latitude or
 #' longitude and plot the covariance for each longitudinal/latitudinal strips.
 #'
-#' @inheritParams st_ssnap
+#' @inheritParams spatial_snapshots
 #' @param lat_or_lon_strips Takes the values \code{lat} or \code{lon}. The value \code{lat} produces latitudinal strips,
 #'       i.e., covariance plots over longitude for different latitudinal strips. The value \code{lon} produces longitudinal
 #'       strips, i.e., covariance plots over latitude for different longitudinal strips.

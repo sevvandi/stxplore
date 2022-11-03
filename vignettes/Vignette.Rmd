@@ -45,7 +45,7 @@ Tmax_days <- subset(Tmax, t %in% c(1, 15, 30))
 
 Now we can use the *st_ssnap* function. For this function we need to give the data frame and the columns which are used for latitude, longitude, time and the column which has the quantity we want to plot. You can also give the main and legend title for the plot. 
 ```{r ssnap1}
-st_ssnap(Tmax_days, 
+spatial_snapshots(Tmax_days, 
          lat_col = 'lat', 
          lon_col = 'lon', 
          t_col = 't', 
@@ -59,7 +59,7 @@ Suppose we want to plot the maximum temperature for days 1 to 12.
 ```{r ssnap2}
 Tmax_days <- subset(Tmax, t %in% c(1:12))
 
-st_ssnap(Tmax_days, 
+spatial_snapshots(Tmax_days, 
          lat_col = 'lat', 
          lon_col = 'lon', 
          t_col = 't', 

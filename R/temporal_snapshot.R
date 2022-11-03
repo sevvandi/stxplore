@@ -3,7 +3,7 @@
 #' This function plots temporal snapshos for specific spatial locations. The location id sample
 #' need to be given as a function argument.
 #'
-#'@inheritParams st_ssnap
+#'@inheritParams spatial_snapshots
 #'@param id_col The column of the location id.
 #'@param id_sample The sample of location ids to be plotted
 #'

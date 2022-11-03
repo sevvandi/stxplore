@@ -2,7 +2,7 @@
 #'
 #' This function plots two graphs, spatial empirical means by latitude and longitude.
 #'
-#' @inheritParams st_ssnap
+#' @inheritParams spatial_snapshots
 #'
 #' @examples
 #' data(NOAA_df_1990)

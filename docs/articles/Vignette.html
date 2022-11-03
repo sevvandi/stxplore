@@ -134,7 +134,7 @@ need to give the data frame and the columns which are used for latitude,
 longitude, time and the column which has the quantity we want to plot.
 You can also give the main and legend title for the plot.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/st_ssnap.html">st_ssnap</a></span><span class="op">(</span><span class="va">Tmax_days</span>, </span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/spatial_snapshots.html">spatial_snapshots</a></span><span class="op">(</span><span class="va">Tmax_days</span>, </span>
 <span>         lat_col <span class="op">=</span> <span class="st">'lat'</span>, </span>
 <span>         lon_col <span class="op">=</span> <span class="st">'lon'</span>, </span>
 <span>         t_col <span class="op">=</span> <span class="st">'t'</span>, </span>
@@ -146,7 +146,7 @@ You can also give the main and legend title for the plot.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Tmax_days</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">Tmax</span>, <span class="va">t</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/st_ssnap.html">st_ssnap</a></span><span class="op">(</span><span class="va">Tmax_days</span>, </span>
+<span><span class="fu"><a href="../reference/spatial_snapshots.html">spatial_snapshots</a></span><span class="op">(</span><span class="va">Tmax_days</span>, </span>
 <span>         lat_col <span class="op">=</span> <span class="st">'lat'</span>, </span>
 <span>         lon_col <span class="op">=</span> <span class="st">'lon'</span>, </span>
 <span>         t_col <span class="op">=</span> <span class="st">'t'</span>, </span>

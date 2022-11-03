@@ -2,7 +2,7 @@
 #'
 #' Plots ridgeline plots grouped by latitude/longitude or time.
 #'
-#' @inheritParams st_ssnap
+#' @inheritParams spatial_snapshots
 #' @param group_col The column name of the group column.
 #' @param num_grps The number of levels for the ridgeline plot.
 #'

@@ -27,7 +27,7 @@
 #'   year == 1993)
 #' Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
 #' Tmax_days <- subset(Tmax, t %in% c(1, 15, 30))
-#' st_ssnap(Tmax_days,
+#' spatial_snapshots(Tmax_days,
 #'   lat_col = 'lat',
 #'   lon_col = 'lon',
 #'   t_col = 't',
@@ -35,7 +35,7 @@
 #'   title = "Maximum Temperature for 3 days ")
 #' @export
 #' @importFrom rlang .data
-st_ssnap <- function(df,
+spatial_snapshots <- function(df,
                      lat_col,
                      lon_col,
                      t_col,
