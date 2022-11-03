@@ -1,6 +1,6 @@
-#' Plots the semi-variogram
+#' Computes the semi-variogram
 #'
-#' Plots the semi-variogram given the locations, times and the quantity of interest.
+#' Computes the semi-variogram given the locations, times and the quantity of interest.
 #'
 #' @param locations_df The dataframe containing latitude and longitude (colnames lat and lon).
 #' @param times_df The dataframe containing the dates in \code{Date} format.
@@ -20,7 +20,7 @@
 #' temp_part <- with(Times, paste(year, month, day, sep = "-"))
 #' temp_part <- data.frame(date = as.Date(temp_part)[913:943])
 #' Tmax <- Tmax[913:943, ]
-#' st_semiv(locs,
+#' semivariogram(locs,
 #'         temp_part,
 #'         Tmax,
 #'         latitude_linear = FALSE,
@@ -31,8 +31,8 @@
 #'         tlagmax = 7
 #' )
 #'
-#' @export st_semiv
-st_semiv <- function(locations_df,
+#' @export semivariogram
+semivariogram <- function(locations_df,
                      times_df,
                      values_df,
                      latitude_linear = TRUE,
@@ -109,8 +109,11 @@ st_semiv <- function(locations_df,
                   cutoff = cutoff,                    # only consider pts < cutoff km apart
                   tlags = 0.01:tlagmax)               # 0-tlagmaxdays days (will create an NA if start at 0)
 
-  # display the empirical semi-variogram
-  color_pal <- rev(grDevices::colorRampPalette(RColorBrewer::brewer.pal(9, "YlOrRd"))(16))
-  plot(vv, col = color_pal)
-
+ structure(list(
+    variogram = vv,
+    loc_data = locations_df,
+    times_data = times_df,
+    values_data = values_df,
+    call = match.call()
+  ), class='semivariogramobj')
 }

@@ -365,11 +365,11 @@ this data after removing a quadratic trend in time.</p>
 <h2 id="space-time-semi-variograms">Space-time semi-variograms<a class="anchor" aria-label="anchor" href="#space-time-semi-variograms"></a>
 </h2>
 <p>To plot space-time semi-variograms we need to construct an object of
-STDF Class. We do this inside the function <em>st_semiv</em>. To create
-an STDF object, we need spatio-temporal data with a full spate-time
-grid. That is, we need a matrix of M x N size, where N is the number of
-spatial locations and M is the number of timestamps. Let’s have a look
-at these files.</p>
+STDF Class. We do this inside the function <em>semivariogram</em>. To
+create an STDF object, we need spatio-temporal data with a full
+spate-time grid. That is, we need a matrix of M x N size, where N is the
+number of spatial locations and M is the number of timestamps. Let’s
+have a look at these files.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Location data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">locs</span><span class="op">)</span></span>
@@ -416,7 +416,7 @@ We can specify if we need to remove the linear trend of the latitude or
 longitude. First, let’s see what happens without removing the linear
 trend.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/st_semiv.html">st_semiv</a></span><span class="op">(</span><span class="va">locs</span>,</span>
+<code class="sourceCode R"><span><span class="va">semiv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/semivariogram.html">semivariogram</a></span><span class="op">(</span><span class="va">locs</span>,</span>
 <span>        <span class="va">temp_part</span>,</span>
 <span>        <span class="va">Tmax2</span>,</span>
 <span>        latitude_linear <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -425,12 +425,13 @@ trend.</p>
 <span>        width <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>        cutoff <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>        tlagmax <span class="op">=</span> <span class="fl">7</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">semiv</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Vignette_files/figure-html/stsemiv3-1.png" width="700"></p>
 <p>Now let’s see what happens if we account for a linear trend in
 latitude.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/st_semiv.html">st_semiv</a></span><span class="op">(</span><span class="va">locs</span>,</span>
+<code class="sourceCode R"><span><span class="va">semiv</span><span class="op">&lt;-</span> <span class="fu"><a href="../reference/semivariogram.html">semivariogram</a></span><span class="op">(</span><span class="va">locs</span>,</span>
 <span>        <span class="va">temp_part</span>,</span>
 <span>        <span class="va">Tmax2</span>,</span>
 <span>        latitude_linear <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -438,12 +439,12 @@ latitude.</p>
 <span>        missing_value <span class="op">=</span> <span class="op">-</span><span class="fl">9999</span>,</span>
 <span>        width <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>        cutoff <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>        tlagmax <span class="op">=</span> <span class="fl">7</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span>        tlagmax <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">semiv</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Vignette_files/figure-html/stsemiv4-1.png" width="700"></p>
 <p>What about longitude?</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/st_semiv.html">st_semiv</a></span><span class="op">(</span><span class="va">locs</span>,</span>
+<code class="sourceCode R"><span><span class="va">semiv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/semivariogram.html">semivariogram</a></span><span class="op">(</span><span class="va">locs</span>,</span>
 <span>        <span class="va">temp_part</span>,</span>
 <span>        <span class="va">Tmax2</span>,</span>
 <span>        latitude_linear <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -451,8 +452,8 @@ latitude.</p>
 <span>        missing_value <span class="op">=</span> <span class="op">-</span><span class="fl">9999</span>,</span>
 <span>        width <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>        cutoff <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>        tlagmax <span class="op">=</span> <span class="fl">7</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span>        tlagmax <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">semiv</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Vignette_files/figure-html/stsemiv5-1.png" width="700"></p>
 <p>We see a big reduction in dark red squares when we include latitude,
 but not so much when we include both latitude and longitude. That means,

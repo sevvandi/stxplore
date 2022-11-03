@@ -223,7 +223,7 @@ st_ecov(Tmax,
 
 ## Space-time semi-variograms
 
-To plot space-time semi-variograms we need to construct an object of STDF Class. We do this inside the function *st_semiv*. To create an STDF object, we need spatio-temporal data with a full spate-time grid. That is, we need a matrix of M x N size, where N is the number of spatial locations and M is the number of timestamps. Let's have a look at these files.
+To plot space-time semi-variograms we need to construct an object of STDF Class. We do this inside the function *semivariogram*. To create an STDF object, we need spatio-temporal data with a full spate-time grid. That is, we need a matrix of M x N size, where N is the number of spatial locations and M is the number of timestamps. Let's have a look at these files.
 
 ```{r stsemiv1}
 # Location data
@@ -254,7 +254,7 @@ Tmax2 <- Tmax[913:943, ]
 Now we can plot the semi-variogram. Under the hood we use the function *variogram* in the package *gstate* to produce the semi-variogram. We include a bin size of 50km and  up to 7 timelags. We can specify if we need to remove the linear trend of the latitude or longitude. First, let's see what happens without removing the linear trend. 
 
 ```{r stsemiv3}
-st_semiv(locs,
+semiv <- semivariogram(locs,
         temp_part,
         Tmax2,
         latitude_linear = FALSE,
@@ -264,12 +264,13 @@ st_semiv(locs,
         cutoff = 1000,
         tlagmax = 7
 )
+autoplot(semiv)
 ```
 
 Now let's see what happens if we account for a linear trend in latitude. 
 
 ```{r stsemiv4}
-st_semiv(locs,
+semiv<- semivariogram(locs,
         temp_part,
         Tmax2,
         latitude_linear = TRUE,
@@ -277,14 +278,14 @@ st_semiv(locs,
         missing_value = -9999,
         width = 50,
         cutoff = 1000,
-        tlagmax = 7
-)
+        tlagmax = 7)
+autoplot(semiv)
 ```
 
 What about longitude?
 
 ```{r stsemiv5}
-st_semiv(locs,
+semiv <- semivariogram(locs,
         temp_part,
         Tmax2,
         latitude_linear = TRUE,
@@ -292,8 +293,8 @@ st_semiv(locs,
         missing_value = -9999,
         width = 50,
         cutoff = 1000,
-        tlagmax = 7
-)
+        tlagmax = 7)
+autoplot(semiv)
 ```
 
 We see a big reduction in dark red squares when we include latitude, but not so much when we include both latitude and longitude. That means, there is a spatial component that we need to account for. 

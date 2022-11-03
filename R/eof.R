@@ -2,7 +2,7 @@
 #'
 #' Plots empirical orthogonal functions of the data.
 #'
-#' @inheritParams st_semiv
+#' @inheritParams semivariogram
 #' @inheritParams spatial_snapshots
 #' @param EOF_num The Empirical Orthogonal Function (EOF) to plot.
 #' @param only_EOF If \code{TRUE}, only the spatial EOF function would be plotted.
