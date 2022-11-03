@@ -17,10 +17,10 @@
 #'Tmax_ID <- unique(Tmax$id)
 #'Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
 #'ids <- sample(Tmax_ID, 10)
-#'st_tsnap(Tmax, 't', 'z', 'id', ids)
+#'temporal_snapshot(Tmax, 't', 'z', 'id', ids)
 #'@export
 
-st_tsnap <- function(df,
+temporal_snapshot <- function(df,
                      t_col,
                      z_col,
                      id_col,
@@ -66,3 +66,4 @@ st_tsnap <- function(df,
     theme_bw() +                                           # black and white theme
     ggtitle(title)                                         # add title
 }
+

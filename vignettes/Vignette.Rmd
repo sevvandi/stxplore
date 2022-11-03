@@ -82,11 +82,11 @@ ids
 Then we use the *st_tsnap* function to plot the temporal snapshots at those locations. Similar to the previous function, we need to specify the dataframe, time column, value column, the id column and the id samples. You can specify the x and y labels and the title. 
 
 ```{r tsnap1}
-st_tsnap(Tmax, 
+temporal_snapshot(Tmax, 
          t_col = 't', 
          z_col = 'z', 
          id_col = 'id', 
-         id_sample = ids, 
+         id_sample = ids,  
          xlab = "Days", 
          ylab="Temperature",
          title = "Temperature Selected Days")
@@ -113,13 +113,13 @@ Similarly, we can plot the averages over space and see their fluctuations over t
 
 ```{r tem1}
 
-st_tem(Tmax,
-       t_col = 'date',
-       z_col = 'z',
-       id_col = 'id',
-       ylab = "Mean Maximum Temperature")
+tem <- temporal_means(Tmax,
+                      t_col = 'date',
+                      z_col = 'z',
+                      id_col = 'id')
 
-
+autoplot(tem,
+         ylab = "Mean Maximum Temperature")
 ```
 
 We finish the initial explorations with the Hovmoller plots.
@@ -297,3 +297,5 @@ st_semiv(locs,
 ```
 
 We see a big reduction in dark red squares when we include latitude, but not so much when we include both latitude and longitude. That means, there is a spatial component that we need to account for. 
+
+### 

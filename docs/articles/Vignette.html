@@ -172,11 +172,11 @@ snapshots at those locations. Similar to the previous function, we need
 to specify the dataframe, time column, value column, the id column and
 the id samples. You can specify the x and y labels and the title.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/st_tsnap.html">st_tsnap</a></span><span class="op">(</span><span class="va">Tmax</span>, </span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/temporal_snapshot.html">temporal_snapshot</a></span><span class="op">(</span><span class="va">Tmax</span>, </span>
 <span>         t_col <span class="op">=</span> <span class="st">'t'</span>, </span>
 <span>         z_col <span class="op">=</span> <span class="st">'z'</span>, </span>
 <span>         id_col <span class="op">=</span> <span class="st">'id'</span>, </span>
-<span>         id_sample <span class="op">=</span> <span class="va">ids</span>, </span>
+<span>         id_sample <span class="op">=</span> <span class="va">ids</span>,  </span>
 <span>         xlab <span class="op">=</span> <span class="st">"Days"</span>, </span>
 <span>         ylab<span class="op">=</span><span class="st">"Temperature"</span>,</span>
 <span>         title <span class="op">=</span> <span class="st">"Temperature Selected Days"</span><span class="op">)</span></span></code></pre></div>
@@ -215,11 +215,13 @@ each date over all the latitude and longitude values. We see a graph
 with the observed and the average values for each date.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="../reference/st_tem.html">st_tem</a></span><span class="op">(</span><span class="va">Tmax</span>,</span>
-<span>       t_col <span class="op">=</span> <span class="st">'date'</span>,</span>
-<span>       z_col <span class="op">=</span> <span class="st">'z'</span>,</span>
-<span>       id_col <span class="op">=</span> <span class="st">'id'</span>,</span>
-<span>       ylab <span class="op">=</span> <span class="st">"Mean Maximum Temperature"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">tem</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/temporal_means.html">temporal_means</a></span><span class="op">(</span><span class="va">Tmax</span>,</span>
+<span>                      t_col <span class="op">=</span> <span class="st">'date'</span>,</span>
+<span>                      z_col <span class="op">=</span> <span class="st">'z'</span>,</span>
+<span>                      id_col <span class="op">=</span> <span class="st">'id'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">tem</span>,</span>
+<span>         ylab <span class="op">=</span> <span class="st">"Mean Maximum Temperature"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Vignette_files/figure-html/tem1-1.png" width="700"></p>
 <p>We finish the initial explorations with the Hovmoller plots.</p>
 </div>
@@ -455,6 +457,9 @@ latitude.</p>
 <p>We see a big reduction in dark red squares when we include latitude,
 but not so much when we include both latitude and longitude. That means,
 there is a spatial component that we need to account for.</p>
+<div class="section level3">
+<h3 id="section"></h3>
+</div>
 </div>
   </div>
 

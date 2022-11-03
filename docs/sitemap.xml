@@ -37,6 +37,9 @@
     <loc>/reference/Tmax.html</loc>
   </url>
   <url>
+    <loc>/reference/autoplot.temporal_means.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
@@ -44,6 +47,9 @@
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>/reference/reexports.html</loc>
   </url>
   <url>
     <loc>/reference/st_cancor.html</loc>
@@ -77,5 +83,14 @@
   </url>
   <url>
     <loc>/reference/st_tsnap.html</loc>
+  </url>
+  <url>
+    <loc>/reference/stxplore-package.html</loc>
+  </url>
+  <url>
+    <loc>/reference/temporal_means.html</loc>
+  </url>
+  <url>
+    <loc>/reference/temporal_snapshot.html</loc>
   </url>
 </urlset>

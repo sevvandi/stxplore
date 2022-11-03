@@ -1,9 +1,8 @@
-#' Plots temporal empirical means
+#' Computes temporal empirical means
 #'
-#' This function plots temporal empirical means averaged per time unit.
+#' This function computes temporal empirical means averaged per time unit.
 #'
-#' @inheritParams st_tsnap
-#' @param legend_title The title for the legend.
+#' @inheritParams temporal_snapshot
 #'
 #' @examples
 #' data(NOAA_df_1990)
@@ -13,20 +12,15 @@
 #'                 month %in% 5:9 &                 # May to July
 #'                 year == 1993)                    # year 1993
 #' Tmax$t <- Tmax$julian - min(Tmax$julian) + 1      # create a new time variable starting at 1
-#' st_tem(Tmax,
+#' temporal_means(Tmax,
 #'        t_col = 'date',
 #'        z_col = 'z',
 #'        id_col = 'id')
-#' @export st_tem
-st_tem <- function(df,
+#' @export temporal_means
+temporal_means <- function(df,
                    t_col,
                    z_col,
-                   id_col,
-                   ylab = "Mean Value",
-                   xlab ="Month",
-                   legend_title ="",
-                   title = "Temporal Empirical Means"
-                  ){
+                   id_col){
   if(missing(df)){
     stop("Empty dataframe df. Please give a proper input.")
   }
@@ -55,27 +49,12 @@ st_tem <- function(df,
   df_av <- dplyr::group_by(df2, date) %>%
     dplyr::summarise(meanz = mean(z))
 
-
-  ## Temporal Empirical Means
-  ggplot() +
-    geom_line(data = df2,
-              aes(x = date,
-                  y = z,
-                  group = id,
-                  colour = "blue"),
-              alpha = 0.04) +
-    geom_line(data = df_av,
-              aes(x = date,
-                  y = meanz,
-                  colour = "black")) +
-    xlab(xlab) +
-    ylab(ylab) +
-    theme_bw() +
-    scale_color_manual(name = legend_title,
-                                    values = c(blue = "blue", black = "black"),
-                                    labels = c("Observed", "Average"),
-                                    guide = "legend") +
-    ggtitle(title)
-
+  structure(list(
+    data = df2,
+    averages = df_av,
+    call = match.call()
+  ), class='temporal_means')
 }
+
+
 
