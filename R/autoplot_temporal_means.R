@@ -1,4 +1,4 @@
-#' Plots temporal empirical means computed from temporal_means algorithm
+#' Plots temporal empirical means computed from temporal_means function
 #'
 #' A line plot of temporal means with observed data in the background.
 #'
@@ -21,7 +21,7 @@
 #'               id_col = 'id')
 #' autoplot(temp_means)
 #' @export
-autoplot.temporal_means <- function(object,
+autoplot.temporalmeans <- function(object,
                                     ylab = "Mean Value",
                                     xlab ="Month",
                                     legend_title ="",

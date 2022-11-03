@@ -98,13 +98,13 @@ temporal_snapshot(Tmax,
 Suppose we want to explore the average value for the time period. That is, for every location we average the values over time. We can see how the average value changes for different latitude and longitude values. As our quantity of interest is Maximum Temperature, we get the Mean Maximum Temperature in these plots. We can also see that there is a relationship between Mean Maximum Temperature and the Latitude, but not the Longitude, which is expected. 
 
 ```{r sem1, message=FALSE}
-st_sem(Tmax, 
+sem <- spatial_means(Tmax, 
        lat_col = "lat", 
        lon_col = "lon", 
        t_col = "t", 
-       z_col = "z", 
-       ylab="Mean Max Temp")
-
+       z_col = "z" 
+       )
+autoplot(sem, ylab="Mean Max Temp")
 ```
 
 

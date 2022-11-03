@@ -53,7 +53,7 @@ temporal_means <- function(df,
     data = df2,
     averages = df_av,
     call = match.call()
-  ), class='temporal_means')
+  ), class='temporalmeans')
 }
 
 

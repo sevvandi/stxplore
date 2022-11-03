@@ -1,6 +1,6 @@
-#' Plots spatial empirical means
+#' Computes spatial empirical means
 #'
-#' This function plots two graphs, spatial empirical means by latitude and longitude.
+#' This function computes spatial empirical means by latitude and longitude averaged over time.
 #'
 #' @inheritParams spatial_snapshots
 #'
@@ -12,21 +12,18 @@
 #'                 month %in% 5:9 &                 # May to July
 #'                 year == 1993)                    # year 1993
 #' Tmax$t <- Tmax$julian - min(Tmax$julian) + 1      # create a new time variable starting at 1
-#' st_sem(Tmax,
+#' spatial_means(Tmax,
 #'        lat_col = "lat",
 #'        lon_col = "lon",
 #'        t_col = "t",
-#'        z_col = "z",
-#'        ylab="Mean Max Temp")
+#'        z_col = "z")
 #'
-#' @export st_sem
-st_sem <- function(df,
+#' @export spatial_means
+spatial_means <- function(df,
                    lat_col,
                    lon_col,
                    t_col,
-                   z_col,
-                   ylab = "Mean Value"
-                   ){
+                   z_col){
   if(missing(df)){
     stop("Empty dataframe df. Please give a proper input.")
   }
@@ -58,19 +55,12 @@ st_sem <- function(df,
   spat_av <- dplyr::group_by(df2, lat, lon) %>%           # group by lon-lat
     dplyr::summarise(mu_emp = mean(z))                     # mean in each lon-lat box
 
-  lat_means <- ggplot(spat_av) +
-    geom_point(aes(lat, mu_emp)) +
-    theme_bw() +
-    xlab("Latitude") +
-    ylab(ylab)
-  lon_means <- ggplot(spat_av) +
-    geom_point(aes(lon, mu_emp)) +
-    theme_bw() +
-    xlab("Longitude") +
-    ylab("Mean Value")
-
   ## Spatial Empirical Means
 
-  ll_means <- gridExtra::grid.arrange(lat_means, lon_means, nrow = 1, ncol = 2, top = "Spatial Empirical Means")
-  ll_means
+  structure(list(
+    spatial_avg = spat_av,
+    data = df2,
+    call = match.call()
+  ), class='spatialmeans')
+
 }

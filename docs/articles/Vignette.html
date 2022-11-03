@@ -193,12 +193,13 @@ Mean Maximum Temperature in these plots. We can also see that there is a
 relationship between Mean Maximum Temperature and the Latitude, but not
 the Longitude, which is expected.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/st_sem.html">st_sem</a></span><span class="op">(</span><span class="va">Tmax</span>, </span>
+<code class="sourceCode R"><span><span class="va">sem</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatial_means.html">spatial_means</a></span><span class="op">(</span><span class="va">Tmax</span>, </span>
 <span>       lat_col <span class="op">=</span> <span class="st">"lat"</span>, </span>
 <span>       lon_col <span class="op">=</span> <span class="st">"lon"</span>, </span>
 <span>       t_col <span class="op">=</span> <span class="st">"t"</span>, </span>
-<span>       z_col <span class="op">=</span> <span class="st">"z"</span>, </span>
-<span>       ylab<span class="op">=</span><span class="st">"Mean Max Temp"</span><span class="op">)</span></span></code></pre></div>
+<span>       z_col <span class="op">=</span> <span class="st">"z"</span> </span>
+<span>       <span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">sem</span>, ylab<span class="op">=</span><span class="st">"Mean Max Temp"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Vignette_files/figure-html/sem1-1.png" width="700"></p>
 <pre><code><span><span class="co">#&gt; TableGrob (2 x 2) "arrange": 3 grobs</span></span>
 <span><span class="co">#&gt;   z     cells    name                 grob</span></span>

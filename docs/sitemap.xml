@@ -40,7 +40,16 @@
     <loc>/reference/autoplot.semivariogramobj.html</loc>
   </url>
   <url>
+    <loc>/reference/autoplot.spatial_means.html</loc>
+  </url>
+  <url>
+    <loc>/reference/autoplot.spatialmeans.html</loc>
+  </url>
+  <url>
     <loc>/reference/autoplot.temporal_means.html</loc>
+  </url>
+  <url>
+    <loc>/reference/autoplot.temporalmeans.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
@@ -56,6 +65,9 @@
   </url>
   <url>
     <loc>/reference/semivariogram.html</loc>
+  </url>
+  <url>
+    <loc>/reference/spatial_means.html</loc>
   </url>
   <url>
     <loc>/reference/spatial_snapshots.html</loc>
