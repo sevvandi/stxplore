@@ -7,7 +7,7 @@
 \method{autoplot}{spatialmeans}(object, ylab = "Mean Value", ...)
 }
 \arguments{
-\item{object}{The output of the function `temporal_means'.}
+\item{object}{The output from the `spatial_means' function.}
 
 \item{ylab}{The label for y axis.}
 

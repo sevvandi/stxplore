@@ -2,12 +2,13 @@
 #'
 #' Plots CCA plots using EOF analysis using a lagged dataset.
 #'
-#' @inheritParams st_eof
+#' @inheritParams emp_orth_fun
 #' @param lag Specifies the lag to be used.
 #' @param n_eof The number of EOFs to be used.
 #' @param xlab The x label for the line plot.
 #' @param line_plot If set to \code{TRUE}, then the line plot is included.
 #' @param space_plot If set to \code{TRUE}, the space splot is included.
+#' @param palette The color palette to use for plotting.
 #'
 #' @examples
 #' st_cancor_eof(SSTlonlatshort,

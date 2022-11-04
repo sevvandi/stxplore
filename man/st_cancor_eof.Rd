@@ -30,7 +30,7 @@ st_cancor_eof(
 
 \item{space_plot}{If set to \code{TRUE}, the space splot is included.}
 
-\item{palette}{The color palette. Default is \code{Spectral}.}
+\item{palette}{The color palette to use for plotting.}
 }
 \description{
 Plots CCA plots using EOF analysis using a lagged dataset.

@@ -2,8 +2,9 @@
 #'
 #' This function computes spatial empirical means by latitude and longitude averaged over time.
 #'
-#' @inheritParams autoplot.temporalmeans
+#' @param object The output from the `spatial_means' function.
 #' @param ylab The label for y axis.
+#' @param ... Other arguments currently ignored.
 #'
 #' @examples
 #' data(NOAA_df_1990)
