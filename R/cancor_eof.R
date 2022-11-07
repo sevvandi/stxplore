@@ -1,29 +1,22 @@
-#' Plots Canonical Correlation Analysis plots using Empirical Orthogonal Functions from a lagged dataset
+#' Performs Canonical Correlation Analysis  using Empirical Orthogonal Functions from a lagged dataset
 #'
-#' Plots CCA plots using EOF analysis using a lagged dataset.
+#' Performs CCA using EOF analysis using a lagged dataset.
 #'
 #' @inheritParams emp_orth_fun
 #' @param lag Specifies the lag to be used.
 #' @param n_eof The number of EOFs to be used.
-#' @param xlab The x label for the line plot.
-#' @param line_plot If set to \code{TRUE}, then the line plot is included.
-#' @param space_plot If set to \code{TRUE}, the space splot is included.
-#' @param palette The color palette to use for plotting.
 #'
 #' @examples
-#' st_cancor_eof(SSTlonlatshort,
-#'               SSTdatashort,
-#'               n_eof = 8)
+#' cancor_eof(SSTlonlatshort,
+#'            SSTdatashort,
+#'            lag = 7,
+#'            n_eof = 8)
 #'
-#' @export st_cancor_eof
-st_cancor_eof <- function(locations_df,
+#' @export cancor_eof
+cancor_eof <- function(locations_df,
                           values_df,
                           lag = 7,
-                          n_eof = 10,
-                          xlab = "Year",
-                          line_plot = TRUE,
-                          space_plot = TRUE,
-                          palette = 'Spectral'){
+                          n_eof = 10){
 
   # option 4 - using the same dataset - using eof lagged
   if(missing(locations_df)){
@@ -80,31 +73,13 @@ st_cancor_eof <- function(locations_df,
 
 
 
-  # Now plot
-  sst_cca <- ggplot(CCA_df, aes(x=t, y=ts, colour = Variable)) + geom_line(size = 0.8) +
-    scale_color_manual(values = c("dark blue", "dark red")) +
-    ylab("CCA  variables")  +
-    xlab(xlab)  +
-    theme_bw() +
-    ggtitle("Canonical Correlation Analysis")
+  structure(list(
+    cancor_df = CCA_df,
+    eofs_df = EOFs_CCA,
+    locations_df = locations_df,
+    values_df = values_df,
+    call = match.call()
+  ), class='cancoreof')
 
-
-  # Plotting Weights as Spatial Maps: First Canoncial Variable
-
-  spwts_p <- ggplot(EOFs_CCA, aes(lon, lat)) +
-    geom_tile(aes(fill = SW1)) +
-    scale_fill_distiller(palette = palette, guide = "colourbar") +
-    scale_y_reverse() + ylab("Latitude") +
-    xlab("Longitude") +
-    ggtitle("Spatial Weights: Canonical Variable")  +
-    theme_bw()
-
-  if(line_plot & space_plot){
-    gridExtra::grid.arrange(sst_cca, spwts_p)
-  }else if(line_plot){
-    sst_cca
-  }else if(space_plot){
-    spwts_p
-  }
 
 }
