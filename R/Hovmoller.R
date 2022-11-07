@@ -1,6 +1,6 @@
-#' Hovmoller plots for latitude or longitude
+#' Computes the data structure for the Hovmoller plots
 #'
-#' This function creates a Hovmoller plot for either latitude or longitude.
+#' This function creates the data structure for Hovmoller plots for either latitude or longitude.
 #'
 #' @inheritParams spatial_snapshots
 #' @param lat_or_lon Needs to be either \code{lat} or \code{lon}. \code{lat} plots the latitudinal
@@ -16,24 +16,19 @@
 #'   month %in% 5:9 &
 #'   year == 1993)
 #' Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
-#' st_hov(lat_or_lon = "lat",
-#'    df = Tmax,
-#'    lat_or_lon_col = 'lat',
-#'    t_col = 't',
-#'    z_col = 'z',
-#'    legend_title = 'Temperature')
+#' hovmoller(lat_or_lon = "lat",
+#'           df = Tmax,
+#'           lat_or_lon_col = 'lat',
+#'           t_col = 't',
+#'           z_col = 'z')
 #'
-#' @export st_hov
+#' @export hovmoller
 #' @importFrom rlang .data
-st_hov <- function(lat_or_lon ="lat",
+hovmoller <- function(lat_or_lon ="lat",
                    df,
                    lat_or_lon_col,
                    t_col,
                    z_col,
-                   ylab = "Day",
-                   title = "",
-                   palette = "Spectral",
-                   legend_title="z",
                    xlen = NULL){
   if(lat_or_lon =="lat"){
     xlab = "Latitude"
@@ -87,15 +82,12 @@ st_hov <- function(lat_or_lon ="lat",
     print("Consider reducing xlen to eliminate empty patches.")
   }
 
-  # Produce a tiled plot where each tile corresponding to
-  # latitude and time is filled with z
-  ggplot(df2_Hov) +
-    geom_tile(aes(x = lat_or_lon, y = t, fill = z)) +             # produce tiles with fill colour, z
-    scale_fill_distiller(palette = palette, guide = "colourbar") +
-    scale_y_reverse() +                                    # reverse the scale so red is high z
-    ylab(ylab) +
-    xlab(xlab) +                                           # label the x-axis
-    guides(fill=guide_legend(title=legend_title)) +        # specify legend title
-    theme_bw()                                             # black and white theme
+  structure(list(
+    hov_df = df2_Hov,
+    data = df2,
+    xlab = xlab,
+    call = match.call()
+  ), class='hovmoller')
+
 
 }

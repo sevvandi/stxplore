@@ -239,7 +239,7 @@ values. We can average by latitude and see how the maximum temperature
 changes with time and longitude. Or we can average by longitude and
 explore the changes in maximum temperature with respect to latitude and
 time.</p>
-<p>The function <em>st_hov</em> takes similar arguments to the other
+<p>The function <em>hovmoller</em> takes similar arguments to the other
 functions with the exception of <em>lat_or_lon</em> and
 <em>lat_or_lon_col</em> arguments. The argument <em>lat_or_lon</em>
 specifies, which spatial component we will see in the plot. If we
@@ -252,11 +252,12 @@ corresponding to the spatial variable.</p>
 ‘lat’</em>. That is, if you want to see latitude on the x-axis, then
 specify <em>lat</em>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/st_hov.html">st_hov</a></span><span class="op">(</span>lat_or_lon <span class="op">=</span> <span class="st">"lat"</span>,</span>
-<span>       df <span class="op">=</span> <span class="va">Tmax</span>,</span>
-<span>       lat_or_lon_col <span class="op">=</span> <span class="st">'lat'</span>,</span>
-<span>       t_col <span class="op">=</span> <span class="st">'t'</span>,</span>
-<span>       z_col <span class="op">=</span> <span class="st">'z'</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">hov</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hovmoller.html">hovmoller</a></span><span class="op">(</span>lat_or_lon <span class="op">=</span> <span class="st">"lat"</span>,</span>
+<span>                 df <span class="op">=</span> <span class="va">Tmax</span>,</span>
+<span>                 lat_or_lon_col <span class="op">=</span> <span class="st">'lat'</span>,</span>
+<span>                 t_col <span class="op">=</span> <span class="st">'t'</span>,</span>
+<span>                 z_col <span class="op">=</span> <span class="st">'z'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">hov</span>, legend_title <span class="op">=</span> <span class="st">"Temperature"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Vignette_files/figure-html/hovm1-1.png" width="700"></p>
 <p>The above graph gives valuable information. We see that at higher
 latitudes the maximum temperature is low compared to lower latitudes.
@@ -270,11 +271,12 @@ time.</p>
 we need to specify <em>lat_or_lon = ‘lon’</em>. but this plot is not so
 interesting.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/st_hov.html">st_hov</a></span><span class="op">(</span>lat_or_lon <span class="op">=</span> <span class="st">"lon"</span>,</span>
-<span>       df <span class="op">=</span> <span class="va">Tmax</span>,</span>
-<span>       lat_or_lon_col <span class="op">=</span> <span class="st">'lon'</span>,</span>
-<span>       t_col <span class="op">=</span> <span class="st">'t'</span>,</span>
-<span>       z_col <span class="op">=</span> <span class="st">'z'</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">hov</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hovmoller.html">hovmoller</a></span> <span class="op">(</span>lat_or_lon <span class="op">=</span> <span class="st">"lon"</span>,</span>
+<span>                  df <span class="op">=</span> <span class="va">Tmax</span>,</span>
+<span>                  lat_or_lon_col <span class="op">=</span> <span class="st">'lon'</span>,</span>
+<span>                  t_col <span class="op">=</span> <span class="st">'t'</span>,</span>
+<span>                  z_col <span class="op">=</span> <span class="st">'z'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">hov</span>, legend_title <span class="op">=</span> <span class="st">"Temperature"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Vignette_files/figure-html/hovm2-1.png" width="700"></p>
 </div>
 </div>

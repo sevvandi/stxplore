@@ -37,7 +37,16 @@
     <loc>/reference/Tmax.html</loc>
   </url>
   <url>
+    <loc>/reference/autoplot.cancor.html</loc>
+  </url>
+  <url>
+    <loc>/reference/autoplot.cancoreof.html</loc>
+  </url>
+  <url>
     <loc>/reference/autoplot.emporthfun.html</loc>
+  </url>
+  <url>
+    <loc>/reference/autoplot.hovmoller.html</loc>
   </url>
   <url>
     <loc>/reference/autoplot.semivariogramobj.html</loc>
@@ -58,10 +67,19 @@
     <loc>/reference/autoplot.temporalmeans.html</loc>
   </url>
   <url>
+    <loc>/reference/cancor_eof.html</loc>
+  </url>
+  <url>
+    <loc>/reference/canonical_correlation.html</loc>
+  </url>
+  <url>
     <loc>/reference/emp_orth_fun.html</loc>
   </url>
   <url>
     <loc>/reference/emp_spatial_cov.html</loc>
+  </url>
+  <url>
+    <loc>/reference/hovmoller.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
