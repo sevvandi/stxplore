@@ -1,4 +1,4 @@
-#' Plots empirical orthogonal function given from emp_orth_fun
+#' Plots empirical orthogonal function from emp_orth_fun
 #'
 #' Plots either the empirical orthogonal functions or the PC time series for EOFs.
 #'

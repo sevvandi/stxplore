@@ -43,7 +43,7 @@ Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
 Tmax_days <- subset(Tmax, t %in% c(1, 15, 30))
 ```
 
-Now we can use the *st_ssnap* function. For this function we need to give the data frame and the columns which are used for latitude, longitude, time and the column which has the quantity we want to plot. You can also give the main and legend title for the plot. 
+Now we can use the *spatial_snapshots* function. For this function we need to give the data frame and the columns which are used for latitude, longitude, time and the column which has the quantity we want to plot. You can also give the main and legend title for the plot. 
 ```{r ssnap1}
 spatial_snapshots(Tmax_days, 
          lat_col = 'lat', 
@@ -79,7 +79,7 @@ ids <- sample(Tmax_ID, 12)
 ids
 ```
 
-Then we use the *st_tsnap* function to plot the temporal snapshots at those locations. Similar to the previous function, we need to specify the dataframe, time column, value column, the id column and the id samples. You can specify the x and y labels and the title. 
+Then we use the *temporal_snapshot* function to plot the temporal snapshots at those locations. Similar to the previous function, we need to specify the dataframe, time column, value column, the id column and the id samples. You can specify the x and y labels and the title. 
 
 ```{r tsnap1}
 temporal_snapshot(Tmax, 
@@ -155,39 +155,41 @@ st_hov(lat_or_lon = "lon",
 Empirical covariances, spatio-temporal covariograms and semivariograms are popular tools in spatio-temporal exploration.  In this section, we will look at plotting some of these objects. For more details on covariances, semivariograms and orthogonal functions please refer Chapter 2.4.2 in Spatio-Temporal Statistics with R by Christopher K. Wikle, Andrew Zammit-Mangion and Noel Cressie.
 
 ### Empirical covariances
-To explore the empirical covariances, we first remove the trends and examine the residuals. The *st_ecov* function can remove either linear or quadratic trends in space and time. If you set *quadratic_time = TRUE* a quadratic trend is removed in time. Similarly if you set *quadratic_space = TRUE*, a quadratic component in space is removed. If these arguments are set to *FALSE* only a linear trend is removed. 
+To explore the empirical covariances, we first remove the trends and examine the residuals. The *emp_spatial_cov* function can remove either linear or quadratic trends in space and time. If you set *quadratic_time = TRUE* a quadratic trend is removed in time. Similarly if you set *quadratic_space = TRUE*, a quadratic component in space is removed. If these arguments are set to *FALSE* only a linear trend is removed. 
 
-The *st_ecov* function can plot latitude or longitude strips of empirical covariance. That is, you can divide the spatial domain into strips corresponding to either latitude or longitude and plot the associated covariance matrices for those strips. 
+The *emp_spatial_cov* function can plot latitude or longitude strips of empirical covariance. That is, you can divide the spatial domain into strips corresponding to either latitude or longitude and plot the associated covariance matrices for those strips. 
 
 Let's see some longitudinal strips for this dataset after removing a quadratic time and a linear space trend. We will see how they change with latitude values. 
 ```{r stecov1}
-st_ecov(Tmax,
-        lat_col = "lat",
-        lon_col = "lon",
-        t_col ="t",
-        z_col = "z",
-        num_strips = 4,
-        quadratic_space = FALSE,
-        quadratic_time = TRUE,
-        lat_or_lon_strips = "lon"
+esv <- emp_spatial_cov(Tmax,
+                       lat_col = "lat",
+                       lon_col = "lon",
+                       t_col ="t",
+                       z_col = "z",
+                       num_strips = 4,
+                       quadratic_space = FALSE,
+                       quadratic_time = TRUE,
+                       lat_or_lon_strips = "lon"
 )
 
+autoplot(esv)
 ```
 
 
 Similarly, we can also plot latitude strips; the x axis will be longitude then.
 
 ```{r stecov2}
-st_ecov(Tmax,
-        lat_col = "lat",
-        lon_col = "lon",
-        t_col ="t",
-        z_col = "z",
-        num_strips = 4,
-        quadratic_space = FALSE,
-        quadratic_time = TRUE,
-        lat_or_lon_strips = "lat"
+esv <- emp_spatial_cov(Tmax,
+                       lat_col = "lat",
+                       lon_col = "lon",
+                       t_col ="t",
+                       z_col = "z",
+                       num_strips = 4,
+                       quadratic_space = FALSE,
+                       quadratic_time = TRUE,
+                       lat_or_lon_strips = "lat"
 )
+autoplot(esv)
 
 ```
 
@@ -195,30 +197,32 @@ We can also compute the lagged covariance. We do this by setting the *lag* param
 
 ```{r stecov3}
 # longitudinal strips
-st_ecov(Tmax,
-        lat_col = "lat",
-        lon_col = "lon",
-        t_col ="t",
-        z_col = "z",
-        num_strips = 4,
-        quadratic_space = FALSE,
-        quadratic_time = TRUE,
-        lat_or_lon_strips = "lon",
-        lag = 1
+esv1 <- emp_spatial_cov(Tmax,
+                        lat_col = "lat",
+                        lon_col = "lon",
+                        t_col ="t",
+                        z_col = "z",
+                        num_strips = 4,
+                        quadratic_space = FALSE,
+                        quadratic_time = TRUE,
+                        lat_or_lon_strips = "lon",
+                        lag = 1
 )
+autoplot(esv1)
 
 # latitude strips
-st_ecov(Tmax,
-        lat_col = "lat",
-        lon_col = "lon",
-        t_col ="t",
-        z_col = "z",
-        num_strips = 4,
-        quadratic_space = FALSE,
-        quadratic_time = TRUE,
-        lat_or_lon_strips = "lat",
-        lag = 1
+esv2 <- emp_spatial_cov(Tmax,
+                        lat_col = "lat",
+                        lon_col = "lon",
+                        t_col ="t",
+                        z_col = "z",
+                        num_strips = 4,
+                        quadratic_space = FALSE,
+                        quadratic_time = TRUE,
+                        lat_or_lon_strips = "lat",
+                        lag = 1
 )
+autoplot(esv2)
 ```
 
 ## Space-time semi-variograms

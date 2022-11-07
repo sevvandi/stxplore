@@ -2,7 +2,7 @@
 % Please edit documentation in R/autoplot_emp_orth_fun.R
 \name{autoplot.emporthfun}
 \alias{autoplot.emporthfun}
-\title{Plots empirical orthogonal function given from emp_orth_fun}
+\title{Plots empirical orthogonal function from emp_orth_fun}
 \usage{
 \method{autoplot}{emporthfun}(
   object,

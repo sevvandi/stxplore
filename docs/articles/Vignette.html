@@ -129,10 +129,11 @@ each day. We will make a new column to represent the days starting from
 <span>  <span class="va">year</span> <span class="op">==</span> <span class="fl">1993</span><span class="op">)</span></span>
 <span><span class="va">Tmax</span><span class="op">$</span><span class="va">t</span> <span class="op">&lt;-</span> <span class="va">Tmax</span><span class="op">$</span><span class="va">julian</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">Tmax</span><span class="op">$</span><span class="va">julian</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span></span>
 <span><span class="va">Tmax_days</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">Tmax</span>, <span class="va">t</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">15</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Now we can use the <em>st_ssnap</em> function. For this function we
-need to give the data frame and the columns which are used for latitude,
-longitude, time and the column which has the quantity we want to plot.
-You can also give the main and legend title for the plot.</p>
+<p>Now we can use the <em>spatial_snapshots</em> function. For this
+function we need to give the data frame and the columns which are used
+for latitude, longitude, time and the column which has the quantity we
+want to plot. You can also give the main and legend title for the
+plot.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/spatial_snapshots.html">spatial_snapshots</a></span><span class="op">(</span><span class="va">Tmax_days</span>, </span>
 <span>         lat_col <span class="op">=</span> <span class="st">'lat'</span>, </span>
@@ -167,10 +168,11 @@ location ids and sample 12 of them.</p>
 <span><span class="va">ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">Tmax_ID</span>, <span class="fl">12</span><span class="op">)</span></span>
 <span><span class="va">ids</span></span>
 <span><span class="co">#&gt;  [1] 14926 93842 14848 93820  3919 94918 13871 94823 13988  3952 13971  3841</span></span></code></pre></div>
-<p>Then we use the <em>st_tsnap</em> function to plot the temporal
-snapshots at those locations. Similar to the previous function, we need
-to specify the dataframe, time column, value column, the id column and
-the id samples. You can specify the x and y labels and the title.</p>
+<p>Then we use the <em>temporal_snapshot</em> function to plot the
+temporal snapshots at those locations. Similar to the previous function,
+we need to specify the dataframe, time column, value column, the id
+column and the id samples. You can specify the x and y labels and the
+title.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/temporal_snapshot.html">temporal_snapshot</a></span><span class="op">(</span><span class="va">Tmax</span>, </span>
 <span>         t_col <span class="op">=</span> <span class="st">'t'</span>, </span>
@@ -289,76 +291,81 @@ K. Wikle, Andrew Zammit-Mangion and Noel Cressie.</p>
 <h3 id="empirical-covariances">Empirical covariances<a class="anchor" aria-label="anchor" href="#empirical-covariances"></a>
 </h3>
 <p>To explore the empirical covariances, we first remove the trends and
-examine the residuals. The <em>st_ecov</em> function can remove either
-linear or quadratic trends in space and time. If you set
+examine the residuals. The <em>emp_spatial_cov</em> function can remove
+either linear or quadratic trends in space and time. If you set
 <em>quadratic_time = TRUE</em> a quadratic trend is removed in time.
 Similarly if you set <em>quadratic_space = TRUE</em>, a quadratic
 component in space is removed. If these arguments are set to
 <em>FALSE</em> only a linear trend is removed.</p>
-<p>The <em>st_ecov</em> function can plot latitude or longitude strips
-of empirical covariance. That is, you can divide the spatial domain into
-strips corresponding to either latitude or longitude and plot the
-associated covariance matrices for those strips.</p>
+<p>The <em>emp_spatial_cov</em> function can plot latitude or longitude
+strips of empirical covariance. That is, you can divide the spatial
+domain into strips corresponding to either latitude or longitude and
+plot the associated covariance matrices for those strips.</p>
 <p>Let’s see some longitudinal strips for this dataset after removing a
 quadratic time and a linear space trend. We will see how they change
 with latitude values.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/st_ecov.html">st_ecov</a></span><span class="op">(</span><span class="va">Tmax</span>,</span>
-<span>        lat_col <span class="op">=</span> <span class="st">"lat"</span>,</span>
-<span>        lon_col <span class="op">=</span> <span class="st">"lon"</span>,</span>
-<span>        t_col <span class="op">=</span><span class="st">"t"</span>,</span>
-<span>        z_col <span class="op">=</span> <span class="st">"z"</span>,</span>
-<span>        num_strips <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>        quadratic_space <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>        quadratic_time <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>        lat_or_lon_strips <span class="op">=</span> <span class="st">"lon"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">esv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emp_spatial_cov.html">emp_spatial_cov</a></span><span class="op">(</span><span class="va">Tmax</span>,</span>
+<span>                       lat_col <span class="op">=</span> <span class="st">"lat"</span>,</span>
+<span>                       lon_col <span class="op">=</span> <span class="st">"lon"</span>,</span>
+<span>                       t_col <span class="op">=</span><span class="st">"t"</span>,</span>
+<span>                       z_col <span class="op">=</span> <span class="st">"z"</span>,</span>
+<span>                       num_strips <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>                       quadratic_space <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                       quadratic_time <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                       lat_or_lon_strips <span class="op">=</span> <span class="st">"lon"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">esv</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Vignette_files/figure-html/stecov1-1.png" width="700"></p>
 <p>Similarly, we can also plot latitude strips; the x axis will be
 longitude then.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/st_ecov.html">st_ecov</a></span><span class="op">(</span><span class="va">Tmax</span>,</span>
-<span>        lat_col <span class="op">=</span> <span class="st">"lat"</span>,</span>
-<span>        lon_col <span class="op">=</span> <span class="st">"lon"</span>,</span>
-<span>        t_col <span class="op">=</span><span class="st">"t"</span>,</span>
-<span>        z_col <span class="op">=</span> <span class="st">"z"</span>,</span>
-<span>        num_strips <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>        quadratic_space <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>        quadratic_time <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>        lat_or_lon_strips <span class="op">=</span> <span class="st">"lat"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">esv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emp_spatial_cov.html">emp_spatial_cov</a></span><span class="op">(</span><span class="va">Tmax</span>,</span>
+<span>                       lat_col <span class="op">=</span> <span class="st">"lat"</span>,</span>
+<span>                       lon_col <span class="op">=</span> <span class="st">"lon"</span>,</span>
+<span>                       t_col <span class="op">=</span><span class="st">"t"</span>,</span>
+<span>                       z_col <span class="op">=</span> <span class="st">"z"</span>,</span>
+<span>                       num_strips <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>                       quadratic_space <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                       quadratic_time <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                       lat_or_lon_strips <span class="op">=</span> <span class="st">"lat"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">esv</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Vignette_files/figure-html/stecov2-1.png" width="700"></p>
 <p>We can also compute the lagged covariance. We do this by setting the
 <em>lag</em> parameter. Let’s see the lagged-1 empirical covariance for
 this data after removing a quadratic trend in time.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># longitudinal strips</span></span>
-<span><span class="fu"><a href="../reference/st_ecov.html">st_ecov</a></span><span class="op">(</span><span class="va">Tmax</span>,</span>
-<span>        lat_col <span class="op">=</span> <span class="st">"lat"</span>,</span>
-<span>        lon_col <span class="op">=</span> <span class="st">"lon"</span>,</span>
-<span>        t_col <span class="op">=</span><span class="st">"t"</span>,</span>
-<span>        z_col <span class="op">=</span> <span class="st">"z"</span>,</span>
-<span>        num_strips <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>        quadratic_space <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>        quadratic_time <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>        lat_or_lon_strips <span class="op">=</span> <span class="st">"lon"</span>,</span>
-<span>        lag <span class="op">=</span> <span class="fl">1</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">esv1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emp_spatial_cov.html">emp_spatial_cov</a></span><span class="op">(</span><span class="va">Tmax</span>,</span>
+<span>                        lat_col <span class="op">=</span> <span class="st">"lat"</span>,</span>
+<span>                        lon_col <span class="op">=</span> <span class="st">"lon"</span>,</span>
+<span>                        t_col <span class="op">=</span><span class="st">"t"</span>,</span>
+<span>                        z_col <span class="op">=</span> <span class="st">"z"</span>,</span>
+<span>                        num_strips <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>                        quadratic_space <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                        quadratic_time <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                        lat_or_lon_strips <span class="op">=</span> <span class="st">"lon"</span>,</span>
+<span>                        lag <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">esv1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Vignette_files/figure-html/stecov3-1.png" width="700"></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># latitude strips</span></span>
-<span><span class="fu"><a href="../reference/st_ecov.html">st_ecov</a></span><span class="op">(</span><span class="va">Tmax</span>,</span>
-<span>        lat_col <span class="op">=</span> <span class="st">"lat"</span>,</span>
-<span>        lon_col <span class="op">=</span> <span class="st">"lon"</span>,</span>
-<span>        t_col <span class="op">=</span><span class="st">"t"</span>,</span>
-<span>        z_col <span class="op">=</span> <span class="st">"z"</span>,</span>
-<span>        num_strips <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>        quadratic_space <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>        quadratic_time <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>        lat_or_lon_strips <span class="op">=</span> <span class="st">"lat"</span>,</span>
-<span>        lag <span class="op">=</span> <span class="fl">1</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">esv2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emp_spatial_cov.html">emp_spatial_cov</a></span><span class="op">(</span><span class="va">Tmax</span>,</span>
+<span>                        lat_col <span class="op">=</span> <span class="st">"lat"</span>,</span>
+<span>                        lon_col <span class="op">=</span> <span class="st">"lon"</span>,</span>
+<span>                        t_col <span class="op">=</span><span class="st">"t"</span>,</span>
+<span>                        z_col <span class="op">=</span> <span class="st">"z"</span>,</span>
+<span>                        num_strips <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>                        quadratic_space <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                        quadratic_time <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                        lat_or_lon_strips <span class="op">=</span> <span class="st">"lat"</span>,</span>
+<span>                        lag <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">esv2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Vignette_files/figure-html/stecov3-2.png" width="700"></p>
 </div>
 </div>
