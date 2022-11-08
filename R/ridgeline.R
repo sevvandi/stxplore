@@ -3,6 +3,7 @@
 #' Plots ridgeline plots grouped by latitude/longitude or time.
 #'
 #' @inheritParams spatial_snapshots
+#' @inheritParams spatial_snapshots.data.frame
 #' @param group_col The column name of the group column.
 #' @param num_grps The number of levels for the ridgeline plot.
 #'
@@ -22,7 +23,7 @@
 #' @importFrom ggplot2 scale_fill_viridis_c stat
 #' @importFrom ggridges geom_density_ridges_gradient
 #' @export ridgeline
-ridgeline <- function(df,
+ridgeline <- function(x,
                   group_col,
                   z_col,
                   num_grps = 10,
@@ -31,8 +32,8 @@ ridgeline <- function(df,
                   title = "",
                   legend_title = "z"){
 
-  if(missing(df)){
-    stop("Empty dataframe df. Please give a proper input.")
+  if(missing(x)){
+    stop("Empty dataframe x. Please give a proper input.")
   }
 
   if(missing(group_col)){
@@ -43,6 +44,7 @@ ridgeline <- function(df,
     stop("Variable to plot is not specified. Use z_col to specify variable.")
   }
 
+  df <- x
   ctgrp <- x <- NULL
   grp <- df[ ,group_col]
   z <- df[ ,z_col]

@@ -3,6 +3,7 @@
 #' This function creates the data structure for Hovmoller plots for either latitude or longitude.
 #'
 #' @inheritParams spatial_snapshots
+#' @inheritParams spatial_snapshots.data.frame
 #' @param lat_or_lon Needs to be either \code{lat} or \code{lon}. \code{lat} plots the latitudinal
 #' Hovmoller plat, while \code{lon} plots the longitudinal Hovmoller plot.
 #' @param lat_or_lon_col The column or the column name corresponding to the latitude/longitude.
@@ -17,7 +18,7 @@
 #'   year == 1993)
 #' Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
 #' hovmoller(lat_or_lon = "lat",
-#'           df = Tmax,
+#'           x = Tmax,
 #'           lat_or_lon_col = 'lat',
 #'           t_col = 't',
 #'           z_col = 'z')
@@ -25,7 +26,7 @@
 #' @export hovmoller
 #' @importFrom rlang .data
 hovmoller <- function(lat_or_lon ="lat",
-                   df,
+                   x,
                    lat_or_lon_col,
                    t_col,
                    z_col,
@@ -38,8 +39,8 @@ hovmoller <- function(lat_or_lon ="lat",
     stop("The argument lat_or_lon can only be either lat or lon.")
   }
 
-  if(missing(df)){
-    stop("Empty dataframe df. Please give a proper input.")
+  if(missing(x)){
+    stop("Empty dataframe x. Please give a proper input.")
   }
 
   if(missing(lat_or_lon_col)){
@@ -54,6 +55,7 @@ hovmoller <- function(lat_or_lon ="lat",
     stop("Variable to plot is not specified. Use z_col to specify variable.")
   }
 
+  df <- x
   lat_or_lon <- df[ ,lat_or_lon_col]
   z <- df[ ,z_col]
   t <- df[ ,t_col]

@@ -5,7 +5,7 @@
 \title{Plots temporal snapshots of data for specific spatial locations}
 \usage{
 temporal_snapshot(
-  df,
+  x,
   t_col,
   z_col,
   id_col,
@@ -16,7 +16,7 @@ temporal_snapshot(
 )
 }
 \arguments{
-\item{df}{The input data in a dataframe.}
+\item{x}{A stars object or a dataframe. Arguments differ according to the input type.}
 
 \item{t_col}{The time column. Time must be a set of discrete integer values.}
 

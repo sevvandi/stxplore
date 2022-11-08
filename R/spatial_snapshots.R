@@ -1,25 +1,23 @@
-#' Plots spatial snapshots of data through time
+#' Plots spatial snapshots of data through time using a dataframe as input.
 #'
 #' This function plots a set of spatial snapshots through time. General usage involves latitude and
 #' longitude. However, x and y coordinates can be given instead of longitude and latitude. If x and
 #' y are given instead of longitude and latitude, the country borders will not be shown.
 #'
-#' @param df The input data in a dataframe.
+#' @inheritParams spatial_snapshots
+#' @param x The input data in a dataframe.
 #' @param lat_col The column or the column name giving the latitude. The y coordinate can be used instead of latitude.
 #' @param lon_col The column or the column name giving the longitude. The x coordinate can be used instead of longitude.
 #' @param t_col The time column. Time must be a set of discrete integer values.
 #' @param z_col The The quantity of interest that will be plotted. Eg. temperature.
-#' @param xlab The x label.
-#' @param ylab The y label.
 #' @param ifxy If \code{TRUE} then the country borders are not drawn as longitude and latitude are unknown.
-#' @param title The graph title.
-#' @param palette The color palette. Default is \code{Spectral}.
-#' @param legend_title The title for the legend.
+#' @param ... Other arguments currently ignored.
 #'
 #' @return A ggplot object.
 #'
 #' @examples
 #' library(dplyr)
+#' # Dataframe example
 #' data(NOAA_df_1990)
 #' Tmax <- filter(NOAA_df_1990,
 #'   proc == "Tmax" &
@@ -33,21 +31,29 @@
 #'   t_col = 't',
 #'   z_col = 'z',
 #'   title = "Maximum Temperature for 3 days ")
-#' @export
+#'
+#' # stars example
+#' library(stars)
+#' tif = system.file("tif/L7_ETMs.tif", package = "stars")
+#' x <- read_stars(tif)
+#' spatial_snapshots(x)
+#'
 #' @importFrom rlang .data
-spatial_snapshots <- function(df,
+#' @export
+spatial_snapshots.data.frame <- function(x,
+                     xlab = "Longitude",
+                     ylab = "Latitude",
+                     title = "",
+                     palette = "Spectral",
+                     legend_title = "z",
                      lat_col,
                      lon_col,
                      t_col,
                      z_col,
-                     xlab = "Longitude",
-                     ylab = "Latitude",
                      ifxy = FALSE,
-                     title = "",
-                     palette = "Spectral",
-                     legend_title = "z"){
-  if(missing(df)){
-    stop("Empty dataframe df. Please give a proper input.")
+                     ...){
+  if(missing(x)){
+    stop("Empty dataframe x. Please give a proper input.")
   }
 
 
@@ -67,6 +73,7 @@ spatial_snapshots <- function(df,
     stop("Variable to plot is not specified. Use z_col to specify variable.")
   }
 
+  df <- x
   lat <- df[ ,lat_col]
   lon <- df[ ,lon_col]
   z <- df[ ,z_col]
@@ -107,5 +114,45 @@ spatial_snapshots <- function(df,
       ggtitle(title)+
       guides(fill = guide_legend(title = legend_title))
   }
+
+}
+
+
+#' Plots spatial snapshots of data through time using a stars object as input.
+#'
+#' This function plots a set of spatial snapshots through time.
+#'
+#' @inheritParams spatial_snapshots
+#'
+#' @return A ggplot object.
+#'
+#' @examples
+#' library(stars)
+#' tif = system.file("tif/L7_ETMs.tif", package = "stars")
+#' x <- read_stars(tif)
+#' spatial_snapshots(x)
+#'
+#' @importFrom stars geom_stars
+#' @importFrom rlang sym
+#' @export
+spatial_snapshots.stars <- function(x,
+                                    xlab = "x",
+                                    ylab = "y",
+                                    title = "",
+                                    palette = "Spectral",
+                                    legend_title = "z",
+                                    ...){
+
+  dim_names <- dimnames(x)
+  variable <- dim_names[3]
+  ggplot() +
+    geom_stars(data = x) +
+    facet_wrap(sym(variable)) +
+    xlab(xlab) +
+    ylab(ylab) +
+    scale_fill_distiller(palette = palette,
+                         guide = "colourbar",
+                         legend_title)
+
 
 }

@@ -5,7 +5,7 @@
 \title{Ridgeline plots grouped by an attribute.}
 \usage{
 ridgeline(
-  df,
+  x,
   group_col,
   z_col,
   num_grps = 10,
@@ -16,7 +16,7 @@ ridgeline(
 )
 }
 \arguments{
-\item{df}{The input data in a dataframe.}
+\item{x}{A stars object or a dataframe. Arguments differ according to the input type.}
 
 \item{group_col}{The column name of the group column.}
 

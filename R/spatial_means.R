@@ -3,6 +3,7 @@
 #' This function computes spatial empirical means by latitude and longitude averaged over time.
 #'
 #' @inheritParams spatial_snapshots
+#' @inheritParams spatial_snapshots.data.frame
 #'
 #' @examples
 #' data(NOAA_df_1990)
@@ -19,13 +20,13 @@
 #'        z_col = "z")
 #'
 #' @export spatial_means
-spatial_means <- function(df,
+spatial_means <- function(x,
                    lat_col,
                    lon_col,
                    t_col,
                    z_col){
-  if(missing(df)){
-    stop("Empty dataframe df. Please give a proper input.")
+  if(missing(x)){
+    stop("Empty dataframe x. Please give a proper input.")
   }
 
   if(missing(lat_col)){
@@ -44,6 +45,7 @@ spatial_means <- function(df,
     stop("Variable to plot is not specified. Use z_col to specify variable.")
   }
 
+  df <- x
   lat <- df[ ,lat_col]
   lon <- df[ ,lon_col]
   z <- df[ ,z_col]

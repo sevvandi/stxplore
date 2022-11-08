@@ -4,10 +4,10 @@
 \alias{spatial_means}
 \title{Computes spatial empirical means}
 \usage{
-spatial_means(df, lat_col, lon_col, t_col, z_col)
+spatial_means(x, lat_col, lon_col, t_col, z_col)
 }
 \arguments{
-\item{df}{The input data in a dataframe.}
+\item{x}{A stars object or a dataframe. Arguments differ according to the input type.}
 
 \item{lat_col}{The column or the column name giving the latitude. The y coordinate can be used instead of latitude.}
 

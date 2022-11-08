@@ -4,10 +4,10 @@
 \alias{temporal_means}
 \title{Computes temporal empirical means}
 \usage{
-temporal_means(df, t_col, z_col, id_col)
+temporal_means(x, t_col, z_col, id_col)
 }
 \arguments{
-\item{df}{The input data in a dataframe.}
+\item{x}{A stars object or a dataframe. Arguments differ according to the input type.}
 
 \item{t_col}{The time column. Time must be a set of discrete integer values.}
 

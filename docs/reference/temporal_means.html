@@ -54,13 +54,13 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">temporal_means</span><span class="op">(</span><span class="va">df</span>, <span class="va">t_col</span>, <span class="va">z_col</span>, <span class="va">id_col</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">temporal_means</span><span class="op">(</span><span class="va">x</span>, <span class="va">t_col</span>, <span class="va">z_col</span>, <span class="va">id_col</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>df</dt>
-<dd><p>The input data in a dataframe.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>A stars object or a dataframe. Arguments differ according to the input type.</p></dd>
 
 
 <dt>t_col</dt>
@@ -20416,7 +20416,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> temporal_means(df = Tmax, t_col = "date", z_col = "z", id_col = "id")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> temporal_means(x = Tmax, t_col = "date", z_col = "z", id_col = "id")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "temporalmeans"</span>

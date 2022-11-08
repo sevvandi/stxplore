@@ -31,6 +31,7 @@ Imports:
     rlang,
     sp,
     spacetime,
+    stars,
     tidyr
 RoxygenNote: 7.2.1
 Depends: 
@@ -40,4 +41,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-URL:  https://sevvandi.github.io/stxplore/
+URL: https://sevvandi.github.io/stxplore/

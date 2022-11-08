@@ -4,13 +4,13 @@
 \alias{hovmoller}
 \title{Computes the data structure for the Hovmoller plots}
 \usage{
-hovmoller(lat_or_lon = "lat", df, lat_or_lon_col, t_col, z_col, xlen = NULL)
+hovmoller(lat_or_lon = "lat", x, lat_or_lon_col, t_col, z_col, xlen = NULL)
 }
 \arguments{
 \item{lat_or_lon}{Needs to be either \code{lat} or \code{lon}. \code{lat} plots the latitudinal
 Hovmoller plat, while \code{lon} plots the longitudinal Hovmoller plot.}
 
-\item{df}{The input data in a dataframe.}
+\item{x}{A stars object or a dataframe. Arguments differ according to the input type.}
 
 \item{lat_or_lon_col}{The column or the column name corresponding to the latitude/longitude.}
 
@@ -32,7 +32,7 @@ Tmax <- filter(NOAA_df_1990,
   year == 1993)
 Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
 hovmoller(lat_or_lon = "lat",
-          df = Tmax,
+          x = Tmax,
           lat_or_lon_col = 'lat',
           t_col = 't',
           z_col = 'z')

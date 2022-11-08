@@ -59,7 +59,7 @@ longitude and plot the covariance for each longitudinal/latitudinal strips.</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">emp_spatial_cov</span><span class="op">(</span></span>
-<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">x</span>,</span>
 <span>  <span class="va">lat_col</span>,</span>
 <span>  <span class="va">lon_col</span>,</span>
 <span>  <span class="va">t_col</span>,</span>
@@ -74,8 +74,8 @@ longitude and plot the covariance for each longitudinal/latitudinal strips.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>df</dt>
-<dd><p>The input data in a dataframe.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>A stars object or a dataframe. Arguments differ according to the input type.</p></dd>
 
 
 <dt>lat_col</dt>
@@ -22690,9 +22690,8 @@ the model is fitted with linear space and time coefficients.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [ reached 'max' / getOption("max.print") -- omitted 307 rows ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> emp_spatial_cov(df = Tmax, lat_col = "lat", lon_col = "lon", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     t_col = "t", z_col = "z", lat_or_lon_strips = "lon", num_strips = 4, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     lag = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> emp_spatial_cov(x = Tmax, lat_col = "lat", lon_col = "lon", t_col = "t", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     z_col = "z", lat_or_lon_strips = "lon", num_strips = 4, lag = 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "spatialcov"</span>

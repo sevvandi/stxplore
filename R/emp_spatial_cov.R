@@ -5,6 +5,7 @@
 #' longitude and plot the covariance for each longitudinal/latitudinal strips.
 #'
 #' @inheritParams spatial_snapshots
+#' @inheritParams spatial_snapshots.data.frame
 #' @param lat_or_lon_strips Takes the values \code{lat} or \code{lon}. The value \code{lat} produces latitudinal strips,
 #'       i.e., covariance plots over longitude for different latitudinal strips. The value \code{lon} produces longitudinal
 #'       strips, i.e., covariance plots over latitude for different longitudinal strips.
@@ -35,7 +36,7 @@
 #' @importFrom graphics par
 #' @importFrom stats cov lm
 #' @export emp_spatial_cov
-emp_spatial_cov <- function(df,
+emp_spatial_cov <- function(x,
                     lat_col,
                     lon_col,
                     t_col,
@@ -45,8 +46,8 @@ emp_spatial_cov <- function(df,
                     quadratic_space = FALSE,
                     num_strips = 1,
                     lag = 0){
-  if(missing(df)){
-    stop("Empty dataframe df. Please give a proper input.")
+  if(missing(x)){
+    stop("Empty dataframe x. Please give a proper input.")
   }
 
   if(missing(lat_col)){
@@ -73,6 +74,7 @@ emp_spatial_cov <- function(df,
     stop("Parameter lag can only be 0, 1, or 2. ")
   }
 
+  df <- x
   lat <- df[ ,lat_col]
   lon <- df[ ,lon_col]
   z <- df[ ,z_col]

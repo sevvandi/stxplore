@@ -5,7 +5,7 @@
 \title{Computes empirical spatial covariance}
 \usage{
 emp_spatial_cov(
-  df,
+  x,
   lat_col,
   lon_col,
   t_col,
@@ -18,7 +18,7 @@ emp_spatial_cov(
 )
 }
 \arguments{
-\item{df}{The input data in a dataframe.}
+\item{x}{A stars object or a dataframe. Arguments differ according to the input type.}
 
 \item{lat_col}{The column or the column name giving the latitude. The y coordinate can be used instead of latitude.}
 

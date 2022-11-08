@@ -3,6 +3,7 @@
 #' This function computes temporal empirical means averaged per time unit.
 #'
 #' @inheritParams temporal_snapshot
+#' @inheritParams spatial_snapshots.data.frame
 #'
 #' @examples
 #' data(NOAA_df_1990)
@@ -17,12 +18,12 @@
 #'        z_col = 'z',
 #'        id_col = 'id')
 #' @export temporal_means
-temporal_means <- function(df,
+temporal_means <- function(x,
                    t_col,
                    z_col,
                    id_col){
-  if(missing(df)){
-    stop("Empty dataframe df. Please give a proper input.")
+  if(missing(x)){
+    stop("Empty dataframe x. Please give a proper input.")
   }
 
   if(missing(t_col)){
@@ -37,7 +38,7 @@ temporal_means <- function(df,
     stop("Location id column is not specified. Use id_col to specify location id.")
   }
 
-
+  df <- x
   z <- df[ ,z_col]
   t <- df[ ,t_col]
   id <- df[ ,id_col]

@@ -133,7 +133,7 @@ The function *hovmoller* takes similar arguments to the other functions with the
 To average by longitude, we need to specify *lat_or_lon = 'lat'*. That is, if you want to see latitude on the x-axis, then specify *lat*. 
 ```{r hovm1}
 hov <- hovmoller(lat_or_lon = "lat",
-                 df = Tmax,
+                 x = Tmax,
                  lat_or_lon_col = 'lat',
                  t_col = 't',
                  z_col = 'z')
@@ -146,7 +146,7 @@ If we want to see longitude on the x-axis (average by latitude), then we need to
 
 ```{r hovm2}
 hov <- hovmoller (lat_or_lon = "lon",
-                  df = Tmax,
+                  x = Tmax,
                   lat_or_lon_col = 'lon',
                   t_col = 't',
                   z_col = 'z')

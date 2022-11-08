@@ -4,6 +4,7 @@
 #' need to be given as a function argument.
 #'
 #'@inheritParams spatial_snapshots
+#'@inheritParams spatial_snapshots.data.frame
 #'@param id_col The column of the location id.
 #'@param id_sample The sample of location ids to be plotted
 #'
@@ -20,7 +21,7 @@
 #'temporal_snapshot(Tmax, 't', 'z', 'id', ids)
 #'@export
 
-temporal_snapshot <- function(df,
+temporal_snapshot <- function(x,
                      t_col,
                      z_col,
                      id_col,
@@ -29,8 +30,8 @@ temporal_snapshot <- function(df,
                      ylab ="Value",
                      title = ""){
 
-  if(missing(df)){
-    stop("Empty dataframe df. Please give a proper input.")
+  if(missing(x)){
+    stop("Empty dataframe x. Please give a proper input.")
   }
 
   if(missing(t_col)){
@@ -49,6 +50,7 @@ temporal_snapshot <- function(df,
     stop("Location id sample is not specified. Use id_sample to specify a sample of location ids.")
   }
 
+  df <- x
   id <- df[ ,id_col]
   rows <- which(id %in% id_sample)
   id <- df[rows, id_col]

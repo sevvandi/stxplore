@@ -15,7 +15,7 @@
 #'   year == 1993)
 #' Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
 #' hov <- hovmoller(lat_or_lon = "lat",
-#'           df = Tmax,
+#'           x = Tmax,
 #'           lat_or_lon_col = 'lat',
 #'           t_col = 't',
 #'           z_col = 'z')
