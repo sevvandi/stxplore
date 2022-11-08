@@ -2,7 +2,7 @@
 #'
 #' A line plot of temporal means with observed data in the background.
 #'
-#' @inheritParams temporal_snapshot
+#' @inheritParams temporal_snapshots
 #' @param object The output of the function `temporal_means'.
 #' @param legend_title The title for the legend.
 #' @param ... Other arguments currently ignored.

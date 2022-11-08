@@ -168,13 +168,13 @@ location ids and sample 12 of them.</p>
 <span><span class="va">ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">Tmax_ID</span>, <span class="fl">12</span><span class="op">)</span></span>
 <span><span class="va">ids</span></span>
 <span><span class="co">#&gt;  [1] 14926 93842 14848 93820  3919 94918 13871 94823 13988  3952 13971  3841</span></span></code></pre></div>
-<p>Then we use the <em>temporal_snapshot</em> function to plot the
+<p>Then we use the <em>temporal_snapshots</em> function to plot the
 temporal snapshots at those locations. Similar to the previous function,
 we need to specify the dataframe, time column, value column, the id
 column and the id samples. You can specify the x and y labels and the
 title.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/temporal_snapshot.html">temporal_snapshot</a></span><span class="op">(</span><span class="va">Tmax</span>, </span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/temporal_snapshots.html">temporal_snapshots</a></span><span class="op">(</span><span class="va">Tmax</span>, </span>
 <span>         t_col <span class="op">=</span> <span class="st">'t'</span>, </span>
 <span>         z_col <span class="op">=</span> <span class="st">'z'</span>, </span>
 <span>         id_col <span class="op">=</span> <span class="st">'id'</span>, </span>
@@ -253,7 +253,7 @@ corresponding to the spatial variable.</p>
 specify <em>lat</em>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hov</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hovmoller.html">hovmoller</a></span><span class="op">(</span>lat_or_lon <span class="op">=</span> <span class="st">"lat"</span>,</span>
-<span>                 df <span class="op">=</span> <span class="va">Tmax</span>,</span>
+<span>                 x <span class="op">=</span> <span class="va">Tmax</span>,</span>
 <span>                 lat_or_lon_col <span class="op">=</span> <span class="st">'lat'</span>,</span>
 <span>                 t_col <span class="op">=</span> <span class="st">'t'</span>,</span>
 <span>                 z_col <span class="op">=</span> <span class="st">'z'</span><span class="op">)</span></span>
@@ -272,7 +272,7 @@ we need to specify <em>lat_or_lon = ‘lon’</em>. but this plot is not so
 interesting.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hov</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hovmoller.html">hovmoller</a></span> <span class="op">(</span>lat_or_lon <span class="op">=</span> <span class="st">"lon"</span>,</span>
-<span>                  df <span class="op">=</span> <span class="va">Tmax</span>,</span>
+<span>                  x <span class="op">=</span> <span class="va">Tmax</span>,</span>
 <span>                  lat_or_lon_col <span class="op">=</span> <span class="st">'lon'</span>,</span>
 <span>                  t_col <span class="op">=</span> <span class="st">'t'</span>,</span>
 <span>                  z_col <span class="op">=</span> <span class="st">'z'</span><span class="op">)</span></span>

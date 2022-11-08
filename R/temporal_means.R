@@ -2,7 +2,7 @@
 #'
 #' This function computes temporal empirical means averaged per time unit.
 #'
-#' @inheritParams temporal_snapshot
+#' @inheritParams temporal_snapshots.data.frame
 #' @inheritParams spatial_snapshots.data.frame
 #'
 #' @examples

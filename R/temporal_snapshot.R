@@ -1,12 +1,13 @@
-#' Plots temporal snapshots of data for specific spatial locations
+#' Plots temporal snapshots of data for specific spatial locations using a dataframe as input.
 #'
 #' This function plots temporal snapshos for specific spatial locations. The location id sample
 #' need to be given as a function argument.
 #'
-#'@inheritParams spatial_snapshots
+#'@inheritParams temporal_snapshots
 #'@inheritParams spatial_snapshots.data.frame
 #'@param id_col The column of the location id.
 #'@param id_sample The sample of location ids to be plotted
+#'@param ... Other arguments currently ignored.
 #'
 #'@examples
 #'library(dplyr)
@@ -18,17 +19,21 @@
 #'Tmax_ID <- unique(Tmax$id)
 #'Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
 #'ids <- sample(Tmax_ID, 10)
-#'temporal_snapshot(Tmax, 't', 'z', 'id', ids)
+#'temporal_snapshots(Tmax,
+#'                   t_col = 't',
+#'                   z_col = 'z',
+#'                   id_col = 'id',
+#'                   id_sample = ids)
 #'@export
-
-temporal_snapshot <- function(x,
-                     t_col,
-                     z_col,
-                     id_col,
-                     id_sample,
-                     xlab="Time",
-                     ylab ="Value",
-                     title = ""){
+temporal_snapshots.data.frame <- function(x,
+                                         xlab="Time",
+                                         ylab ="Value",
+                                         title = "",
+                                         t_col,
+                                         z_col,
+                                         id_col,
+                                         id_sample,
+                                         ...){
 
   if(missing(x)){
     stop("Empty dataframe x. Please give a proper input.")
@@ -69,3 +74,58 @@ temporal_snapshot <- function(x,
     ggtitle(title)                                         # add title
 }
 
+
+#' Plots temporal snapshots of data for specific spatial locations using a stars object as input.
+#'
+#' This function plots temporal snapshos for specific spatial locations. The location x and y
+#' indices need to be given.
+#'
+#'@inheritParams temporal_snapshots
+#'@param xvals The set of xvalues to plot.
+#'@param yvals The set of yvalues to plot. These two lengths need to be the same.
+#'@param precision Set to 0, if the given values are compared with the integer values in the stars object.
+#'@param ... Other arguments currently ignored.
+#'
+#'@examples
+#'library(stars)
+#'tif = system.file("tif/L7_ETMs.tif", package = "stars")
+#'x <- read_stars(tif)
+#'xvals <- c(288876.0,289047.0)
+#'yvals <- c(9120405, 9120006)
+#'temporal_snapshots(x,
+#'                   xvals = xvals,
+#'                   yvals = yvals)
+#'@export
+temporal_snapshots.stars <- function(x,
+                                     xlab="Time",
+                                     ylab ="Value",
+                                     title = "",
+                                     xvals,
+                                     yvals,
+                                     precision = 0,
+                                     ...){
+
+  if(length(xvals)!=length(xvals)){
+    stop("The number of x and y locations need to be the same.i.e, length(xvals) = length(yvals) ")
+  }
+
+  xt <- tidyr::as_tibble(x)
+  xx <- yy<- x <- y <- t <- value <- NULL
+
+  colnames(xt) <- c("x", "y", "t", "value")
+  xt <- xt %>%
+    dplyr::mutate(xx = round(x, precision), yy = round(y, precision))
+  xt2 <- xt %>%
+    dplyr::filter(xx %in% xvals & yy %in% yvals) %>%
+    dplyr::group_by(xx, yy) %>%
+    dplyr::mutate(id = paste(xx,yy,sep="-"))
+
+  ggplot(xt2) +
+    geom_line(aes(x = t, y = value)) +                         # line plot of z against t
+    facet_wrap(~id) +                                      # facet by station
+    xlab(xlab) +                                           # x label
+    ylab(ylab) +                                           # y label
+    theme(panel.spacing = unit(1, "lines")) +              # facet spacing
+    theme_bw() +                                           # black and white theme
+    ggtitle(title)
+}

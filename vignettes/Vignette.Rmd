@@ -79,10 +79,10 @@ ids <- sample(Tmax_ID, 12)
 ids
 ```
 
-Then we use the *temporal_snapshot* function to plot the temporal snapshots at those locations. Similar to the previous function, we need to specify the dataframe, time column, value column, the id column and the id samples. You can specify the x and y labels and the title. 
+Then we use the *temporal_snapshots* function to plot the temporal snapshots at those locations. Similar to the previous function, we need to specify the dataframe, time column, value column, the id column and the id samples. You can specify the x and y labels and the title. 
 
 ```{r tsnap1}
-temporal_snapshot(Tmax, 
+temporal_snapshots(Tmax, 
          t_col = 't', 
          z_col = 'z', 
          id_col = 'id', 

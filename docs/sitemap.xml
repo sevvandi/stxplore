@@ -103,7 +103,13 @@
     <loc>/reference/spatial_means.html</loc>
   </url>
   <url>
+    <loc>/reference/spatial_snapshots.data.frame.html</loc>
+  </url>
+  <url>
     <loc>/reference/spatial_snapshots.html</loc>
+  </url>
+  <url>
+    <loc>/reference/spatial_snapshots.stars.html</loc>
   </url>
   <url>
     <loc>/reference/st_cancor.html</loc>
@@ -146,5 +152,14 @@
   </url>
   <url>
     <loc>/reference/temporal_snapshot.html</loc>
+  </url>
+  <url>
+    <loc>/reference/temporal_snapshots.data.frame.html</loc>
+  </url>
+  <url>
+    <loc>/reference/temporal_snapshots.html</loc>
+  </url>
+  <url>
+    <loc>/reference/temporal_snapshots.stars.html</loc>
   </url>
 </urlset>

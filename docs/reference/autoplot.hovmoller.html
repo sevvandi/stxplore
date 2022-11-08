@@ -115,13 +115,12 @@
 <span class="r-in"><span>  <span class="va">year</span> <span class="op">==</span> <span class="fl">1993</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">Tmax</span><span class="op">$</span><span class="va">t</span> <span class="op">&lt;-</span> <span class="va">Tmax</span><span class="op">$</span><span class="va">julian</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">Tmax</span><span class="op">$</span><span class="va">julian</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span><span class="va">hov</span> <span class="op">&lt;-</span> <span class="fu"><a href="hovmoller.html">hovmoller</a></span><span class="op">(</span>lat_or_lon <span class="op">=</span> <span class="st">"lat"</span>,</span></span>
-<span class="r-in"><span>          df <span class="op">=</span> <span class="va">Tmax</span>,</span></span>
+<span class="r-in"><span>          x <span class="op">=</span> <span class="va">Tmax</span>,</span></span>
 <span class="r-in"><span>          lat_or_lon_col <span class="op">=</span> <span class="st">'lat'</span>,</span></span>
 <span class="r-in"><span>          t_col <span class="op">=</span> <span class="st">'t'</span>,</span></span>
 <span class="r-in"><span>          z_col <span class="op">=</span> <span class="st">'z'</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in hovmoller(lat_or_lon = "lat", df = Tmax, lat_or_lon_col = "lat",     t_col = "t", z_col = "z"):</span> unused argument (df = Tmax)</span>
 <span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">hov</span>, legend_title <span class="op">=</span> <span class="st">'Temperature'</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in autoplot(hov, legend_title = "Temperature"):</span> object 'hov' not found</span>
+<span class="r-plt img"><img src="autoplot.hovmoller-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
