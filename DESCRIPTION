@@ -27,6 +27,7 @@ Imports:
     lubridate,
     magrittr,
     maps,
+    ncmeta,
     RColorBrewer,
     rlang,
     sp,
