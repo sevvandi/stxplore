@@ -8,6 +8,7 @@
 #' @param ... Other arguments currently ignored.
 #'
 #' @examples
+#' # dataframe example
 #' data(NOAA_df_1990)
 #' library(dplyr)
 #' Tmax <- filter(NOAA_df_1990,                      # subset the data
@@ -20,6 +21,16 @@
 #'               z_col = 'z',
 #'               id_col = 'id')
 #' autoplot(temp_means)
+#'
+#' # stars example
+#' library(stars)
+#' library(dplyr)
+#' library(units)
+#' # Example
+#' prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
+#' prec <- read_ncdf(prec_file)
+#' temp_means <- temporal_means(prec)
+#' # autoplot(temp_means)
 #' @export
 autoplot.temporalmeans <- function(object,
                                     ylab = "Mean Value",

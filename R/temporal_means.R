@@ -1,4 +1,4 @@
-#' Computes temporal empirical means
+#' Computes temporal empirical means using a dataframe as input
 #'
 #' This function computes temporal empirical means averaged per time unit.
 #'
@@ -17,11 +17,12 @@
 #'        t_col = 'date',
 #'        z_col = 'z',
 #'        id_col = 'id')
-#' @export temporal_means
-temporal_means <- function(x,
-                   t_col,
-                   z_col,
-                   id_col){
+#' @export
+temporal_means.data.frame <- function(x,
+                                      t_col,
+                                      z_col,
+                                      id_col,
+                                      ...){
   if(missing(x)){
     stop("Empty dataframe x. Please give a proper input.")
   }
@@ -58,4 +59,48 @@ temporal_means <- function(x,
 }
 
 
+#' Computes temporal empirical means using a stars object as input
+#'
+#' This function computes temporal empirical means averaged per time unit.
+#'
+#' @inheritParams temporal_snapshots.data.frame
+#' @inheritParams spatial_snapshots.data.frame
+#'
+#' @examples
+#' library(stars)
+#' library(dplyr)
+#' library(units)
+#' # Example
+#' prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
+#' prec <- read_ncdf(prec_file)
+#' temporal_means(prec)
+#' @export
+temporal_means.stars <- function(x,
+                                 t_col,
+                                 ...){
+
+  if(missing(x)){
+    stop("Empty stars object x. Please give a proper input.")
+  }
+
+  if(length(dim(x)) !=3){
+    stop("To compute temporal means, you need a 3D raster! Not more or less dimensions. ")
+  }
+
+  df <- dplyr::as_tibble(x)
+
+  x <- y <- time <- value <- NULL
+
+  descriptive_name <- colnames(df)[4]
+  colnames(df) <- c("x", "y", "time", "value")
+
+  df_av <- dplyr::group_by(df, time) %>%
+    dplyr::summarise(meanz = mean(value))
+
+  structure(list(
+    data = df,
+    averages = df_av,
+    call = match.call()
+  ), class='temporalmeans')
+}
 

@@ -1,4 +1,4 @@
-#' Ridgeline plots grouped by an attribute.
+#' Generic function for ridgeline plots grouped by an attribute.
 #'
 #' Plots ridgeline plots grouped by latitude/longitude or time.
 #' This function can take either a stars object or a dataframe.

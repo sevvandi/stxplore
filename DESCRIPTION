@@ -26,21 +26,21 @@ Imports:
     gstat,
     lubridate,
     magrittr,
-    maps,
-    ncmeta,
     RColorBrewer,
     rlang,
     sp,
     spacetime,
     stars,
     tidyr,
-    units
 RoxygenNote: 7.2.1
 Depends: 
     R (>= 2.10)
 Suggests: 
     dplyr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ncmeta,
+    units,
+    maps
 VignetteBuilder: knitr
 URL: https://sevvandi.github.io/stxplore/

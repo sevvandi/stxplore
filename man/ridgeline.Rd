@@ -2,7 +2,7 @@
 % Please edit documentation in R/generic_ridgeline.R
 \name{ridgeline}
 \alias{ridgeline}
-\title{Ridgeline plots grouped by an attribute.}
+\title{Generic function for ridgeline plots grouped by an attribute.}
 \usage{
 ridgeline(
   x,
