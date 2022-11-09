@@ -32,7 +32,8 @@ Imports:
     sp,
     spacetime,
     stars,
-    tidyr
+    tidyr,
+    units
 RoxygenNote: 7.2.1
 Depends: 
     R (>= 2.10)

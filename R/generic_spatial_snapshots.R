@@ -36,9 +36,16 @@
 #'
 #' # stars example
 #' library(stars)
+#' # The third dimension is not time in this example
 #' tif = system.file("tif/L7_ETMs.tif", package = "stars")
 #' x <- read_stars(tif)
 #' spatial_snapshots(x)
+#'
+#' # The third dimension is time in this example
+#' prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
+#' prec <- read_ncdf(prec_file)
+#' prec2 <- prec %>% slice(index =c(1,3,5), along = time)
+#' spatial_snapshots(prec2)
 #'
 #' @export
 #' @importFrom rlang .data

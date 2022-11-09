@@ -128,9 +128,17 @@ spatial_snapshots.data.frame <- function(x,
 #'
 #' @examples
 #' library(stars)
+#' library(dplyr)
+#' # The third dimension is not time, but bands in this example
 #' tif = system.file("tif/L7_ETMs.tif", package = "stars")
 #' x <- read_stars(tif)
 #' spatial_snapshots(x)
+#'
+#' # The third dimension is time in this example
+#' prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
+#' prec <- read_ncdf(prec_file)
+#' prec2 <- prec %>% slice(index =c(1,3,5), along = time)
+#' spatial_snapshots(prec2)
 #'
 #' @importFrom stars geom_stars
 #' @importFrom rlang sym
@@ -145,8 +153,11 @@ spatial_snapshots.stars <- function(x,
 
   dim_names <- dimnames(x)
   variable <- dim_names[3]
+  time_vals <- stars::st_get_dimension_values(x, 3)
+  xx <- stars::st_set_dimensions(x, 3, as.factor(time_vals))
+
   ggplot() +
-    geom_stars(data = x) +
+    geom_stars(data = xx) +
     facet_wrap(sym(variable)) +
     xlab(xlab) +
     ylab(ylab) +
