@@ -48,4 +48,22 @@ ridgeline(TmaxJan,
       xlab = 'Maximum Temperature',
       ylab = 'Latitude Intervals')
 
+# stars examples
+library(stars)
+library(units)
+
+# stars Example 1
+tif = system.file("tif/olinda_dem_utm25s.tif", package = "stars")
+x <- read_stars(tif)
+dim(x)
+ridgeline(x, group_dim = 1)
+ridgeline(x, group_dim = 2)
+
+
+# stars Example 2
+tif = system.file("tif/lc.tif", package = "stars")
+x <- read_stars(tif)
+ridgeline(x, group_dim = 1)
+ridgeline(x, group_dim = 2)
+
 }
