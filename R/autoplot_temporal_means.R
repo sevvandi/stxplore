@@ -30,19 +30,26 @@
 #' prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
 #' prec <- read_ncdf(prec_file)
 #' temp_means <- temporal_means(prec)
-#' # autoplot(temp_means)
+#' autoplot(temp_means)
 #' @export
 autoplot.temporalmeans <- function(object,
-                                    ylab = "Mean Value",
-                                    xlab ="Month",
+                                    ylab = "Value",
+                                    xlab ="Time",
                                     legend_title ="",
                                     title = "Temporal Empirical Means",
                                     ...){
 
-  df <- object$data
-  df_av <- object$averages
+  df <- as.data.frame(object$data)
+  df_av <- as.data.frame(object$averages)
 
-  meanz <- date <- NULL
+  num_obs <- dim(df)[1]
+  if(num_obs > 50000){  # More than 50000 data points
+    set.seed(1)
+    ss <- sample(num_obs, 50000)
+    df <- df[ss, ]
+  }
+
+  meanz <- time <- NULL
 
   p <- ggplot() +
        geom_line(data = df,
@@ -52,7 +59,7 @@ autoplot.temporalmeans <- function(object,
                   colour = "blue"),
               alpha = 0.04) +
     geom_line(data = df_av,
-              aes(x = date,
+              aes(x = time,
                   y = meanz,
                   colour = "black")) +
     xlab(xlab) +

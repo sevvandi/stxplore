@@ -6,8 +6,8 @@
 \usage{
 \method{autoplot}{temporalmeans}(
   object,
-  ylab = "Mean Value",
-  xlab = "Month",
+  ylab = "Value",
+  xlab = "Time",
   legend_title = "",
   title = "Temporal Empirical Means",
   ...
@@ -52,5 +52,5 @@ library(units)
 prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
 prec <- read_ncdf(prec_file)
 temp_means <- temporal_means(prec)
-# autoplot(temp_means)
+autoplot(temp_means)
 }

@@ -44,11 +44,11 @@ temporal_means.data.frame <- function(x,
   t <- df[ ,t_col]
   id <- df[ ,id_col]
   meanz <- NULL
-  date <- NULL
+  time <- NULL
 
-  df2 <- data.frame(z = z, date = t, id = id)
+  df2 <- data.frame(z = z, time = t, id = id)
 
-  df_av <- dplyr::group_by(df2, date) %>%
+  df_av <- dplyr::group_by(df2, time) %>%
     dplyr::summarise(meanz = mean(z))
 
   structure(list(
@@ -89,16 +89,19 @@ temporal_means.stars <- function(x,
 
   df <- dplyr::as_tibble(x)
 
-  x <- y <- time <- value <- NULL
+  id <- x <- y <- time <- value <- NULL
 
   descriptive_name <- colnames(df)[4]
   colnames(df) <- c("x", "y", "time", "value")
+  df2 <- df %>%
+    dplyr::mutate(id = paste(x, y, sep ="-")) %>%
+    dplyr::select(value, time, id)
 
   df_av <- dplyr::group_by(df, time) %>%
     dplyr::summarise(meanz = mean(value))
 
   structure(list(
-    data = df,
+    data = df2,
     averages = df_av,
     call = match.call()
   ), class='temporalmeans')
