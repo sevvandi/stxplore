@@ -4,12 +4,25 @@
 \alias{autoplot.spatialmeans}
 \title{Plots spatial empirical means computed from spatial_means function}
 \usage{
-\method{autoplot}{spatialmeans}(object, ylab = "Mean Value", ...)
+\method{autoplot}{spatialmeans}(
+  object,
+  ylab = "Mean Value",
+  xlab1 = "Latitude",
+  xlab2 = "Longitude",
+  title = "Spatial Empirical Means",
+  ...
+)
 }
 \arguments{
 \item{object}{The output from the `spatial_means' function.}
 
-\item{ylab}{The label for y axis.}
+\item{ylab}{The y label.}
+
+\item{xlab1}{The xlabel for the first plot.}
+
+\item{xlab2}{The xlabel for the second plot.}
+
+\item{title}{The graph title.}
 
 \item{...}{Other arguments currently ignored.}
 }
@@ -17,6 +30,7 @@
 This function computes spatial empirical means by latitude and longitude averaged over time.
 }
 \examples{
+# dataframe example
 data(NOAA_df_1990)
 library(dplyr)
 Tmax <- filter(NOAA_df_1990,                      # subset the data
@@ -30,4 +44,21 @@ sem <- spatial_means(Tmax,
        t_col = "t",
        z_col = "z")
 autoplot(sem, ylab="Mean Max Temp")
+
+
+# stars examples
+# Example 1
+library(stars)
+library(units)
+prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
+prec <- read_ncdf(prec_file)
+sp_means <- spatial_means(prec)
+autoplot(sp_means)
+
+
+# Example 2
+tif = system.file("tif/olinda_dem_utm25s.tif", package = "stars")
+x <- read_stars(tif)
+sp_means <- spatial_means(x)
+autoplot(sp_means)
 }

@@ -31,7 +31,6 @@
 #' temporal_means(prec)
 #' @export temporal_means
 temporal_means <- function(x,
-                           t_col,
                            ...){
   UseMethod("temporal_means")
 }

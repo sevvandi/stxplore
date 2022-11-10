@@ -76,7 +76,6 @@ temporal_means.data.frame <- function(x,
 #' temporal_means(prec)
 #' @export
 temporal_means.stars <- function(x,
-                                 t_col,
                                  ...){
 
   if(missing(x)){

@@ -4,12 +4,10 @@
 \alias{temporal_means.stars}
 \title{Computes temporal empirical means using a stars object as input}
 \usage{
-\method{temporal_means}{stars}(x, t_col, ...)
+\method{temporal_means}{stars}(x, ...)
 }
 \arguments{
 \item{x}{A stars object or a dataframe. Arguments differ according to the input type.}
-
-\item{t_col}{The time column. Time must be a set of discrete integer values.}
 
 \item{...}{Other arguments currently ignored.}
 }

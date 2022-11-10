@@ -2,11 +2,14 @@
 #'
 #' This function computes spatial empirical means by latitude and longitude averaged over time.
 #'
+#' @inheritParams spatial_snapshots
 #' @param object The output from the `spatial_means' function.
-#' @param ylab The label for y axis.
+#' @param xlab1 The xlabel for the first plot.
+#' @param xlab2 The xlabel for the second plot.
 #' @param ... Other arguments currently ignored.
 #'
 #' @examples
+#' # dataframe example
 #' data(NOAA_df_1990)
 #' library(dplyr)
 #' Tmax <- filter(NOAA_df_1990,                      # subset the data
@@ -20,25 +23,45 @@
 #'        t_col = "t",
 #'        z_col = "z")
 #' autoplot(sem, ylab="Mean Max Temp")
+#'
+#'
+#' # stars examples
+#' # Example 1
+#' library(stars)
+#' library(units)
+#' prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
+#' prec <- read_ncdf(prec_file)
+#' sp_means <- spatial_means(prec)
+#' autoplot(sp_means)
+#'
+#'
+#' # Example 2
+#' tif = system.file("tif/olinda_dem_utm25s.tif", package = "stars")
+#' x <- read_stars(tif)
+#' sp_means <- spatial_means(x)
+#' autoplot(sp_means)
 #' @export
 autoplot.spatialmeans <- function(object,
-                                   ylab = "Mean Value",
+                                  ylab = "Mean Value",
+                                  xlab1 = "Latitude",
+                                  xlab2 = "Longitude",
+                                  title = "Spatial Empirical Means",
                                   ...){
 
-  lat <- lon <- mu_emp <- NULL
+  x <- y <- mu_emp <- NULL
 
   spat_av <- object$spatial_avg
   lat_means <- ggplot(spat_av) +
-    geom_point(aes(lat, mu_emp)) +
+    geom_point(aes(y, mu_emp)) +
     theme_bw() +
-    xlab("Latitude") +
+    xlab(xlab1) +
     ylab(ylab)
   lon_means <- ggplot(spat_av) +
-    geom_point(aes(lon, mu_emp)) +
+    geom_point(aes(x, mu_emp)) +
     theme_bw() +
-    xlab("Longitude") +
+    xlab(xlab2) +
     ylab(ylab)
 
-  ll_means <- gridExtra::grid.arrange(lat_means, lon_means, nrow = 1, ncol = 2, top = "Spatial Empirical Means")
+  ll_means <- gridExtra::grid.arrange(lat_means, lon_means, nrow = 1, ncol = 2, top = title)
   ll_means
 }
