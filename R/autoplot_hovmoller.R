@@ -7,6 +7,7 @@
 #' @param ... Other arguments currently ignored.
 #'
 #' @examples
+#' # dataframe example
 #' library(dplyr)
 #' data(NOAA_df_1990)
 #' Tmax <- filter(NOAA_df_1990,
@@ -21,6 +22,13 @@
 #'           z_col = 'z')
 #' autoplot(hov, legend_title = 'Temperature')
 #'
+#'
+#' # stars example
+#' library(stars)
+#' prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
+#' prec <- read_ncdf(prec_file)
+#' hov <- hovmoller(prec)
+#' autoplot(hov, ylab = "Time", xlab = "Latitude")
 #' @export
 autoplot.hovmoller <- function(object,
                                ylab = "Day",
@@ -32,6 +40,8 @@ autoplot.hovmoller <- function(object,
 
   lat_or_lon <- t <- z <- NULL
   df2_Hov <- object$hov_df
+  df2_Hov$z <- as.numeric(df2_Hov$z)
+  df2_Hov <- as.data.frame(df2_Hov)
 
   if(is.null(xlab)){
     xlab <- object$xlab
@@ -42,7 +52,6 @@ autoplot.hovmoller <- function(object,
   ggplot(df2_Hov) +
     geom_tile(aes(x = lat_or_lon, y = t, fill = z)) +             # produce tiles with fill colour, z
     scale_fill_distiller(palette = palette, guide = "colourbar") +
-    scale_y_reverse() +                                    # reverse the scale so red is high z
     ylab(ylab) +
     xlab(xlab) +                                           # label the x-axis
     guides(fill=guide_legend(title=legend_title)) +        # specify legend title

@@ -33,6 +33,7 @@
 This function creates a Hovmoller plot for either latitude or longitude.
 }
 \examples{
+# dataframe example
 library(dplyr)
 data(NOAA_df_1990)
 Tmax <- filter(NOAA_df_1990,
@@ -47,4 +48,11 @@ hov <- hovmoller(lat_or_lon = "lat",
           z_col = 'z')
 autoplot(hov, legend_title = 'Temperature')
 
+
+# stars example
+library(stars)
+prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
+prec <- read_ncdf(prec_file)
+hov <- hovmoller(prec)
+autoplot(hov, ylab = "Time", xlab = "Latitude")
 }
