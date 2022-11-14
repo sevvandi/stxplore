@@ -9,7 +9,7 @@
 #' @param title The graph title.
 #' @param palette The color palette. Default is \code{Spectral}.
 #' @param legend_title The title for the legend.
-#' @param ... Other arguments that need to be used for datafames to specify columns.
+#' @param ... Other arguments that need to be used for datafames  or currently ignored.
 #'
 #'
 #' @seealso spatial_snapshots.data.frame

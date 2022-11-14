@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{A stars object or a dataframe. Arguments differ according to the input type.}
 
-\item{...}{Other arguments that need to be used for datafames to specify columns.}
+\item{...}{Other arguments that need to be used for datafames  or currently ignored.}
 }
 \description{
 This function computes spatial empirical means by latitude and longitude averaged over time.

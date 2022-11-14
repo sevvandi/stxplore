@@ -4,10 +4,10 @@
 \alias{cancor_eof}
 \title{Performs Canonical Correlation Analysis  using Empirical Orthogonal Functions from a lagged dataset}
 \usage{
-cancor_eof(locations_df, values_df, lag = 7, n_eof = 10)
+cancor_eof(x, values_df, lag = 7, n_eof = 10)
 }
 \arguments{
-\item{locations_df}{The dataframe containing latitude and longitude (colnames lat and lon).}
+\item{x}{The dataframe or stars object. If it is a dataframe, then it should have the locations.}
 
 \item{values_df}{The dataframe of dimension \code{length(times) x length(locations)} containing the quantity of interest.}
 

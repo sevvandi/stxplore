@@ -2,7 +2,7 @@
 #'
 #' Computes empirical orthogonal functions of the data.
 #'
-#' @inheritParams semivariogram
+#' @inheritParams semivariogram.data.frame
 #'
 #' @examples
 #' data(SSTlonlatshort)
@@ -15,12 +15,14 @@
 #'              SSTdatashort)
 #'
 #' @export emp_orth_fun
-emp_orth_fun <- function(locations_df,
-                   values_df){
+emp_orth_fun <- function(x,
+                         values_df){
 
-  if(missing(locations_df)){
-    stop("Empty dataframe locations_df. Please give a dataframe with latitude and longitude.")
+  if(missing(x)){
+    stop("Empty dataframe x. Please give a dataframe with latitude and longitude.")
   }
+
+  locations_df <- x
 
   if(missing(values_df)){
     stop("Empty dataframe values_df. Please give an N x T dataframe with values of the quantity you are interested in.  ")

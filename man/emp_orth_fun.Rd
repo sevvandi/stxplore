@@ -4,10 +4,10 @@
 \alias{emp_orth_fun}
 \title{Computes empirical orthogonal functions}
 \usage{
-emp_orth_fun(locations_df, values_df)
+emp_orth_fun(x, values_df)
 }
 \arguments{
-\item{locations_df}{The dataframe containing latitude and longitude (colnames lat and lon).}
+\item{x}{The dataframe or stars object. If it is a dataframe, then it should have the locations.}
 
 \item{values_df}{The dataframe of dimension \code{length(times) x length(locations)} containing the quantity of interest.}
 }

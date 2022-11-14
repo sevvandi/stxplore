@@ -28,7 +28,7 @@ Hovmoller plat, while \code{lon} plots the longitudinal Hovmoller plot.}
 
 \item{z_col}{The The quantity of interest that will be plotted. Eg. temperature.}
 
-\item{...}{Other arguments that need to be used for datafames to specify columns.}
+\item{...}{Other arguments that need to be used for datafames  or currently ignored.}
 }
 \description{
 This function creates the data structure for Hovmoller plots for either latitude or longitude.

@@ -30,7 +30,7 @@
 
 \item{group_dim}{The dimension for the grouping variable.}
 
-\item{...}{Other arguments that need to be used for datafames to specify columns.}
+\item{...}{Other arguments that need to be used for datafames  or currently ignored.}
 }
 \description{
 Plots ridgeline plots grouped by latitude/longitude or time.

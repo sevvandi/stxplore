@@ -13,15 +13,16 @@
 #'            n_eof = 8)
 #'
 #' @export cancor_eof
-cancor_eof <- function(locations_df,
+cancor_eof <- function(x,
                           values_df,
                           lag = 7,
                           n_eof = 10){
 
   # option 4 - using the same dataset - using eof lagged
-  if(missing(locations_df)){
-    stop("Empty dataframe locations_df. Please give a dataframe with latitude and longitude.")
+  if(missing(x)){
+    stop("Empty dataframe x. Please give a dataframe with latitude and longitude.")
   }
+  locations_df <- x
 
   if(missing(values_df)){
     stop("Empty dataframe values_df. Please give an N x T dataframe with values of the quantity you are interested in.  ")
