@@ -38,21 +38,11 @@ the first 2 for locations and the third for time.
 }
 \examples{
 library(dplyr)
-data(locs)
-data(Times)
-data(Tmax)
-temp_part <- with(Times, paste(year, month, day, sep = "-"))
-temp_part <- data.frame(date = as.Date(temp_part)[913:943])
-Tmax <- Tmax[913:943, ]
-semivariogram(locs,
-              latitude_linear = FALSE,
-              longitude_linear = FALSE,
-              missing_value = -9999,
-              width = 50,
-              cutoff = 1000,
-              tlagmax = 7,
-              times_df = temp_part,
-              values_df = Tmax
-)
+library(stars)
+# Create a stars object from a data frame
+precip_df <- NOAA_df_1990[NOAA_df_1990$proc == 'Precip', ] \%>\% filter(date >= "1992-02-01" & date <= "1992-02-28")
+precip <- precip_df[ ,c('lat', 'lon', 'date', 'z')]
+st_precip <- st_as_stars(precip, dims = c("lon", "lat", "date"))
+semivariogram(st_precip)
 
 }

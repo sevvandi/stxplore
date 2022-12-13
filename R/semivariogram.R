@@ -125,22 +125,12 @@ semivariogram.data.frame <- function(x,
 #'
 #' @examples
 #' library(dplyr)
-#' data(locs)
-#' data(Times)
-#' data(Tmax)
-#' temp_part <- with(Times, paste(year, month, day, sep = "-"))
-#' temp_part <- data.frame(date = as.Date(temp_part)[913:943])
-#' Tmax <- Tmax[913:943, ]
-#' semivariogram(locs,
-#'               latitude_linear = FALSE,
-#'               longitude_linear = FALSE,
-#'               missing_value = -9999,
-#'               width = 50,
-#'               cutoff = 1000,
-#'               tlagmax = 7,
-#'               times_df = temp_part,
-#'               values_df = Tmax
-#' )
+#' library(stars)
+#' # Create a stars object from a data frame
+#' precip_df <- NOAA_df_1990[NOAA_df_1990$proc == 'Precip', ] %>% filter(date >= "1992-02-01" & date <= "1992-02-28")
+#' precip <- precip_df[ ,c('lat', 'lon', 'date', 'z')]
+#' st_precip <- st_as_stars(precip, dims = c("lon", "lat", "date"))
+#' semivariogram(st_precip)
 #'
 #' @export
 semivariogram.stars <- function(x,
@@ -155,73 +145,29 @@ semivariogram.stars <- function(x,
      stop("Empty stars object x. Please give a stars object with 3 dimensions.")
    }
 
-   return(x)
+   x <- stats::setNames(x, "dat")
+
+   # get x, y and t values
+   x1 <- stars::st_get_dimension_values(x, 1)
+   x2 <- stars::st_get_dimension_values(x, 2)
+   t_vals <- stars::st_get_dimension_values(x, 3)
+
+   times_df <- data.frame(time = t_vals)
+
+   # make an xy grid
+   gridxy <- meshgrid2d(x1, x2)
+   locations_df <- data.frame(id = 1:dim(gridxy)[1], lon = gridxy[ ,1], lat = gridxy[ ,2])
+   # flatten the stars to 2D
+   x_sf <- stars::st_xy2sfc(x, as_points = TRUE, na.rm = FALSE)
+   values_df <- t(x_sf$dat)
+   semivariogram.data.frame(locations_df,
+                            latitude_linear = latitude_linear,
+                            longitude_linear = longitude_linear,
+                            missing_value = missing_value,
+                            width = width,
+                            cutoff = cutoff,
+                            tlagmax = tlagmax,
+                            times_df,
+                            values_df)
+
 }
-
-#
-#   if(!setequal(colnames(locations_df), c("id", "lon", "lat"))){
-#     stop("The column names of locations_df needs to be id, lon and lat. Please update locations_df.")
-#   }
-#
-#   if(dim(times_df)[2] !=1 ){
-#     stop("The dataframe times_df needs to have only 1 column of dates.")
-#   }
-#
-#   colnames(times_df) <- "date"
-#   if(!lubridate::is.Date(times_df$date)){
-#     stop("The dataframe times_df doesn't contain any dates.")
-#   }
-#
-#   if(!identical(dim(values_df), c(dim(times_df)[1], dim(locations_df)[1]) )){
-#     stop("The dataframe values_df needs to have T x N dimensions, T = number of times N = number of locations.")
-#   }
-#
-#   names(values_df)  <- locations_df$id
-#   values_df <-  cbind(times_df,  values_df)
-#   id <- NULL
-#
-#   # Define spatial and temporal components
-#   spat_part <- sp::SpatialPoints(coords = locations_df[, c("lon", "lat")])
-#   temp_part <- as.Date(times_df$date)
-#
-#   values_long <- tidyr::pivot_longer(values_df, cols = 2:dim(values_df)[2])
-#   colnames(values_long) <- c("date", "id", "z")
-#   values_long$id <- as.integer(values_long$id)
-#   values_long <- dplyr::arrange(values_long, date, id)
-#
-#   STObj3 <- spacetime::STFDF(sp = spat_part,
-#                              time = temp_part,
-#                              data = values_long)
-#
-#   # Assign a projection
-#   sp::proj4string(STObj3) <- sp::CRS("+proj=longlat +ellps=WGS84")
-#
-#   # Label missing values
-#   STObj3$z[STObj3$z == missing_value] <- NA
-#
-#   if(latitude_linear & longitude_linear){
-#     formula <- z ~ 1 + lat + lon
-#   }else if(latitude_linear){
-#     formula <- z ~ 1 + lat
-#   }else if(longitude_linear){
-#     formula <- z ~ 1 + lon
-#   }else{
-#     formula <- z ~ 1
-#   }
-#
-#   vv <- gstat::variogram(object = formula,            # fixed effect component
-#                          data = STObj3,                      #
-#                          width = width,                      #
-#                          cutoff = cutoff,                    # only consider pts < cutoff km apart
-#                          tlags = 0.01:tlagmax)               # 0-tlagmaxdays days (will create an NA if start at 0)
-#
-#   structure(list(
-#     variogram = vv,
-#     loc_data = locations_df,
-#     times_data = times_df,
-#     values_data = values_df,
-#     call = match.call()
-#   ), class='semivariogramobj')
-# }
-
-#'
