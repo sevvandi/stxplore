@@ -1,9 +1,9 @@
-#' Computes empirical orthogonal functions
+#' Computes empirical orthogonal functions using a dataframe
 #'
 #' Computes empirical orthogonal functions of the data.
 #'
+#' @inheritParams emp_orth_fun
 #' @inheritParams semivariogram.data.frame
-#'
 #' @examples
 #' data(SSTlonlatshort)
 #' data(SSTdatashort)
@@ -14,9 +14,10 @@
 #' emp_orth_fun(SSTlonlatshort[-delete_rows,  ],
 #'              SSTdatashort)
 #'
-#' @export emp_orth_fun
-emp_orth_fun <- function(x,
-                         values_df){
+#' @export
+emp_orth_fun.data.frame <- function(x,
+                                    values_df,
+                                    ...){
 
   if(missing(x)){
     stop("Empty dataframe x. Please give a dataframe with latitude and longitude.")
@@ -33,7 +34,7 @@ emp_orth_fun <- function(x,
   # Put data into space-time format
   Z  <- t(values_df)
 
-  spat_mean <-  apply(values_df, 1, mean)
+  spat_mean <-  apply(values_df, 1, function(x) mean(x, na.rm = TRUE))
   nT  <- ncol(values_df)
 
   # Subtract and standardise and compute the SVD
@@ -67,4 +68,50 @@ emp_orth_fun <- function(x,
     call = match.call()
   ), class='emporthfun')
 
+}
+
+#' Computes empirical orthogonal functions for a stars object
+#'
+#' Computes empirical orthogonal functions of the data.
+#'
+#' @inheritParams emp_orth_fun
+#' @examples
+#' library(dplyr)
+#' library(stars)
+#' # Create a stars object from a data frame
+#' precip_df <- NOAA_df_1990[NOAA_df_1990$proc == 'Precip', ] %>% filter(date >= "1992-02-01" & date <= "1992-02-28")
+#' precip <- precip_df[ ,c('lat', 'lon', 'date', 'z')]
+#' st_precip <- st_as_stars(precip, dims = c("lon", "lat", "date"))
+#' emp_orth_fun(st_precip)
+#'
+#' @export
+emp_orth_fun.stars <- function(x,
+                               ...){
+
+  if(missing(x)){
+    stop("Empty stars object x. Please give a stars object with 3 dimensions.")
+  }
+
+  x <- stats::setNames(x, "dat")
+
+  # get x, y and t values
+  x1 <- stars::st_get_dimension_values(x, 1)
+  x2 <- stars::st_get_dimension_values(x, 2)
+  t_vals <- stars::st_get_dimension_values(x, 3)
+
+  times_df <- data.frame(time = t_vals)
+
+  # make an xy grid
+  gridxy <- meshgrid2d(x1, x2)
+  locations_df <- data.frame(lon = gridxy[ ,1], lat = gridxy[ ,2])
+  # flatten the stars to 2D
+  x_sf <- stars::st_xy2sfc(x, as_points = TRUE, na.rm = FALSE)
+  values_df <- x_sf$dat
+
+  good_loc_vals <- which(apply(values_df, 1, function(x) sum(is.na(x))) ==0 )
+  values_df2 <- values_df[good_loc_vals, ]
+  locations_df2 <- locations_df[good_loc_vals, ]
+
+  emp_orth_fun.data.frame(locations_df2,
+                          values_df2)
 }

@@ -2,7 +2,7 @@
 #'
 #' Performs CCA using EOF analysis using a lagged dataset.
 #'
-#' @inheritParams emp_orth_fun
+#' @inheritParams emp_orth_fun.data.frame
 #' @param lag Specifies the lag to be used.
 #' @param n_eof The number of EOFs to be used.
 #'
