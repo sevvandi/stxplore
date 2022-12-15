@@ -30,9 +30,9 @@
 Plots CCA using EOF analysis using a lagged dataset.
 }
 \examples{
-cca <- cancor_eof(SSTlonlatshort,
-                 SSTdatashort,
-                 n_eof = 8)
+cca <- cancor_eof(x = SSTlonlatshort,
+                 n_eof = 8,
+                 values_df = SSTdatashort)
 autoplot(cca)
 autoplot(cca, line_plot = FALSE)
 autoplot(cca, space_plot = FALSE)

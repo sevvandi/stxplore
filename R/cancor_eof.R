@@ -1,22 +1,22 @@
-#' Performs Canonical Correlation Analysis  using Empirical Orthogonal Functions from a lagged dataset
+#' Performs Canonical Correlation Analysis  using Empirical Orthogonal Functions from a lagged dataset using a dataframe
 #'
-#' Performs CCA using EOF analysis using a lagged dataset.
+#' Performs CCA using EOF analysis using in a dataframe
 #'
 #' @inheritParams emp_orth_fun.data.frame
-#' @param lag Specifies the lag to be used.
-#' @param n_eof The number of EOFs to be used.
+#' @inheritParams cancor_eof
 #'
 #' @examples
-#' cancor_eof(SSTlonlatshort,
-#'            SSTdatashort,
+#' cancor_eof(x = SSTlonlatshort,
 #'            lag = 7,
-#'            n_eof = 8)
+#'            n_eof = 8,
+#'            values_df = SSTdatashort)
 #'
-#' @export cancor_eof
-cancor_eof <- function(x,
-                          values_df,
-                          lag = 7,
-                          n_eof = 10){
+#' @export
+cancor_eof.data.frame <- function(x,
+                                  lag = 7,
+                                  n_eof = 10,
+                                  values_df,
+                                  ...){
 
   # option 4 - using the same dataset - using eof lagged
   if(missing(x)){
@@ -83,4 +83,54 @@ cancor_eof <- function(x,
   ), class='cancoreof')
 
 
+}
+
+
+#' Performs Canonical Correlation Analysis  using Empirical Orthogonal Functions from a lagged dataset using a stars object
+#'
+#' Performs CCA using EOF analysis using a stars object
+#'
+#' @inheritParams cancor_eof
+#'
+#' @examples
+#' library(dplyr)
+#' library(stars)
+#' # Create a stars object from a data frame
+#' precip_df <- NOAA_df_1990[NOAA_df_1990$proc == 'Precip', ] %>% filter(date >= "1992-02-01" & date <= "1992-02-28")
+#' precip <- precip_df[ ,c('lat', 'lon', 'date', 'z')]
+#' st_precip <- st_as_stars(precip, dims = c("lon", "lat", "date"))
+#' cancor_eof(st_precip)
+#' @export
+cancor_eof.stars <- function(x,
+                             lag = 7,
+                             n_eof = 10,
+                             ...){
+  if(missing(x)){
+    stop("Empty stars object x. Please give a stars object with 3 dimensions.")
+  }
+
+  x <- stats::setNames(x, "dat")
+
+  # get x, y and t values
+  x1 <- stars::st_get_dimension_values(x, 1)
+  x2 <- stars::st_get_dimension_values(x, 2)
+  t_vals <- stars::st_get_dimension_values(x, 3)
+
+  times_df <- data.frame(time = t_vals)
+
+  # make an xy grid
+  gridxy <- meshgrid2d(x1, x2)
+  locations_df <- data.frame(lon = gridxy[ ,1], lat = gridxy[ ,2])
+  # flatten the stars to 2D
+  x_sf <- stars::st_xy2sfc(x, as_points = TRUE, na.rm = FALSE)
+  values_df <- x_sf$dat
+
+  good_loc_vals <- which(apply(values_df, 1, function(x) sum(is.na(x))) ==0 )
+  values_df2 <- values_df[good_loc_vals, ]
+  locations_df2 <- locations_df[good_loc_vals, ]
+
+  cancor_eof.data.frame(x = locations_df2,
+                        lag = lag,
+                        n_eof = n_eof,
+                        values_df =  values_df2)
 }
