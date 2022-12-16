@@ -1,9 +1,8 @@
-#' Computes transformed variables from Canonical Correlation Analysis
+#' Computes transformed variables from Canonical Correlation Analysis using a dataframe
 #'
 #' Computes Canonical Correlation Analysis (CCA) using 2 datasets.
 #'
-#' @param df1 The first dataset.
-#' @param df2 The second dataset. The dimensions of both datasets need to be the same.
+#' @inheritParams canonical_correlation
 #'
 #' @examples
 #' df1 <- SSTdatashort[1:100, ]
@@ -11,21 +10,25 @@
 #' canonical_correlation(df1, df2)
 #'
 #' @importFrom stats cancor
-#' @export canonical_correlation
-canonical_correlation <- function(df1, df2){
+#' @export
+canonical_correlation.data.frame <- function(x1,
+                                             x2,
+                                             ...){
   # option 1 - using 2 separate datasets - using raw
-  if(missing(df1)){
+  if(missing(x1)){
     stop("Empty dataframe df1. Please give a dataframe with N1 rows and N2 columns.")
   }
 
-  if(missing(df2)){
+  if(missing(x2)){
     stop("Empty dataframe df2. Please give a dataframe with N1 rows and N2 columns.")
   }
 
-  if(!identical(dim(df1),dim(df2))){
+  if(!identical(dim(x1),dim(x2))){
     stop("The datasets need to have the same dimensions.")
   }
 
+  df1 <- x1
+  df2 <- x2
   t <- ts <- Variable <- NULL
 
   nn <- dim(df1)[1]
@@ -54,4 +57,43 @@ canonical_correlation <- function(df1, df2){
     call = match.call()
   ), class='cancor')
 
+}
+
+#' Computes transformed variables from Canonical Correlation Analysis using a stars object
+#'
+#' Computes Canonical Correlation Analysis (CCA) using 2 datasets.
+#'
+#' @inheritParams canonical_correlation
+#'
+#' @examples
+#' library(stars)
+#' tif = system.file("tif/olinda_dem_utm25s.tif", package = "stars")
+#' x <- read_stars(tif)
+#' x1 <- x[[1]][1:50, 1:50]
+#' x2 <- x[[1]][51:100, 1:50]
+#' stx1 <- st_as_stars(x1)
+#' stx2 <- st_as_stars(x2)
+#' canonical_correlation(stx1, stx2)
+#' @importFrom stats cancor
+#' @export
+canonical_correlation.stars <- function(x1,
+                                        x2,
+                                        ...){
+  # option 1 - using 2 separate datasets - using raw
+  if(missing(x1)){
+    stop("Empty stars object x1. Please give a stars object with dimensions N1xN2.")
+  }
+
+  if(missing(x2)){
+    stop("Empty stars object x2. Please give a stars object with dimensions N1xN2.")
+  }
+
+  if(!identical(dim(x1),dim(x2))){
+    stop("The datasets need to have the same dimensions.")
+  }
+
+  df1 <- dplyr::as_tibble(x1)
+  df2 <- dplyr::as_tibble(x2)
+
+  canonical_correlation.data.frame(df1, df2)
 }
