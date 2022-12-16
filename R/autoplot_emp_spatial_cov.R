@@ -31,7 +31,7 @@ autoplot.spatialcov <- function(object,
 
   Lag_cov <- object$lag_cov
   spat_df <- object$spatial_df
-  num_strips <- object$call$num_strips
+  num_strips <- object$num_strips
 
   if(num_strips == 1){
     plot_cov_strips(Lag_cov, spat_df, xlab = xlab)

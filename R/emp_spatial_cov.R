@@ -1,4 +1,4 @@
-#' Computes empirical spatial covariance
+#' Computes empirical spatial covariance using a dataframe as input
 #'
 #' Computes empirical spatial covariance by removing trends and examining residuals. It can compute lag-0 or log-1
 #' empirical covariance either by latitude or longitude. You can split up the spatial domain by latitude or
@@ -6,15 +6,7 @@
 #'
 #' @inheritParams spatial_snapshots
 #' @inheritParams spatial_snapshots.data.frame
-#' @param lat_or_lon_strips Takes the values \code{lat} or \code{lon}. The value \code{lat} produces latitudinal strips,
-#'       i.e., covariance plots over longitude for different latitudinal strips. The value \code{lon} produces longitudinal
-#'       strips, i.e., covariance plots over latitude for different longitudinal strips.
-#' @param quadratic_time If \code{TRUE}  a linear model with quadratic time is fitted and residuals computed. If \code{FALSE}
-#'       the model is fitted with linear space and time coefficients.
-#' @param quadratic_space  If \code{TRUE}  a linear model with quadratic space is fitted and residuals computed. If \code{FALSE}
-#'       the model is fitted with linear space and time coefficients.
-#' @param num_strips The number of latitudinal/longitudinal strips to produce. This is used when plotting using autoplot.
-#' @param lag Lag can be either 0 or 1.
+#' @inheritParams emp_spatial_cov
 #'
 #' @examples
 #' library(dplyr)
@@ -25,27 +17,28 @@
 #'   year == 1993)
 #' Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
 #' emp_spatial_cov(Tmax,
+#'                 lat_or_lon_strips = "lon",
+#'                 num_strips = 4,
+#'                 lag = 1,
 #'                 lat_col = "lat",
 #'                 lon_col = "lon",
 #'                 t_col ="t",
-#'                 z_col = "z",
-#'                 lat_or_lon_strips = "lon",
-#'                 num_strips = 4,
-#'                 lag = 1)
+#'                 z_col = "z")
 #'
 #' @importFrom graphics par
 #' @importFrom stats cov lm
-#' @export emp_spatial_cov
-emp_spatial_cov <- function(x,
-                    lat_col,
-                    lon_col,
-                    t_col,
-                    z_col,
-                    lat_or_lon_strips = "lon",
-                    quadratic_time = FALSE,
-                    quadratic_space = FALSE,
-                    num_strips = 1,
-                    lag = 0){
+#' @export
+emp_spatial_cov.data.frame <- function(x,
+                                       lat_or_lon_strips = "lon",
+                                       quadratic_time = FALSE,
+                                       quadratic_space = FALSE,
+                                       num_strips = 1,
+                                       lag = 0,
+                                       lat_col,
+                                       lon_col,
+                                       t_col,
+                                       z_col,
+                                       ...){
   if(missing(x)){
     stop("Empty dataframe x. Please give a proper input.")
   }
@@ -125,7 +118,7 @@ emp_spatial_cov <- function(x,
 
 
   # Extract spatial locations
-  spat_df <- dplyr::filter(df2, t == 1) %>%         # lon/lat co-ordinates of stations
+  spat_df <- dplyr::filter(df2, t == min(t)) %>%         # lon/lat co-ordinates of stations
     dplyr::select(group, space) %>%                      # select lon/lat only
     dplyr::arrange(group, space)                         # sort ascending by lon/lat
 
@@ -142,7 +135,65 @@ emp_spatial_cov <- function(x,
     spatial_df = spat_df,
     lag_cov = Lag_cov,
     data = df2,
+    num_strips = num_strips,
     call = match.call()
   ), class='spatialcov')
 
+}
+
+
+#' Computes empirical spatial covariance using a stars object
+#'
+#' Computes empirical spatial covariance by removing trends and examining residuals. It can compute lag-0 or log-1
+#' empirical covariance either by latitude or longitude. You can split up the spatial domain by latitude or
+#' longitude and plot the covariance for each longitudinal/latitudinal strips.
+#'
+#' @inheritParams spatial_snapshots
+#' @inheritParams spatial_snapshots.data.frame
+#' @inheritParams emp_spatial_cov
+#'
+#' @examples
+#' \dontrun{
+#' library(stars)
+#' library(dplyr)
+#' library(units)
+#' prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
+#' prec <- read_ncdf(prec_file)
+#' prec2 <- prec %>%
+#'          slice(time,  1:3)
+#' emp_spatial_cov(prec2,
+#'                 lat_or_lon_strips = "lon",
+#'                 num_strips = 4,
+#'                 lag = 1)
+#' }
+#' @importFrom graphics par
+#' @importFrom stats cov lm
+#' @export
+emp_spatial_cov.stars <- function(x,
+                                  lat_or_lon_strips = "lon",
+                                  quadratic_time = FALSE,
+                                  quadratic_space = FALSE,
+                                  num_strips = 1,
+                                  lag = 0,
+                                  ...){
+  if(missing(x)){
+    stop("Empty stars object x. Please give a proper input.")
+  }
+
+
+  df <- dplyr::as_tibble(x)
+  df <- as.data.frame(df)
+  inds <- which(!is.na(df$z))
+  df <- df[inds, ]
+  emp_spatial_cov.data.frame(x = df,
+                             lat_or_lon_strips = lat_or_lon_strips,
+                             quadratic_time = quadratic_time,
+                             quadratic_space = quadratic_space,
+                             num_strips = num_strips,
+                             lag = lag,
+                             lat_col = 2,
+                             lon_col = 1,
+                             t_col = 3,
+                             z_col = 4,
+                             ...)
 }
