@@ -1,0 +1,15 @@
+url: https://sevvandi.github.io/stxplore/
+template:
+  bootstrap: 5
+  bootswatch: flatly
+
+navbar:
+  left:
+    - text: Articles
+      menu:
+        - text: Exploration using dataframes
+          href: articles/stxplore.html
+        - text: Exploration using stars objects
+          href: articles/stxplore_stars.html
+    - text: Reference
+      href: reference/index.html

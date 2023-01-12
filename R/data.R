@@ -1,4 +1,4 @@
-#' NOAA maximum recorded temperature between May 1993 and September 1993
+#' National oceanic and atmospheric administration (NOAA) data from 1990 to 1993
 #'
 #' A dataset containing the precipitation, maximum and minimum temperatures taken from
 #' the STRbook R package.

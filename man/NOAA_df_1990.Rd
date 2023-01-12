@@ -3,7 +3,7 @@
 \docType{data}
 \name{NOAA_df_1990}
 \alias{NOAA_df_1990}
-\title{NOAA maximum recorded temperature between May 1993 and September 1993}
+\title{National oceanic and atmospheric administration (NOAA) data from 1990 to 1993}
 \format{
 A data frame with 53940 rows and 10 variables:
 \describe{

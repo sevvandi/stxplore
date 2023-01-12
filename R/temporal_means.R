@@ -97,7 +97,7 @@ temporal_means.stars <- function(x,
     dplyr::select(value, time, id)
 
   df_av <- dplyr::group_by(df, time) %>%
-    dplyr::summarise(meanz = mean(value))
+    dplyr::summarise(meanz = mean(value, na.rm = TRUE))
 
   structure(list(
     data = df2,

@@ -1,5 +1,6 @@
 ---
 output: github_document
+bibliography: vignettes/bibliography.bib
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -18,7 +19,7 @@ knitr::opts_chunk$set(
   [![R-CMD-check](https://github.com/sevvandi/stxplore/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sevvandi/stxplore/actions/workflows/R-CMD-check.yaml)
   <!-- badges: end -->
 
-The goal of stxplore is to explore spatio-temporal data. It is not a modelling tool. 
+The goal of stxplore is to explore spatio-temporal data. It can take in either dataframes or stars objects. It is a tool for exploratory data analysis. 
 
 ## Installation
 
@@ -29,25 +30,80 @@ You can install the development version of stxplore from [GitHub](https://github
 devtools::install_github("sevvandi/stxplore")
 ```
 
+## A quick introduction
+
+Let's first explore some spatio-temporal data using dataframes. The dataset NOAA_df_1990 has temperature and precipitation for from 1990 to 1993 for selected locations. 
+
+```{r readdataframe}
+library(stxplore)
+library(dplyr)
+
+data("NOAA_df_1990")
+
+precip <- filter(NOAA_df_1990,
+  proc == "Precip" &
+  year == 1993)
+precip$t <- precip$julian - min(precip$julian) + 1
+head(precip)
+```
+
+The z variable has precipitation in this in dataset. Let's visualize the mean precipitation over time. 
+
+```{r tempmeans}
+
+tem <- temporal_means(precip,
+                      t_col = 'date',
+                      z_col = 'z',
+                      id_col = 'id')
+
+autoplot(tem,
+         ylab = "Mean Precipitation")
+
+```
+Let's look at minimum temperature.  Let's first subset the dataset. 
+
+```{r tmin}
+tmin <- filter(NOAA_df_1990,
+  proc == "Tmin" &
+  year == 1993)
+```
+Ridgeline plots break up the quantity of interest into several groups and shows its distribution. We use the R package *ggridges* [@ridgeline] underneath. In this Ridgeline plot we see how the minimum temperature for higher latitudes is lower. 
+
+```{r ridgeline1}
+ridgeline(tmin, group_col = 'lat', z_col = 'z')
+```
+
+Of course if we group by longitude, there wouldn't be much difference between the groups. What about the difference over time? Can we see that using Ridgeline plots?
+
+```{r ridgeline3}
+ridgeline(tmin, group_col = 'date', z_col = 'z', num_grps = 12)
+```
+
+## Moving on to stars objects
+
+The stars dataset aerosol_australia has aerosol optical thickness over Australia and surrounds for 13 months starting from 2019 December to 2020 December. There were devastating bushfires in Australia during this time. The data was taken from NASA Earth Observations (NEO) website https://neo.gsfc.nasa.gov.
+
+
+```{r stars1}
+data("aerosol_australia")
+
+aerosol_australia
+
+temp_means <- temporal_means(aerosol_australia)
+autoplot(temp_means)
+
+ridgeline(aerosol_australia, group_dim = 3, num_grps = 13)
+```
+
+We can see that during December and January there aerosols were much higher compared to  other months. 
+
+
 ## The making of stxplore
 In 2017,  Chris Wikle and Petra Kunhert taught a short course titled *An Introduction to Statistics for Spatio-Temporal Data*.  The course was based on two books:
 
-1. Statistics for Spatio-Temporal Data by Noel Cressie and Christopher K. Wikle
-2. Spatio-Temporal Statistics with R by Christopher K. Wikle, Andrew Zammit-Mangion and Noel Cressie
-
-The course heavily used the materials from **Spatio-Temporal Statistics with R**. The code used in the book is contained in the R package **STRbook**.  Chris Wikle and Petra Kunhert thanked/acknowledged Andrew Zammit-Mangion in multiple places in their slides for the teaching course. 
+1. Statistics for Spatio-Temporal Data by Noel Cressie and Christopher K. Wikle [@cressie2015statistics]
+2. Spatio-Temporal Statistics with R by Christopher K. Wikle, Andrew Zammit-Mangion and Noel Cressie [@wikle2019spatio]
 
 There had been some discussions in making a separate package for spatio-temporal exploration. Even though there are many packages for spatio-temporal modelling, exploration is rarely given the spotlight. Many years later, Petra mentioned this to me and I've been involved in making it a reality. 
 
-
-
-<!-- ## Example -->
-
-<!-- This is a basic example which shows you how to solve a common problem: -->
-
-<!-- ```{r example} -->
-<!-- library(stxplore) -->
-<!-- ## basic example code -->
-<!-- ``` -->
-
-<!-- To do -->
+## References
