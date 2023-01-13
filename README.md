@@ -112,7 +112,7 @@ The stars dataset aerosol_australia has aerosol optical thickness over
 Australia and surrounds for 13 months starting from 2019 December to
 2020 December. There were devastating bushfires in Australia during this
 time. The data was taken from NASA Earth Observations (NEO) website
-<https://neo.gsfc.nasa.gov>.
+<https://neo.gsfc.nasa.gov> (“NASA Earth Observations (NEO),” n.d.).
 
 ``` r
 data("aerosol_australia")
@@ -131,7 +131,6 @@ aerosol_australia
 temp_means <- temporal_means(aerosol_australia)
 autoplot(temp_means)
 #> Warning: Removed 6513 rows containing missing values (`geom_line()`).
-#> Warning: Removed 13 rows containing missing values (`geom_line()`).
 ```
 
 <img src="man/figures/README-stars1-1.png" width="100%" />
@@ -174,6 +173,13 @@ making it a reality.
 Cressie, Noel, and Christopher K Wikle. 2015. *<span
 class="nocase">Statistics for spatio-temporal data</span>*. John Wiley &
 Sons.
+
+</div>
+
+<div id="ref-nasa" class="csl-entry">
+
+“NASA Earth Observations (NEO).” n.d. NASA.
+<https://neo.gsfc.nasa.gov/>.
 
 </div>
 

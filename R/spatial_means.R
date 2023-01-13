@@ -57,7 +57,7 @@ spatial_means.data.frame <- function(x,
   df2 <- data.frame(y = y, x = x, value = z, t = t)
 
   spat_av <- dplyr::group_by(df2, x, y) %>%           # group by lon-lat
-    dplyr::summarise(mu_emp = mean(value))                     # mean in each lon-lat box
+    dplyr::summarise(mu_emp = mean(value, na.rm = TRUE))                     # mean in each lon-lat box
 
   if(dim(df2)[1] == dim(spat_av)[1]){
     message("Only one observation of each location is present. The mean is the original value itself!")
@@ -67,6 +67,7 @@ spatial_means.data.frame <- function(x,
   structure(list(
     spatial_avg = spat_av,
     data = df2,
+    data_stars = NULL,
     call = match.call()
   ), class='spatialmeans')
 
@@ -106,6 +107,9 @@ spatial_means.stars <- function(x,
          It doesn't make sense to average over more dimensions.")
   }
 
+
+  st_mean <- stars::st_apply(x, c("x", "y"), function(x) mean(x, na.rm = TRUE))
+
   df <- dplyr::as_tibble(x)
 
   x <- y <- value <- t <- NULL
@@ -121,16 +125,19 @@ spatial_means.stars <- function(x,
   mu_emp <- NULL
 
  spat_av <- dplyr::group_by(df, x, y) %>%           # group by lon-lat
-    dplyr::summarise(mu_emp = mean(value))                     # mean in each lon-lat box
+    dplyr::summarise(mu_emp = mean(value, na.rm = TRUE))                     # mean in each lon-lat box
 
  if(dim(df)[1] == dim(spat_av)[1]){
    message("Only one observation of each location is present. The mean is the original value itself!")
  }
+
+
   ## Spatial Empirical Means
 
   structure(list(
     spatial_avg = spat_av,
     data = df,
+    data_stars = st_mean,
     call = match.call()
   ), class='spatialmeans')
 

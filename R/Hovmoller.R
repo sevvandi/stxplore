@@ -77,7 +77,7 @@ hovmoller.data.frame <- function(x,
   df2_grid <- data.frame(lat_or_lon = latlon1, z = df2$z, t = df2$t )
   df2_Hov <- df2_grid %>%
     dplyr::group_by(lat_or_lon, t) %>%
-    dplyr::summarise(z = mean(z))
+    dplyr::summarise(z = mean(z, na.rm = TRUE))
 
   if(length(unique(df2_Hov$lat_or_lon)) < xlen){
     print("Consider reducing xlen to eliminate empty patches.")
@@ -159,7 +159,7 @@ hovmoller.stars <- function(x,
   df2_grid <- data.frame(lat_or_lon = latlon1, z = df2$z, t = df2$t )
   df2_Hov <- df2_grid %>%
     dplyr::group_by(lat_or_lon, t) %>%
-    dplyr::summarise(z = mean(z))
+    dplyr::summarise(z = mean(z, na.rm = TRUE))
 
   if(length(unique(df2_Hov$lat_or_lon)) < xlen){
     print("Consider reducing xlen to eliminate empty patches.")

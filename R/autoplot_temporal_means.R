@@ -66,8 +66,8 @@ autoplot.temporalmeans <- function(object,
     ylab(ylab) +
     theme_bw() +
     scale_color_manual(name = legend_title,
-                       values = c(black = "black", blue = "blue"),
-                       labels = c("Average", "Observed"),
+                       values = c(blue = "blue", black = "black"),
+                       labels = c("Observed", "Average"),
                        guide = "legend") +
     ggtitle(title)
   p

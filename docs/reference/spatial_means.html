@@ -20408,6 +20408,9 @@ This function can take either a stars object or a dataframe. Input arguments dif
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20305 41.36666 -96.01667    66 152</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20306 41.36666 -96.01667    76 153</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $data_stars</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> spatial_means.data.frame(x = Tmax, lat_col = "lat", lon_col = "lon", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     t_col = "t", z_col = "z")</span>
@@ -20464,6 +20467,19 @@ This function can take either a stars object or a dataframe. Input arguments dif
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 236,108 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $data_stars</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> stars object with 2 dimensions and 1 attribute</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attribute(s):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    Min.   1st Qu.   Median     Mean  3rd Qu.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total_precipitation_surface_1_...     0 0.2834783 1.588261 4.143009 6.505326</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                        Max.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total_precipitation_surface_1_...  27.60565</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dimension(s):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   from  to offset delta refsys point                         values x/y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x    1  87     NA    NA WGS 84    NA [87x118] -80.6113,...,-74.8822 [x]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> y    1 118     NA    NA WGS 84    NA   [87x118] 32.4413,...,37.6193 [y]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> curvilinear grid</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> spatial_means.stars(x = prec)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -20511,6 +20527,16 @@ This function can take either a stars object or a dataframe. Input arguments dif
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> <span style="text-decoration: underline;">289</span>631. 9<span style="text-decoration: underline;">120</span>716.    59</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 12,311 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $data_stars</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> stars object with 2 dimensions and 1 attribute</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attribute(s):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        Min. 1st Qu. Median     Mean 3rd Qu. Max.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> olinda_dem_utm25s.tif    -1       6     12 21.66521      35   88</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dimension(s):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   from  to  offset    delta                       refsys point values x/y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x    1 111  288776  89.9941 UTM Zone 25, Southern Hem... FALSE   NULL [x]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> y    1 111 9120761 -89.9941 UTM Zone 25, Southern Hem... FALSE   NULL [y]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> spatial_means.stars(x = x)</span>

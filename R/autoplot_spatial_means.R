@@ -62,6 +62,21 @@ autoplot.spatialmeans <- function(object,
     xlab(xlab2) +
     ylab(ylab)
 
-  ll_means <- gridExtra::grid.arrange(lat_means, lon_means, nrow = 1, ncol = 2, top = title)
+
+  if(!is.null(object$data_stars)){
+    xx <- object$data_stars
+    st_fig <- ggplot() +
+      geom_stars(data = xx) +
+      scale_fill_distiller(palette = "Spectral",
+                         guide = "colourbar")
+
+    ll_means <- gridExtra::grid.arrange(lat_means, lon_means, st_fig, layout_matrix = matrix(c(1, 3, 2, 3), nrow = 2), top = title)
+  }else{
+    ll_means <- gridExtra::grid.arrange(lat_means, lon_means, nrow = 1, ncol = 2, top = title)
+
+  }
+
+
+
   ll_means
 }

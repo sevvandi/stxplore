@@ -81,7 +81,7 @@ ridgeline(tmin, group_col = 'date', z_col = 'z', num_grps = 12)
 
 ## Moving on to stars objects
 
-The stars dataset aerosol_australia has aerosol optical thickness over Australia and surrounds for 13 months starting from 2019 December to 2020 December. There were devastating bushfires in Australia during this time. The data was taken from NASA Earth Observations (NEO) website https://neo.gsfc.nasa.gov.
+The stars dataset aerosol_australia has aerosol optical thickness over Australia and surrounds for 13 months starting from 2019 December to 2020 December. There were devastating bushfires in Australia during this time. The data was taken from NASA Earth Observations (NEO) website https://neo.gsfc.nasa.gov [@nasa].
 
 
 ```{r stars1}

@@ -16,6 +16,91 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(stxplore)
+library(dplyr)
 ```
 
-TO DO
+## The dataset 
+We use aerosol optical thickness data from the NASA Earth Observations (NEO) website https://neo.gsfc.nasa.gov.  Let's load the data first. 
+
+```{r loaddata}
+data("aerosol_australia")
+aerosol_australia
+```
+
+
+## Initial explorations
+
+Let us visualise some snapshots first. 
+
+
+### Spatial snapshots through time
+
+```{r ssnap1}
+aerosol_australia4 <- aerosol_australia %>% 
+  slice(date, 1:4)
+spatial_snapshots(aerosol_australia4)
+```
+
+We see a plume of smoke on the south east of Australia in December 2019 and January 2020 due to the devastating bushfires. 
+
+
+### Time series snapshots for different locations
+
+To see how aerosol changes with time at different locations, we need to select a couple of locations first. We need to give the x and y values of the locations. The x values change from 110 to 180 and y values change from -1 to -70 (see the dataset section).  Looking at the above figures, let's pick locations (120, -20) and (150, -35)
+
+```{r tempsnap}
+xvals <- c(120, 150)
+yvals <- c(-20, -35)
+temporal_snapshots(aerosol_australia,
+                   xvals = xvals,
+                   yvals = yvals)
+
+```
+
+Even though we've given only 2 locations, we get more graphs. This is because the values that the data is recorded is not exactly equal to the locations we have specified. Because of that it picks the closest points to those locations we have specified. 
+
+
+### Spatial empirical means (averaged over time)
+
+Let's look at spatial means, averaged over time. That is, for each location we take the mean over time and plot the mean values by latitude and longitude. The top 2 graphs below shows the mean aerosol values. Each point corresponds to a location. 
+
+From the map we see that high aerosol values correspond to the south east part of Australia and also parts outside Australia.   
+
+
+```{r spmeans}
+spmeans <- spatial_means(aerosol_australia)
+autoplot(spmeans)
+
+
+```
+
+### Temporal empirical means (averaged over space)
+
+How do the aerosol levels change over time, when averaged over locations? The temporal_means functions gives the insights. 
+
+```{r tempmeans}
+tem <- temporal_means(aerosol_australia)
+autoplot(tem)
+```
+
+
+### Hovmoller plots
+
+Hovmoller plots collapses a spatio-temporal dataset (with 2 spatial dimensions) in one spatial dimension. In this case, we're collapsing the latitude by averaging. For each longitude value and for each timestamp, we take the average aerosol values over all latitudes. Then we get the following plot. 
+
+```{r hovmoller1}
+hov <- hovmoller(aerosol_australia, lat_or_lon = 'lon')
+autoplot(hov)
+```
+
+
+This plot shows the aerosol values were high in December and January for longitudes 140 - 165.  
+
+We can average over longitude values as well. 
+
+```{r hovmoller2}
+hov <- hovmoller(aerosol_australia, lat_or_lon = 'lat')
+autoplot(hov)
+```
+
+The grey values are missing values.  We see the aerosol values are high around latitude 40. 

@@ -136,7 +136,7 @@
 <div class="section level2">
 <h2 id="moving-on-to-stars-objects">Moving on to stars objects<a class="anchor" aria-label="anchor" href="#moving-on-to-stars-objects"></a>
 </h2>
-<p>The stars dataset aerosol_australia has aerosol optical thickness over Australia and surrounds for 13 months starting from 2019 December to 2020 December. There were devastating bushfires in Australia during this time. The data was taken from NASA website <a href="https://neo.gsfc.nasa.gov" class="external-link uri">https://neo.gsfc.nasa.gov</a>.</p>
+<p>The stars dataset aerosol_australia has aerosol optical thickness over Australia and surrounds for 13 months starting from 2019 December to 2020 December. There were devastating bushfires in Australia during this time. The data was taken from NASA Earth Observations (NEO) website <a href="https://neo.gsfc.nasa.gov" class="external-link uri">https://neo.gsfc.nasa.gov</a> (“NASA Earth Observations (NEO),” n.d.).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"aerosol_australia"</span><span class="op">)</span></span>
 <span></span>
@@ -153,8 +153,7 @@
 <span></span>
 <span><span class="va">temp_means</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/temporal_means.html">temporal_means</a></span><span class="op">(</span><span class="va">aerosol_australia</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">temp_means</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 6513 rows containing missing values (`geom_line()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 13 rows containing missing values (`geom_line()`).</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Removed 6513 rows containing missing values (`geom_line()`).</span></span></code></pre></div>
 <p><img src="reference/figures/README-stars1-1.png" width="100%"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -182,6 +181,9 @@
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-cressie2015statistics" class="csl-entry">
 Cressie, Noel, and Christopher K Wikle. 2015. <em><span class="nocase">Statistics for spatio-temporal data</span></em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-nasa" class="csl-entry">
+“NASA Earth Observations (NEO).” n.d. NASA. <a href="https://neo.gsfc.nasa.gov/" class="external-link uri">https://neo.gsfc.nasa.gov/</a>.
 </div>
 <div id="ref-wikle2019spatio" class="csl-entry">
 Wikle, Christopher K, Andrew Zammit-Mangion, and Noel Cressie. 2019. <em><span class="nocase">Spatio-temporal Statistics with R</span></em>. Chapman; Hall/CRC.

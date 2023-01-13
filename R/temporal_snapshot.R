@@ -105,7 +105,7 @@ temporal_snapshots.stars <- function(x,
                                      precision = 0,
                                      ...){
 
-  if(length(xvals)!=length(xvals)){
+  if(length(xvals)!=length(yvals)){
     stop("The number of x and y locations need to be the same.i.e, length(xvals) = length(yvals) ")
   }
 
@@ -118,7 +118,8 @@ temporal_snapshots.stars <- function(x,
   xt2 <- xt %>%
     dplyr::filter(xx %in% xvals & yy %in% yvals) %>%
     dplyr::group_by(xx, yy) %>%
-    dplyr::mutate(id = paste(xx,yy,sep="-"))
+    dplyr::mutate(id = paste(x,y,sep="-"))
+
 
   ggplot(xt2) +
     geom_line(aes(x = t, y = value)) +                         # line plot of z against t
