@@ -72,9 +72,128 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sevvandi.github.io/stxplore/">stxplore</a></span><span class="op">)</span></span></code></pre></div>
-<p>TO DO</p>
-  </main>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sevvandi.github.io/stxplore/">stxplore</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="the-dataset">The dataset<a class="anchor" aria-label="anchor" href="#the-dataset"></a>
+</h2>
+<p>We use aerosol optical thickness data from the NASA Earth
+Observations (NEO) website <a href="https://neo.gsfc.nasa.gov" class="external-link uri">https://neo.gsfc.nasa.gov</a>. Let’s load the data
+first.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"aerosol_australia"</span><span class="op">)</span></span>
+<span><span class="va">aerosol_australia</span></span>
+<span><span class="co">#&gt; stars object with 3 dimensions and 1 attribute</span></span>
+<span><span class="co">#&gt; attribute(s):</span></span>
+<span><span class="co">#&gt;                    Min. 1st Qu. Median     Mean 3rd Qu. Max.  NA's</span></span>
+<span><span class="co">#&gt; aerosol_thickness     1      19     26 27.06014      33  254 13585</span></span>
+<span><span class="co">#&gt; dimension(s):</span></span>
+<span><span class="co">#&gt;      from to offset delta refsys point                    values x/y</span></span>
+<span><span class="co">#&gt; x       1 70    110     1 WGS 84 FALSE                      NULL [x]</span></span>
+<span><span class="co">#&gt; y       1 70      0    -1 WGS 84 FALSE                      NULL [y]</span></span>
+<span><span class="co">#&gt; date    1 13     NA    NA   Date    NA 2019-12-01,...,2020-12-01</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="initial-explorations">Initial explorations<a class="anchor" aria-label="anchor" href="#initial-explorations"></a>
+</h2>
+<p>Let us visualise some snapshots first.</p>
+<div class="section level3">
+<h3 id="spatial-snapshots-through-time">Spatial snapshots through time<a class="anchor" aria-label="anchor" href="#spatial-snapshots-through-time"></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">aerosol_australia4</span> <span class="op">&lt;-</span> <span class="va">aerosol_australia</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="va">date</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/spatial_snapshots.html">spatial_snapshots</a></span><span class="op">(</span><span class="va">aerosol_australia4</span><span class="op">)</span></span></code></pre></div>
+<p><img src="stxplore_stars_files/figure-html/ssnap1-1.png" width="700"></p>
+<p>We see a plume of smoke on the south east of Australia in December
+2019 and January 2020 due to the devastating bushfires.</p>
+</div>
+<div class="section level3">
+<h3 id="time-series-snapshots-for-different-locations">Time series snapshots for different locations<a class="anchor" aria-label="anchor" href="#time-series-snapshots-for-different-locations"></a>
+</h3>
+<p>To see how aerosol changes with time at different locations, we need
+to select a couple of locations first. We need to give the x and y
+values of the locations. The x values change from 110 to 180 and y
+values change from -1 to -70 (see the dataset section). Looking at the
+above figures, let’s pick locations (120, -20) and (150, -35)</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">xvals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">120</span>, <span class="fl">150</span><span class="op">)</span></span>
+<span><span class="va">yvals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="op">-</span><span class="fl">35</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/temporal_snapshots.html">temporal_snapshots</a></span><span class="op">(</span><span class="va">aerosol_australia</span>,</span>
+<span>                   xvals <span class="op">=</span> <span class="va">xvals</span>,</span>
+<span>                   yvals <span class="op">=</span> <span class="va">yvals</span><span class="op">)</span></span></code></pre></div>
+<p><img src="stxplore_stars_files/figure-html/tempsnap-1.png" width="700"></p>
+<p>Even though we’ve given only 2 locations, we get more graphs. This is
+because the values that the data is recorded is not exactly equal to the
+locations we have specified. Because of that it picks the closest points
+to those locations we have specified.</p>
+</div>
+<div class="section level3">
+<h3 id="spatial-empirical-means-averaged-over-time">Spatial empirical means (averaged over time)<a class="anchor" aria-label="anchor" href="#spatial-empirical-means-averaged-over-time"></a>
+</h3>
+<p>Let’s look at spatial means, averaged over time. That is, for each
+location we take the mean over time and plot the mean values by latitude
+and longitude. The top 2 graphs below shows the mean aerosol values.
+Each point corresponds to a location.</p>
+<p>From the map we see that high aerosol values correspond to the south
+east part of Australia and also parts outside Australia.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">spmeans</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatial_means.html">spatial_means</a></span><span class="op">(</span><span class="va">aerosol_australia</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">spmeans</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 260 rows containing missing values (`geom_point()`).</span></span>
+<span><span class="co">#&gt; Removed 260 rows containing missing values (`geom_point()`).</span></span></code></pre></div>
+<p><img src="stxplore_stars_files/figure-html/spmeans-1.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; TableGrob (3 x 2) "arrange": 4 grobs</span></span>
+<span><span class="co">#&gt;   z     cells    name                grob</span></span>
+<span><span class="co">#&gt; 1 1 (2-2,1-1) arrange      gtable[layout]</span></span>
+<span><span class="co">#&gt; 2 2 (2-2,2-2) arrange      gtable[layout]</span></span>
+<span><span class="co">#&gt; 3 3 (3-3,1-2) arrange      gtable[layout]</span></span>
+<span><span class="co">#&gt; 4 4 (1-1,1-2) arrange text[GRID.text.716]</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="temporal-empirical-means-averaged-over-space">Temporal empirical means (averaged over space)<a class="anchor" aria-label="anchor" href="#temporal-empirical-means-averaged-over-space"></a>
+</h3>
+<p>How do the aerosol levels change over time, when averaged over
+locations? The temporal_means functions gives the insights.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tem</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/temporal_means.html">temporal_means</a></span><span class="op">(</span><span class="va">aerosol_australia</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">tem</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 6513 rows containing missing values (`geom_line()`).</span></span></code></pre></div>
+<p><img src="stxplore_stars_files/figure-html/tempmeans-1.png" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="hovmoller-plots">Hovmoller plots<a class="anchor" aria-label="anchor" href="#hovmoller-plots"></a>
+</h3>
+<p>Hovmoller plots collapses a spatio-temporal dataset (with 2 spatial
+dimensions) in one spatial dimension. In this case, we’re collapsing the
+latitude by averaging. For each longitude value and for each timestamp,
+we take the average aerosol values over all latitudes. Then we get the
+following plot.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hov</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hovmoller.html">hovmoller</a></span><span class="op">(</span><span class="va">aerosol_australia</span>, lat_or_lon <span class="op">=</span> <span class="st">'lon'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">hov</span><span class="op">)</span></span></code></pre></div>
+<p><img src="stxplore_stars_files/figure-html/hovmoller1-1.png" width="700"></p>
+<p>This plot shows the aerosol values were high in December and January
+for longitudes 140 - 165.</p>
+<p>We can average over longitude values as well.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hov</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hovmoller.html">hovmoller</a></span><span class="op">(</span><span class="va">aerosol_australia</span>, lat_or_lon <span class="op">=</span> <span class="st">'lat'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">hov</span><span class="op">)</span></span></code></pre></div>
+<p><img src="stxplore_stars_files/figure-html/hovmoller2-1.png" width="700"></p>
+<p>The grey values are missing values. We see the aerosol values are
+high around latitude 40.</p>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
