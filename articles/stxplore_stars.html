@@ -81,7 +81,9 @@
 <span><span class="co">#&gt;     filter, lag</span></span>
 <span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span></code></pre></div>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/cubelyr" class="external-link">cubelyr</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="the-dataset">The dataset<a class="anchor" aria-label="anchor" href="#the-dataset"></a>
 </h2>
@@ -190,6 +192,123 @@ for longitudes 140 - 165.</p>
 <p><img src="stxplore_stars_files/figure-html/hovmoller2-1.png" width="700"></p>
 <p>The grey values are missing values. We see the aerosol values are
 high around latitude 40.</p>
+</div>
+<div class="section level3">
+<h3 id="ridgeline-plots">Ridgeline plots<a class="anchor" aria-label="anchor" href="#ridgeline-plots"></a>
+</h3>
+<p>Ridgeline plots show the distribution of a quantity for several
+groups. It can be spatially grouped, for example by latitude or
+longitude, or grouped by time.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ridgeline.html">ridgeline</a></span><span class="op">(</span><span class="va">aerosol_australia</span>, group_dim <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `stat(x)` was deprecated in ggplot2 3.4.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `after_stat(x)` instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">stxplore</span> package.</span></span>
+<span><span class="co">#&gt;   Please report the issue to the authors.</span></span>
+<span><span class="co">#&gt; Picking joint bandwidth of 2.01</span></span></code></pre></div>
+<p><img src="stxplore_stars_files/figure-html/ridgeline-1.png" width="700"></p>
+<p>We see that for certain latitudes the aerosol distribution has a
+large tail.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="investigating-the-covariance">Investigating the covariance<a class="anchor" aria-label="anchor" href="#investigating-the-covariance"></a>
+</h2>
+<div class="section level3">
+<h3 id="empirical-covarainces">Empirical covarainces<a class="anchor" aria-label="anchor" href="#empirical-covarainces"></a>
+</h3>
+<p>Covariances let us know how related one variable/observation is to
+another variable/observation. In the case of spatio-temporal dataset, we
+generally have 3 dimensions: latitude, longitude and time. The empirical
+covariance matrix will tell us how the values depend on these
+dimensions.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">aerosol_region</span> <span class="op">&lt;-</span> <span class="va">aerosol_australia</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;</span> <span class="fl">150</span>, <span class="va">x</span> <span class="op">&lt;</span> <span class="fl">170</span>, <span class="va">y</span> <span class="op">&lt;</span> <span class="op">-</span><span class="fl">20</span>, <span class="va">y</span><span class="op">&gt;</span> <span class="op">-</span><span class="fl">40</span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># longitudinal strips</span></span>
+<span><span class="va">emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emp_spatial_cov.html">emp_spatial_cov</a></span><span class="op">(</span><span class="va">aerosol_region</span>, num_strips <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span></span></code></pre></div>
+<p><img src="stxplore_stars_files/figure-html/empcov1-1.png" width="700"></p>
+<p>Above we’ve plotted the empirical covariance for 2 longitudinal
+plots. That is, we’ve broken up the dataset to 2 parts, by longitude,
+and have plotted the covariance.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># latitude strips</span></span>
+<span><span class="va">emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emp_spatial_cov.html">emp_spatial_cov</a></span><span class="op">(</span><span class="va">aerosol_region</span>, num_strips <span class="op">=</span> <span class="fl">2</span>, lat_or_lon_strips <span class="op">=</span> <span class="st">'lat'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span></span></code></pre></div>
+<p><img src="stxplore_stars_files/figure-html/empcov2-1.png" width="700"></p>
+<p>In both plots we see many white patches corresponding to NA entries.
+This is because for certain latitudes and longitudes there are missing
+values.</p>
+</div>
+<div class="section level3">
+<h3 id="space-time-semivariograms">Space-time semivariograms<a class="anchor" aria-label="anchor" href="#space-time-semivariograms"></a>
+</h3>
+<p>Semivariograms combine the latitude and longitude to find the
+distance between points and shows how the quantity of interest changes
+with distance and time. In the figure below we see that the variation of
+aerosol values between locations and time points close by is low (dark
+red/orange), and variation between locations and time points far away is
+high (light yellow). This is to be expected. But it is useful to know
+how similar observations close by (in time and space) are how dissimilar
+observations far away are.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">semi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/semivariogram.html">semivariogram</a></span><span class="op">(</span><span class="va">aerosol_region</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in variogramST(formula = object, locations = locations, data = data, :</span></span>
+<span><span class="co">#&gt; strictly irregular time steps were assumed to be regular</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">semi</span><span class="op">)</span></span></code></pre></div>
+<p><img src="stxplore_stars_files/figure-html/semivariogram1-1.png" width="700"></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="computations-similar-to-pca">Computations similar to PCA<a class="anchor" aria-label="anchor" href="#computations-similar-to-pca"></a>
+</h2>
+<div class="section level3">
+<h3 id="empirical-orthogonal-functions-eof">Empirical Orthogonal Functions (EOF)<a class="anchor" aria-label="anchor" href="#empirical-orthogonal-functions-eof"></a>
+</h3>
+<p>Empirical Orthogonal Function (EOF) analysis is used to find
+covariability within a dataset (generally spatio-temporal) and depict it
+usin a fewer number of components. This is PCA for spatio-temporal
+data.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">eoff</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emp_orth_fun.html">emp_orth_fun</a></span><span class="op">(</span><span class="va">aerosol_australia</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">eoff</span>, EOF_num <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<p><img src="stxplore_stars_files/figure-html/eof-1.png" width="700"></p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">eoff</span>, EOF_num <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="stxplore_stars_files/figure-html/eof-2.png" width="700"></p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">eoff</span>, EOF_num <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<p><img src="stxplore_stars_files/figure-html/eof-3.png" width="700"></p>
+<p>EOF analysis ensures that the PC time series are orthogonal in time.
+Let’s check the correlation between these t</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pc1</span> <span class="op">&lt;-</span> <span class="va">eoff</span><span class="op">$</span><span class="va">pcts</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">EOF</span> <span class="op">==</span> <span class="st">'X1'</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">nPC</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pc2</span> <span class="op">&lt;-</span> <span class="va">eoff</span><span class="op">$</span><span class="va">pcts</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">EOF</span> <span class="op">==</span> <span class="st">'X2'</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">nPC</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">pc1</span>, <span class="va">pc2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 2.300647e-16</span></span></code></pre></div>
+<p>The matrix below shows the correlation between the first 3 PC time
+series. The off diagonal elements are very close to zero.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pcs</span> <span class="op">&lt;-</span> <span class="va">eoff</span><span class="op">$</span><span class="va">pcts</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">t</span>, <span class="va">EOF</span>, <span class="va">nPC</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">EOF</span>, values_from <span class="op">=</span> <span class="va">nPC</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">t</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cormat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">pcs</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="va">cormat</span></span>
+<span><span class="co">#&gt;              X1           X2           X3</span></span>
+<span><span class="co">#&gt; X1 1.000000e+00 2.300647e-16 5.085021e-17</span></span>
+<span><span class="co">#&gt; X2 2.300647e-16 1.000000e+00 4.691998e-18</span></span>
+<span><span class="co">#&gt; X3 5.085021e-17 4.691998e-18 1.000000e+00</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

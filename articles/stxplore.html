@@ -81,7 +81,8 @@
 <span><span class="co">#&gt;     filter, lag</span></span>
 <span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span></code></pre></div>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="the-dataset">The dataset<a class="anchor" aria-label="anchor" href="#the-dataset"></a>
 </h2>
@@ -272,13 +273,32 @@ interesting.</p>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">hov</span>, legend_title <span class="op">=</span> <span class="st">"Temperature"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="stxplore_files/figure-html/hovm2-1.png" width="700"></p>
 </div>
+<div class="section level3">
+<h3 id="ridgeline-plots">Ridgeline plots<a class="anchor" aria-label="anchor" href="#ridgeline-plots"></a>
+</h3>
+<p>Ridgeline plots show the distribution of a numeric value for
+different groups. Let us look at the maximum temperature distribution
+for different latitude values.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="../reference/ridgeline.html">ridgeline</a></span><span class="op">(</span><span class="va">Tmax</span>, group_col <span class="op">=</span> <span class="st">'lat'</span>, z_col <span class="op">=</span> <span class="st">'z'</span> <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `stat(x)` was deprecated in ggplot2 3.4.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `after_stat(x)` instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">stxplore</span> package.</span></span>
+<span><span class="co">#&gt;   Please report the issue to the authors.</span></span>
+<span><span class="co">#&gt; Picking joint bandwidth of 1.76</span></span></code></pre></div>
+<p><img src="stxplore_files/figure-html/ridgeline-1.png" width="700"></p>
+<p>For higher latitudes, the maximum temperature distribution has a
+longer left tail. That is, during certain periods the maximum
+temperature is lower compared to lower latitudes.</p>
+</div>
 </div>
 <div class="section level2">
-<h2 id="empirical-covarainces-semivariograms-and-orthogonal-functions">Empirical covarainces, semivariograms and orthogonal functions<a class="anchor" aria-label="anchor" href="#empirical-covarainces-semivariograms-and-orthogonal-functions"></a>
+<h2 id="investigating-the-covariance">Investigating the covariance<a class="anchor" aria-label="anchor" href="#investigating-the-covariance"></a>
 </h2>
 <p>Empirical covariances, spatio-temporal covariograms and
-semivariograms are popular tools in spatio-temporal exploration. In this
-section, we will look at plotting some of these objects. For more
+semivariograms are informative tools in spatio-temporal exploration. In
+this section, we will look at plotting some of these objects. For more
 details on covariances, semivariograms and orthogonal functions please
 refer Chapter 2.4.2 in Spatio-Temporal Statistics with R by Christopher
 K. Wikle, Andrew Zammit-Mangion and Noel Cressie.</p>
@@ -299,7 +319,7 @@ plot the associated covariance matrices for those strips.</p>
 <p>Let’s see some longitudinal strips for this dataset after removing a
 quadratic time and a linear space trend. We will see how they change
 with latitude values.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">esv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emp_spatial_cov.html">emp_spatial_cov</a></span><span class="op">(</span><span class="va">Tmax</span>,</span>
 <span>                       lat_col <span class="op">=</span> <span class="st">"lat"</span>,</span>
 <span>                       lon_col <span class="op">=</span> <span class="st">"lon"</span>,</span>
@@ -315,7 +335,7 @@ with latitude values.</p>
 <p><img src="stxplore_files/figure-html/stecov1-1.png" width="700"></p>
 <p>Similarly, we can also plot latitude strips; the x axis will be
 longitude then.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">esv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emp_spatial_cov.html">emp_spatial_cov</a></span><span class="op">(</span><span class="va">Tmax</span>,</span>
 <span>                       lat_col <span class="op">=</span> <span class="st">"lat"</span>,</span>
 <span>                       lon_col <span class="op">=</span> <span class="st">"lon"</span>,</span>
@@ -331,7 +351,7 @@ longitude then.</p>
 <p>We can also compute the lagged covariance. We do this by setting the
 <em>lag</em> parameter. Let’s see the lagged-1 empirical covariance for
 this data after removing a quadratic trend in time.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># longitudinal strips</span></span>
 <span><span class="va">esv1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emp_spatial_cov.html">emp_spatial_cov</a></span><span class="op">(</span><span class="va">Tmax</span>,</span>
 <span>                        lat_col <span class="op">=</span> <span class="st">"lat"</span>,</span>
@@ -346,7 +366,7 @@ this data after removing a quadratic trend in time.</p>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">esv1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="stxplore_files/figure-html/stecov3-1.png" width="700"></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># latitude strips</span></span>
 <span><span class="va">esv2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emp_spatial_cov.html">emp_spatial_cov</a></span><span class="op">(</span><span class="va">Tmax</span>,</span>
@@ -363,17 +383,16 @@ this data after removing a quadratic trend in time.</p>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">esv2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="stxplore_files/figure-html/stecov3-2.png" width="700"></p>
 </div>
-</div>
-<div class="section level2">
-<h2 id="space-time-semi-variograms">Space-time semi-variograms<a class="anchor" aria-label="anchor" href="#space-time-semi-variograms"></a>
-</h2>
+<div class="section level3">
+<h3 id="space-time-semi-variograms">Space-time semi-variograms<a class="anchor" aria-label="anchor" href="#space-time-semi-variograms"></a>
+</h3>
 <p>To plot space-time semi-variograms we need to construct an object of
 STDF Class. We do this inside the function <em>semivariogram</em>. To
 create an STDF object, we need spatio-temporal data with a full
 spate-time grid. That is, we need a matrix of M x N size, where N is the
 number of spatial locations and M is the number of timestamps. Let’s
 have a look at these files.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Location data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">locs</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">locs</span><span class="op">)</span></span>
@@ -407,7 +426,7 @@ have a look at these files.</p>
 <p>For this dataset, NA values are stored as -9999. First we select part
 of the dataset by subsetting the time component. We select the
 appropriate rows in both Times and Tmax.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">temp_part</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">Times</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co"># Selecting the dates from 0992-07-01 to 1992-07-31</span></span>
 <span><span class="va">temp_part</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">temp_part</span><span class="op">)</span><span class="op">[</span><span class="fl">913</span><span class="op">:</span><span class="fl">943</span><span class="op">]</span><span class="op">)</span></span>
@@ -418,7 +437,7 @@ the semi-variogram. We include a bin size of 50km and up to 7 timelags.
 We can specify if we need to remove the linear trend of the latitude or
 longitude. First, let’s see what happens without removing the linear
 trend.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">semiv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/semivariogram.html">semivariogram</a></span><span class="op">(</span><span class="va">locs</span>,</span>
 <span>        <span class="va">temp_part</span>,</span>
 <span>        <span class="va">Tmax2</span>,</span>
@@ -433,7 +452,7 @@ trend.</p>
 <p><img src="stxplore_files/figure-html/stsemiv3-1.png" width="700"></p>
 <p>Now let’s see what happens if we account for a linear trend in
 latitude.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">semiv</span><span class="op">&lt;-</span> <span class="fu"><a href="../reference/semivariogram.html">semivariogram</a></span><span class="op">(</span><span class="va">locs</span>,</span>
 <span>        <span class="va">temp_part</span>,</span>
 <span>        <span class="va">Tmax2</span>,</span>
@@ -446,7 +465,7 @@ latitude.</p>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">semiv</span><span class="op">)</span></span></code></pre></div>
 <p><img src="stxplore_files/figure-html/stsemiv4-1.png" width="700"></p>
 <p>What about longitude?</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">semiv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/semivariogram.html">semivariogram</a></span><span class="op">(</span><span class="va">locs</span>,</span>
 <span>        <span class="va">temp_part</span>,</span>
 <span>        <span class="va">Tmax2</span>,</span>
@@ -461,8 +480,54 @@ latitude.</p>
 <p>We see a big reduction in dark red squares when we include latitude,
 but not so much when we include both latitude and longitude. That means,
 there is a spatial component that we need to account for.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="computations-similar-to-pca">Computations similar to PCA<a class="anchor" aria-label="anchor" href="#computations-similar-to-pca"></a>
+</h2>
 <div class="section level3">
-<h3 id="section"></h3>
+<h3 id="empirical-orthogonal-functions-eof">Empirical Orthogonal Functions (EOF)<a class="anchor" aria-label="anchor" href="#empirical-orthogonal-functions-eof"></a>
+</h3>
+<p>Empirical orthogonal functions are the PCA equivalent to
+spatio-temporal data.</p>
+<p><span class="math display">\[Z(x,y,t) = \sum_{k = 1}^N \lambda_k
+PC_k(t) \times EOF_k(x,y)\]</span></p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">SSTlonlatshort</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">SSTdatashort</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">SSTlandmaskshort</span><span class="op">)</span></span>
+<span><span class="co"># Take first 396 months (33 years) and delete land</span></span>
+<span><span class="va">delete_rows</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">SSTlandmaskshort</span>  <span class="op">==</span>  <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">SSTdatashort</span>   <span class="op">&lt;-</span> <span class="va">SSTdatashort</span><span class="op">[</span><span class="op">-</span><span class="va">delete_rows</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">396</span><span class="op">]</span></span>
+<span><span class="va">eoff</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emp_orth_fun.html">emp_orth_fun</a></span><span class="op">(</span><span class="va">SSTlonlatshort</span><span class="op">[</span><span class="op">-</span><span class="va">delete_rows</span>,  <span class="op">]</span>,</span>
+<span>                     <span class="va">SSTdatashort</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">eoff</span><span class="op">)</span></span></code></pre></div>
+<p><img src="stxplore_files/figure-html/eof1-1.png" width="700"></p>
+<p>That was the first EOF and PC time series. Let’s look at the second
+EOF and associated time series.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">eoff</span>, EOF_num <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="stxplore_files/figure-html/eof2-1.png" width="700"></p>
+<p>EOF is used as a dimension reduction tool.</p>
+<p>The matrix below shows the correlation between the first 3 PC time
+series. The off diagonal elements are very close to zero. Just like in
+PCA, the PC time series are uncorrelated.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pcs</span> <span class="op">&lt;-</span> <span class="va">eoff</span><span class="op">$</span><span class="va">pcts</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">t</span>, <span class="va">EOF</span>, <span class="va">nPC</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">EOF</span>, values_from <span class="op">=</span> <span class="va">nPC</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">t</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cormat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">pcs</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="va">cormat</span></span>
+<span><span class="co">#&gt;               X1            X2            X3</span></span>
+<span><span class="co">#&gt; X1  1.000000e+00  1.306506e-17 -3.208918e-17</span></span>
+<span><span class="co">#&gt; X2  1.306506e-17  1.000000e+00 -6.372879e-18</span></span>
+<span><span class="co">#&gt; X3 -3.208918e-17 -6.372879e-18  1.000000e+00</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="canonical-correlation">Canonical Correlation<a class="anchor" aria-label="anchor" href="#canonical-correlation"></a>
+</h3>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
