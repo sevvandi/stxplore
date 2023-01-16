@@ -42,6 +42,7 @@ Suggests:
     rmarkdown,
     ncmeta,
     units,
-    maps
+    maps,
+    cubelyr
 VignetteBuilder: knitr
 URL: https://sevvandi.github.io/stxplore/
