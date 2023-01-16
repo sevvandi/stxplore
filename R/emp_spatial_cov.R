@@ -104,16 +104,18 @@ emp_spatial_cov.data.frame <- function(x,
     dplyr::select(-space, -group) %>%                               # drop co-ordinate info
     t()
 
+
+
   if(lag == 0){
     # Empirical log-0  Covariance Matrices
-    Lag_cov <- cov(df_sw, use = 'complete.obs')
+    Lag_cov <- cov(df_sw, use = 'pairwise.complete.obs')
   }else if(lag == 1){
     # Empirical lag-1 Covariance Matrices
     Lag_cov <- cov(df_sw[-1, ], df_sw[-nrow(df_sw), ],
-                    use = 'complete.obs')
+                    use = 'pairwise.complete.obs')
   }else if(lag == 2){
     Lag_cov <- cov(df_sw[-c(1:2),] , df_sw[-c(nrow(df_sw)-1):nrow(df_sw), ],
-                    use = 'complete.obs')
+                    use = 'pairwise.complete.obs')
   }
 
 
@@ -182,6 +184,7 @@ emp_spatial_cov.stars <- function(x,
 
 
   df <- dplyr::as_tibble(x)
+  colnames(df)[dim(df)[2]] <- 'z'
   df <- as.data.frame(df)
   inds <- which(!is.na(df$z))
   df <- df[inds, ]
