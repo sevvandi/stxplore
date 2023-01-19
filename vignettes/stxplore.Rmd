@@ -325,6 +325,8 @@ We see a big reduction in dark red squares when we include latitude, but not so 
 Empirical orthogonal functions are the PCA equivalent to spatio-temporal data. 
 
 $$Z(x,y,t) = \sum_{k = 1}^N \lambda_k PC_k(t) \times EOF_k(x,y)$$
+Here the multiplication denotes the outer product. That is for each value of $PC_k(t)$, $EOF_k(x,y)$ gets multiplied by it and we get a 3D data cube. By adding $N$ such data cubes we get $Z$ back. 
+
 
 ```{r eof1}
 data(SSTlonlatshort)
@@ -361,4 +363,24 @@ cormat
 ```
 
 
-### Canonical Correlation
+### Spatio-temporal Canonical Correlation Analysis
+
+Canonical Correlation Analysis (CCA) is used to identify associations between two sets of variables. For example suppose $X_1, X_2, X_3$ are variables from a psychological survey of a set of participants. Let $Y_1, Y_2, Y_3, Y_4$ be a set of university grades of the same set of participants. CCA finds new variables that maximizes the correlation between X and Y sets of variables. For example CCA finds $U_1 = a_1 X_1 + a_2 X_2 + a_3 X_3$ and $V_1 = b_1 Y_1 + b_2 Y_2 + b_3 Y_3 + b_4 Y_4$ such that correlation between $U_1$ and $V_1$ is maximized. Similarly, it finds $U_2$ and $V_2$ and so on. 
+
+In the spatio-temporal setting we can either use two different datasets or we can use a lagged version of the same dataset. But, we cannot implement the CCA on raw data because for most datasets the unique time points $T < n$ where $n$ gives the number of spatial points. Because of this we carry out CCA on Empirical Orthogonal Functions of the data. Recall that EOFs find the temporal PC vectors and the spatial EOF maps. 
+
+$$Z(x,y,t) = \sum_{k = 1}^N \lambda_k PC_k(t) \times EOF_k(x,y)$$
+We take a number of temporal PCs and compute CCA on these. We can do it in two ways. If we're interested in future predictions of the same data, we can use a lagged dataset. In this case, our first dataset will have $PC_k(t)$ for $1 \leq t \leq (T - \ell)$ for all $k$ where $l$ denotes the lag, and the second dataset will have  $PC_k(t)$ for $(\ell +1) \leq t \leq T$ for all $k$. This analysis will give us the new variables. We will plot the first new temporal variable for the first dataset and the first new temporal variable for the second dataset.  
+
+```{r cancor}
+data(SSTlonlatshort)
+data(SSTdatashort)
+cc1 <- cancor_eof(x = SSTlonlatshort,
+           lag = 7,
+           n_eof = 8,
+           values_df = SSTdatashort)
+autoplot(cc1)
+
+```
+
+We can also produce weighted maps. We can weight the EOF maps $EOF_k(x,y)$ by CCA coefficients.  The map above is such a weighted map.  

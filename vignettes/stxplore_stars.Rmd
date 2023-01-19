@@ -19,6 +19,7 @@ library(stxplore)
 library(dplyr)
 library(tidyr)
 library(cubelyr)
+library(stars)
 ```
 
 ## The dataset 
@@ -195,6 +196,16 @@ pcs <- eoff$pcts %>%
 
 cormat <- cor(pcs)[1:3, 1:3]
 cormat
+```
+
+
+### Spatio-temporal Canonical Correlation Analysis
+
+Canonical correlation analysis identifies associations between two sets of variables/datasets. For spatio-temporal analysis we perform canonical correlation analysis on EOFs. (See Exploration using dataframes > Spatio-temporal CCA for more details.)   
+
+```{r cancor}
+cc1 <- cancor_eof(aerosol_australia, lag = 6, n_eof = 4)
+autoplot(cc1)
 ```
 
 

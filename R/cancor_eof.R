@@ -72,13 +72,12 @@ cancor_eof.data.frame <- function(x,
                                  (EOFset2 %*%  cc$ycoef[,1])[,1]),
                         Variable = c(rep("CCA1", nT-lag), rep("CCA2", nT-lag)))
 
-
-
   structure(list(
     cancor_df = CCA_df,
     eofs_df = EOFs_CCA,
     locations_df = locations_df,
     values_df = values_df,
+    cancor_obj = cc,
     call = match.call()
   ), class='cancoreof')
 
