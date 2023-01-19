@@ -491,7 +491,10 @@ there is a spatial component that we need to account for.</p>
 <p>Empirical orthogonal functions are the PCA equivalent to
 spatio-temporal data.</p>
 <p><span class="math display">\[Z(x,y,t) = \sum_{k = 1}^N \lambda_k
-PC_k(t) \times EOF_k(x,y)\]</span></p>
+PC_k(t) \times EOF_k(x,y)\]</span> Here the multiplication denotes the
+outer product. That is for each value of <span class="math inline">\(PC_k(t)\)</span>, <span class="math inline">\(EOF_k(x,y)\)</span> gets multiplied by it and we
+get a 3D data cube. By adding <span class="math inline">\(N\)</span>
+such data cubes we get <span class="math inline">\(Z\)</span> back.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">SSTlonlatshort</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">SSTdatashort</span><span class="op">)</span></span>
@@ -526,8 +529,46 @@ PCA, the PC time series are uncorrelated.</p>
 <span><span class="co">#&gt; X3 -3.208918e-17 -6.372879e-18  1.000000e+00</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="canonical-correlation">Canonical Correlation<a class="anchor" aria-label="anchor" href="#canonical-correlation"></a>
+<h3 id="spatio-temporal-canonical-correlation-analysis">Spatio-temporal Canonical Correlation Analysis<a class="anchor" aria-label="anchor" href="#spatio-temporal-canonical-correlation-analysis"></a>
 </h3>
+<p>Canonical Correlation Analysis (CCA) is used to identify associations
+between two sets of variables. For example suppose <span class="math inline">\(X_1, X_2, X_3\)</span> are variables from a
+psychological survey of a set of participants. Let <span class="math inline">\(Y_1, Y_2, Y_3, Y_4\)</span> be a set of university
+grades of the same set of participants. CCA finds new variables that
+maximizes the correlation between X and Y sets of variables. For example
+CCA finds <span class="math inline">\(U_1 = a_1 X_1 + a_2 X_2 + a_3
+X_3\)</span> and <span class="math inline">\(V_1 = b_1 Y_1 + b_2 Y_2 +
+b_3 Y_3 + b_4 Y_4\)</span> such that correlation between <span class="math inline">\(U_1\)</span> and <span class="math inline">\(V_1\)</span> is maximized. Similarly, it finds
+<span class="math inline">\(U_2\)</span> and <span class="math inline">\(V_2\)</span> and so on.</p>
+<p>In the spatio-temporal setting we can either use two different
+datasets or we can use a lagged version of the same dataset. But, we
+cannot implement the CCA on raw data because for most datasets the
+unique time points <span class="math inline">\(T &lt; n\)</span> where
+<span class="math inline">\(n\)</span> gives the number of spatial
+points. Because of this we carry out CCA on Empirical Orthogonal
+Functions of the data. Recall that EOFs find the temporal PC vectors and
+the spatial EOF maps.</p>
+<p><span class="math display">\[Z(x,y,t) = \sum_{k = 1}^N \lambda_k
+PC_k(t) \times EOF_k(x,y)\]</span> We take a number of temporal PCs and
+compute CCA on these. We can do it in two ways. If we’re interested in
+future predictions of the same data, we can use a lagged dataset. In
+this case, our first dataset will have <span class="math inline">\(PC_k(t)\)</span> for <span class="math inline">\(1
+\leq t \leq (T - \ell)\)</span> for all <span class="math inline">\(k\)</span> where <span class="math inline">\(l\)</span> denotes the lag, and the second dataset
+will have <span class="math inline">\(PC_k(t)\)</span> for <span class="math inline">\((\ell +1) \leq t \leq T\)</span> for all <span class="math inline">\(k\)</span>. This analysis will give us the new
+variables. We will plot the first new temporal variable for the first
+dataset and the first new temporal variable for the second dataset.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">SSTlonlatshort</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">SSTdatashort</span><span class="op">)</span></span>
+<span><span class="va">cc1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cancor_eof.html">cancor_eof</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">SSTlonlatshort</span>,</span>
+<span>           lag <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>           n_eof <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>           values_df <span class="op">=</span> <span class="va">SSTdatashort</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Canonical Correlation Analysis is carried out using a lagged dataset."</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">cc1</span><span class="op">)</span></span></code></pre></div>
+<p><img src="stxplore_files/figure-html/cancor-1.png" width="700"></p>
+<p>We can also produce weighted maps. We can weight the EOF maps <span class="math inline">\(EOF_k(x,y)\)</span> by CCA coefficients. The map
+above is such a weighted map.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
