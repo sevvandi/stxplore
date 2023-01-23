@@ -1,12 +1,28 @@
-#' Computes spatial empirical means using a dataframe as input
+#' Computes spatial empirical means using a dataframe or a stars object
 #'
+#' @description
 #' This function computes spatial empirical means by latitude and longitude averaged over time.
+#' This function can take either a stars object or a dataframe. Input arguments differ for each case.
+#' The autoplot function can plot this object.
+#'
+#' The variations are
+#'  * 'spatial_means.data.frame()' if the input is a dataframe
+#'  * 'spatial_means.stars()' if the input is a stars object
+#'  * 'autoplot.spatialmeans()' to plot the outputs.
+#'
 #'
 #' @inheritParams spatial_snapshots
 #' @inheritParams spatial_snapshots.data.frame
-#' @inheritParams spatial_means
+#' @param object For autoplot: the output from the `spatial_means' function.
+#' @param ylab For autoplot: the ylabel.
+#' @param xlab1 For autoplot: The xlabel for the first plot.
+#' @param xlab2 For autuoplot: The xlabel for the second plot.
+#' @param ... Other arguments currently ignored.
+#'
+#' @return A spatialmeans object contaiing spatial averages and the original data.
 #'
 #' @examples
+#' # dataframe example
 #' data(NOAA_df_1990)
 #' library(dplyr)
 #' Tmax <- filter(NOAA_df_1990,                      # subset the data
@@ -14,12 +30,27 @@
 #'                 month %in% 5:9 &                 # May to July
 #'                 year == 1993)                    # year 1993
 #' Tmax$t <- Tmax$julian - min(Tmax$julian) + 1      # create a new time variable starting at 1
-#' spatial_means(Tmax,
+#' sp_df <- spatial_means(Tmax,
 #'        lat_col = "lat",
 #'        lon_col = "lon",
 #'        t_col = "t",
 #'        z_col = "z")
+#' autoplot(sp_df)
 #'
+#' # stars examples
+#' library(stars)
+#' tif = system.file("tif/olinda_dem_utm25s.tif", package = "stars")
+#' x <- read_stars(tif)
+#' sp_means <- spatial_means(x)
+#' autoplot(sp_means)
+#'
+#' @export
+spatial_means <- function(x,
+                          ...){
+  UseMethod("spatial_means")
+}
+
+#' @rdname spatial_means
 #' @export
 spatial_means.data.frame <- function(x,
                    lat_col,
@@ -74,19 +105,7 @@ spatial_means.data.frame <- function(x,
 }
 
 
-#' Computes spatial empirical means using a stars object as input
-#'
-#' This function computes spatial empirical means by latitude and longitude averaged over time.
-#'
-#' @inheritParams spatial_means
-#'
-#' @examples
-#' library(stars)
-#' tif = system.file("tif/olinda_dem_utm25s.tif", package = "stars")
-#' x <- read_stars(tif)
-#' sp_means <- spatial_means(x)
-#' sp_means
-#'
+#' @rdname spatial_means
 #' @export
 spatial_means.stars <- function(x,
                                 ...){
@@ -133,4 +152,46 @@ spatial_means.stars <- function(x,
     call = match.call()
   ), class='spatialmeans')
 
+}
+
+#' @rdname spatial_means
+#' @export
+autoplot.spatialmeans <- function(object,
+                                  ylab = "Mean Value",
+                                  xlab1 = "Latitude",
+                                  xlab2 = "Longitude",
+                                  title = "Spatial Empirical Means",
+                                  ...){
+
+  x <- y <- mu_emp <- NULL
+
+  spat_av <- object$spatial_avg
+  lat_means <- ggplot(spat_av) +
+    geom_point(aes(y, mu_emp)) +
+    theme_bw() +
+    xlab(xlab1) +
+    ylab(ylab)
+  lon_means <- ggplot(spat_av) +
+    geom_point(aes(x, mu_emp)) +
+    theme_bw() +
+    xlab(xlab2) +
+    ylab(ylab)
+
+
+  if(!is.null(object$data_stars)){
+    xx <- object$data_stars
+    st_fig <- ggplot() +
+      geom_stars(data = xx) +
+      scale_fill_distiller(palette = "Spectral",
+                           guide = "colourbar")
+
+    ll_means <- gridExtra::grid.arrange(lat_means, lon_means, st_fig, layout_matrix = matrix(c(1, 3, 2, 3), nrow = 2), top = title)
+  }else{
+    ll_means <- gridExtra::grid.arrange(lat_means, lon_means, nrow = 1, ncol = 2, top = title)
+
+  }
+
+
+
+  ll_means
 }
