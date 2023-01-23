@@ -15,15 +15,7 @@
 This function computes spatial empirical means by latitude and longitude averaged over time.
 }
 \examples{
-# Example 1
 library(stars)
-prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
-prec <- read_ncdf(prec_file)
-sp_means <- spatial_means(prec)
-sp_means
-
-
-# Example 2
 tif = system.file("tif/olinda_dem_utm25s.tif", package = "stars")
 x <- read_stars(tif)
 sp_means <- spatial_means(x)

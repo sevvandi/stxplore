@@ -1,16 +1,61 @@
-#' Performs Canonical Correlation Analysis  using Empirical Orthogonal Functions from a lagged dataset using a dataframe
+#' Performs CCA  using Empirical Orthogonal Functions (EOFs) from a lagged dataset
 #'
-#' Performs CCA using EOF analysis using in a dataframe
+#'@description
+#' Performs Canonical Correlation Analysis (CCA) using Empirical Orthogonal Function analysis using
+#' in a dataframe or a stars object. The autoplot function can plot the outputs.
 #'
+#' The variations are
+#'  *  `cancor_eof.data.frame()`  if the input is a dataframe
+#'  *  `cancor_eof.stars()` if the input is a stars object
+#'  *  `autoplot.cancoreof()` to plot the outputs.
+#'
+#'
+#'
+#' @inheritParams emp_orth_fun
 #' @inheritParams emp_orth_fun.data.frame
-#' @inheritParams cancor_eof
+#' @param lag Specifies the lag to be used.
+#' @param n_eof The number of EOFs to be used.
+#' @param object autoplot parameter: the output of the function `cancor_eof'.
+#' @param line_plot autoplot parameter: if set to \code{TRUE}, then the line plot is included.
+#' @param space_plot autoplot parameter: if set to \code{TRUE}, the space splot is included.
+#' @param palette autoplot parameter: the color palette to use for plotting.
+#' @param xlab autoplot parameter:: he label on the x-axis for the line plot.
+#' @param ... Other arguments currently ignored.
+#'
+#' @return A cancoreof object with CCA output, EOF output, original data and cancor object from `stats`.
 #'
 #' @examples
-#' cancor_eof(x = SSTlonlatshort,
+#' # Dataframe example
+#' data(SSTlonlatshort)
+#' data(SSTdatashort)
+#' cancor_df <- cancor_eof(x = SSTlonlatshort,
 #'            lag = 7,
 #'            n_eof = 8,
 #'            values_df = SSTdatashort)
+#' autoplot(cancor_df)
 #'
+#' # Stars example
+#' library(dplyr)
+#' library(stars)
+#' # Create a stars object from a data frame
+#' precip_df <- NOAA_df_1990[NOAA_df_1990$proc == 'Precip', ] %>%
+#'   filter(date >= "1992-02-01" & date <= "1992-02-28")
+#' precip <- precip_df[ ,c('lat', 'lon', 'date', 'z')]
+#' st_precip <- st_as_stars(precip, dims = c("lon", "lat", "date"))
+#' cancor_st <- cancor_eof(st_precip)
+#' autoplot(cancor_st, line_plot = TRUE, space_plot = FALSE)
+#'
+#'
+#' @export cancor_eof
+cancor_eof <- function(x,
+                       lag,
+                       n_eof,
+                       ...){
+  UseMethod("cancor_eof")
+}
+
+
+#' @rdname cancor_eof
 #' @export
 cancor_eof.data.frame <- function(x,
                                   lag = 7,
@@ -84,22 +129,7 @@ cancor_eof.data.frame <- function(x,
 
 }
 
-
-#' Performs Canonical Correlation Analysis  using Empirical Orthogonal Functions from a lagged dataset using a stars object
-#'
-#' Performs CCA using EOF analysis using a stars object
-#'
-#' @inheritParams cancor_eof
-#'
-#' @examples
-#' library(dplyr)
-#' library(stars)
-#' # Create a stars object from a data frame
-#' precip_df <- NOAA_df_1990[NOAA_df_1990$proc == 'Precip', ] %>%
-#'    filter(date >= "1992-02-01" & date <= "1992-02-28")
-#' precip <- precip_df[ ,c('lat', 'lon', 'date', 'z')]
-#' st_precip <- st_as_stars(precip, dims = c("lon", "lat", "date"))
-#' cancor_eof(st_precip)
+#' @rdname cancor_eof
 #' @export
 cancor_eof.stars <- function(x,
                              lag = 7,
@@ -133,4 +163,44 @@ cancor_eof.stars <- function(x,
                         lag = lag,
                         n_eof = n_eof,
                         values_df =  values_df2)
+}
+
+
+#' @rdname cancor_eof
+#' @export
+autoplot.cancoreof <- function(object,
+                               line_plot = TRUE,
+                               space_plot = TRUE,
+                               palette = 'Spectral',
+                               xlab = "Time",
+                               ...){
+
+  SW1 <- t <- ts <- Variable <- lon <- lat <- NULL
+  CCA_df <- object$cancor_df
+  EOFs_CCA <- object$eofs_df
+
+  sst_cca <- ggplot(CCA_df, aes(x=t, y=ts, colour = Variable)) + geom_line(size = 0.8) +
+    scale_color_manual(values = c("dark blue", "dark red")) +
+    ylab("CCA  variables")  +
+    xlab(xlab)  +
+    theme_bw() +
+    ggtitle("Canonical Correlation Analysis")
+
+  # Plotting Weights as Spatial Maps: First Canoncial Variable
+
+  spwts_p <- ggplot(EOFs_CCA, aes(lon, lat)) +
+    geom_tile(aes(fill = SW1)) +
+    scale_fill_distiller(palette = palette, guide = "colourbar") +
+    scale_y_reverse() + ylab("Latitude") +
+    xlab("Longitude") +
+    ggtitle("Spatial Weights: Canonical Variable")  +
+    theme_bw()
+
+  if(line_plot & space_plot){
+    gridExtra::grid.arrange(sst_cca, spwts_p)
+  }else if(line_plot){
+    sst_cca
+  }else if(space_plot){
+    spwts_p
+  }
 }

@@ -46,17 +46,8 @@ sem <- spatial_means(Tmax,
 autoplot(sem, ylab="Mean Max Temp")
 
 
-# stars examples
-# Example 1
+# stars example
 library(stars)
-library(units)
-prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
-prec <- read_ncdf(prec_file)
-sp_means <- spatial_means(prec)
-autoplot(sp_means)
-
-
-# Example 2
 tif = system.file("tif/olinda_dem_utm25s.tif", package = "stars")
 x <- read_stars(tif)
 sp_means <- spatial_means(x)
