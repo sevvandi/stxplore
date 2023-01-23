@@ -49,9 +49,6 @@
     <loc>https://sevvandi.github.io/stxplore/reference/autoplot.cancor.html</loc>
   </url>
   <url>
-    <loc>https://sevvandi.github.io/stxplore/reference/autoplot.cancoreof.html</loc>
-  </url>
-  <url>
     <loc>https://sevvandi.github.io/stxplore/reference/autoplot.emporthfun.html</loc>
   </url>
   <url>
@@ -70,13 +67,7 @@
     <loc>https://sevvandi.github.io/stxplore/reference/autoplot.temporalmeans.html</loc>
   </url>
   <url>
-    <loc>https://sevvandi.github.io/stxplore/reference/cancor_eof.data.frame.html</loc>
-  </url>
-  <url>
     <loc>https://sevvandi.github.io/stxplore/reference/cancor_eof.html</loc>
-  </url>
-  <url>
-    <loc>https://sevvandi.github.io/stxplore/reference/cancor_eof.stars.html</loc>
   </url>
   <url>
     <loc>https://sevvandi.github.io/stxplore/reference/canonical_correlation.data.frame.html</loc>
