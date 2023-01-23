@@ -49,9 +49,6 @@
     <loc>https://sevvandi.github.io/stxplore/reference/autoplot.cancor.html</loc>
   </url>
   <url>
-    <loc>https://sevvandi.github.io/stxplore/reference/autoplot.emporthfun.html</loc>
-  </url>
-  <url>
     <loc>https://sevvandi.github.io/stxplore/reference/autoplot.hovmoller.html</loc>
   </url>
   <url>
@@ -73,13 +70,7 @@
     <loc>https://sevvandi.github.io/stxplore/reference/canonical_correlation.stars.html</loc>
   </url>
   <url>
-    <loc>https://sevvandi.github.io/stxplore/reference/emp_orth_fun.data.frame.html</loc>
-  </url>
-  <url>
     <loc>https://sevvandi.github.io/stxplore/reference/emp_orth_fun.html</loc>
-  </url>
-  <url>
-    <loc>https://sevvandi.github.io/stxplore/reference/emp_orth_fun.stars.html</loc>
   </url>
   <url>
     <loc>https://sevvandi.github.io/stxplore/reference/emp_spatial_cov.data.frame.html</loc>
