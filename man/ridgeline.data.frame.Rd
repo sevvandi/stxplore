@@ -31,9 +31,9 @@
 
 \item{group_col}{The column name of the group column.}
 
-\item{z_col}{The The quantity of interest that will be plotted. Eg. temperature.}
+\item{z_col}{For dataframes: the The quantity of interest that will be plotted. Eg. temperature.}
 
-\item{...}{Other arguments that need to be used for datafames  or currently ignored.}
+\item{...}{Other arguments currently ignored.}
 }
 \description{
 Plots ridgeline plots grouped by latitude/longitude or time.

@@ -14,7 +14,7 @@ Hovmoller plat, while \code{lon} plots the longitudinal Hovmoller plot.}
 
 \item{xlen}{The length of the xaxis for latitude/longitude.}
 
-\item{...}{Other arguments that need to be used for datafames  or currently ignored.}
+\item{...}{Other arguments currently ignored.}
 }
 \description{
 This function creates the data structure for Hovmoller plots for either latitude or longitude.

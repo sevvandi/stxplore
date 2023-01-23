@@ -25,9 +25,9 @@
 
 \item{title}{The graph title.}
 
-\item{t_col}{The time column. Time must be a set of discrete integer values.}
+\item{t_col}{For dataframes: the time column. Time must be a set of discrete integer values.}
 
-\item{z_col}{The The quantity of interest that will be plotted. Eg. temperature.}
+\item{z_col}{For dataframes: the The quantity of interest that will be plotted. Eg. temperature.}
 
 \item{id_col}{The column of the location id.}
 

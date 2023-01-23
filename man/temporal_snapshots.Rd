@@ -15,7 +15,7 @@ temporal_snapshots(x, xlab = "x", ylab = "y", title = "", ...)
 
 \item{title}{The graph title.}
 
-\item{...}{Other arguments that need to be used for datafames  or currently ignored.}
+\item{...}{Other arguments currently ignored.}
 }
 \description{
 This function can take either a stars object or a dataframe. Input arguments differ

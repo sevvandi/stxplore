@@ -1,16 +1,25 @@
-#' Plots spatial snapshots of data through time using a dataframe as input.
+#' Plots spatial snapshots of data through time using a dataframe or a stars object.
 #'
-#' This function plots a set of spatial snapshots through time. General usage involves latitude and
-#' longitude. However, x and y coordinates can be given instead of longitude and latitude. If x and
-#' y are given instead of longitude and latitude, the country borders will not be shown.
+#' @description
+#' This function can take either a stars object or a dataframe. Input arguments differ
+#' for each case.
 #'
-#' @inheritParams spatial_snapshots
-#' @param x The input data in a dataframe.
-#' @param lat_col The column or the column name giving the latitude. The y coordinate can be used instead of latitude.
-#' @param lon_col The column or the column name giving the longitude. The x coordinate can be used instead of longitude.
-#' @param t_col The time column. Time must be a set of discrete integer values.
-#' @param z_col The The quantity of interest that will be plotted. Eg. temperature.
-#' @param ifxy If \code{TRUE} then the country borders are not drawn as longitude and latitude are unknown.
+#' For dataframes, usage involves latitude and longitude. However, x and y coordinates
+#' can be given instead of longitude and latitude. If x and y are given instead of longitude
+#' and latitude, the country borders will not be shown.
+#'
+#'
+#' @param x A stars object or a dataframe. Arguments differ according to the input type.
+#' @param xlab The x label.
+#' @param ylab The y label.
+#' @param title The graph title.
+#' @param palette The color palette. Default is \code{Spectral}.
+#' @param legend_title The title for the legend.
+#' @param lat_col For dataframes: the column or the column name giving the latitude. The y coordinate can be used instead of latitude.
+#' @param lon_col For dataframes: the column or the column name giving the longitude. The x coordinate can be used instead of longitude.
+#' @param t_col For dataframes: the time column. Time must be a set of discrete integer values.
+#' @param z_col For dataframes: the The quantity of interest that will be plotted. Eg. temperature.
+#' @param ifxy For dataframes: if \code{TRUE} then the country borders are not drawn as longitude and latitude are unknown.
 #' @param ... Other arguments currently ignored.
 #'
 #' @return A ggplot object.
@@ -39,6 +48,21 @@
 #' spatial_snapshots(x)
 #'
 #' @importFrom rlang .data
+#' @importFrom stars geom_stars
+#' @importFrom rlang sym
+#'
+#' @export
+spatial_snapshots <- function(x,
+                              xlab = "x",
+                              ylab = "y",
+                              title = "",
+                              palette = "Spectral",
+                              legend_title = "z",
+                              ...){
+  UseMethod("spatial_snapshots")
+}
+
+#' @rdname spatial_snapshots
 #' @export
 spatial_snapshots.data.frame <- function(x,
                      xlab = "Longitude",
@@ -117,31 +141,7 @@ spatial_snapshots.data.frame <- function(x,
 
 }
 
-
-#' Plots spatial snapshots of data through time using a stars object as input.
-#'
-#' This function plots a set of spatial snapshots through time.
-#'
-#' @inheritParams spatial_snapshots
-#'
-#' @return A ggplot object.
-#'
-#' @examples
-#' library(stars)
-#' library(dplyr)
-#' # The third dimension is not time, but bands in this example
-#' tif = system.file("tif/L7_ETMs.tif", package = "stars")
-#' x <- read_stars(tif)
-#' spatial_snapshots(x)
-#'
-#' # The third dimension is time in this example
-#' prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
-#' prec <- read_ncdf(prec_file)
-#' prec2 <- prec %>% slice(index =c(1,3,5), along = time)
-#' spatial_snapshots(prec2)
-#'
-#' @importFrom stars geom_stars
-#' @importFrom rlang sym
+#' @rdname spatial_snapshots
 #' @export
 spatial_snapshots.stars <- function(x,
                                     xlab = "x",

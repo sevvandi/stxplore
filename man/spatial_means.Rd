@@ -27,13 +27,13 @@ spatial_means(x, ...)
 
 \item{...}{Other arguments currently ignored.}
 
-\item{lat_col}{The column or the column name giving the latitude. The y coordinate can be used instead of latitude.}
+\item{lat_col}{For dataframes: the column or the column name giving the latitude. The y coordinate can be used instead of latitude.}
 
-\item{lon_col}{The column or the column name giving the longitude. The x coordinate can be used instead of longitude.}
+\item{lon_col}{For dataframes: the column or the column name giving the longitude. The x coordinate can be used instead of longitude.}
 
-\item{t_col}{The time column. Time must be a set of discrete integer values.}
+\item{t_col}{For dataframes: the time column. Time must be a set of discrete integer values.}
 
-\item{z_col}{The The quantity of interest that will be plotted. Eg. temperature.}
+\item{z_col}{For dataframes: the The quantity of interest that will be plotted. Eg. temperature.}
 
 \item{object}{For autoplot: the output from the `spatial_means' function.}
 

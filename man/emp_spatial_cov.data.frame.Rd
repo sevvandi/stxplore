@@ -35,15 +35,15 @@ the model is fitted with linear space and time coefficients.}
 
 \item{lag}{Lag can be either 0 or 1.}
 
-\item{lat_col}{The column or the column name giving the latitude. The y coordinate can be used instead of latitude.}
+\item{lat_col}{For dataframes: the column or the column name giving the latitude. The y coordinate can be used instead of latitude.}
 
-\item{lon_col}{The column or the column name giving the longitude. The x coordinate can be used instead of longitude.}
+\item{lon_col}{For dataframes: the column or the column name giving the longitude. The x coordinate can be used instead of longitude.}
 
-\item{t_col}{The time column. Time must be a set of discrete integer values.}
+\item{t_col}{For dataframes: the time column. Time must be a set of discrete integer values.}
 
-\item{z_col}{The The quantity of interest that will be plotted. Eg. temperature.}
+\item{z_col}{For dataframes: the The quantity of interest that will be plotted. Eg. temperature.}
 
-\item{...}{Other arguments that need to be used for datafames  or currently ignored.}
+\item{...}{Other arguments currently ignored.}
 }
 \description{
 Computes empirical spatial covariance by removing trends and examining residuals. It can compute lag-0 or log-1

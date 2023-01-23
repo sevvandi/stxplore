@@ -31,7 +31,7 @@ the model is fitted with linear space and time coefficients.}
 
 \item{lag}{Lag can be either 0 or 1.}
 
-\item{...}{Other arguments that need to be used for datafames  or currently ignored.}
+\item{...}{Other arguments currently ignored.}
 }
 \description{
 Computes empirical spatial covariance by removing trends and examining residuals. It can compute lag-0 or log-1

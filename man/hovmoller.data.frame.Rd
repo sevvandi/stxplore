@@ -24,11 +24,11 @@ Hovmoller plat, while \code{lon} plots the longitudinal Hovmoller plot.}
 
 \item{lat_or_lon_col}{The column or the column name corresponding to the latitude/longitude.}
 
-\item{t_col}{The time column. Time must be a set of discrete integer values.}
+\item{t_col}{For dataframes: the time column. Time must be a set of discrete integer values.}
 
-\item{z_col}{The The quantity of interest that will be plotted. Eg. temperature.}
+\item{z_col}{For dataframes: the The quantity of interest that will be plotted. Eg. temperature.}
 
-\item{...}{Other arguments that need to be used for datafames  or currently ignored.}
+\item{...}{Other arguments currently ignored.}
 }
 \description{
 This function creates the data structure for Hovmoller plots for either latitude or longitude.
