@@ -1,30 +1,71 @@
-#' Computes the semi-variogram using a dataframe as input
+#' Computes the semi-variogram using a dataframe or a stars object.
 #'
-#' Computes the semi-variogram given the locations, times and the quantity of interest.
+#'@description
+#' Computes the semi-variogram from a stars or a dataframe. Input arguments differ
+#' for each case. Function autoplot can plot the output.
 #'
-#' @inheritParams semivariogram
-#' @param times_df The dataframe containing the dates in \code{Date} format.
-#' @param values_df The dataframe of dimension \code{length(times) x length(locations)} containing the quantity of interest.
+#' When the input is a dataframe, the locations, time and the quantity of interest needs to
+#' be given. When the input is a stars object, a 3 dimensional stars object needs to be given
+#' as input with the first 2 dimensions being spatial and the third being time.
+#'
+#' @param x The dataframe or stars object. If it is a dataframe, then it should have the locations.
+#' @param latitude_linear If \code{TRUE}  a linear model is fitted with latitude as a covariate is fitted.
+#' @param longitude_linear If \code{TRUE}  a linear model is fitted with longitude as a covariate is fitted.
+#' @param missing_value If a certain value such as -9999 denotes the missing values for given locations and times.
+#' @param width A parameter to the \code{gstat::variogram} function. The width of the distance intervals to be considered.
+#' @param cutoff A parameter to the \code{gstat::variogram} function. The spatial separation distance.
+#' @param tlagmax A parameter to the \code{gstat::variogram} function. The maximum time lag.
+#' @param ... Other arguments that need to be used for datafames  or currently ignored.
+#' @param times_df For dataframes: the dataframe containing the dates in \code{Date} format.
+#' @param values_df For dataframes: the dataframe of dimension \code{length(times) x length(locations)} containing the quantity of interest.
+#' @param object For autoplot: the output from the semivariogram function.
+#'
+#' @return A semivariogram object with a gstat variogram and the original data.
 #'
 #' @examples
+#' # Dataframe example
 #' library(dplyr)
 #' data(locs)
 #' data(Times)
 #' data(Tmax)
 #' temp_part <- with(Times, paste(year, month, day, sep = "-"))
-#' temp_part <- data.frame(date = as.Date(temp_part)[913:943])
-#' Tmax <- Tmax[913:943, ]
-#' semivariogram(locs,
-#'               latitude_linear = FALSE,
-#'               longitude_linear = FALSE,
-#'               missing_value = -9999,
-#'               width = 50,
-#'               cutoff = 1000,
-#'               tlagmax = 7,
-#'               times_df = temp_part,
-#'               values_df = Tmax
+#' temp_part <- data.frame(date = as.Date(temp_part)[913:923])
+#' Tmax <- Tmax[913:923, ]
+#' semidf <- semivariogram(locs,
+#'         temp_part,
+#'         Tmax,
+#'         latitude_linear = FALSE,
+#'         longitude_linear = FALSE,
+#'         missing_value = -9999,
+#'         width = 50,
+#'         cutoff = 1000,
+#'         tlagmax = 7
 #' )
+#' autoplot(semidf)
 #'
+#' # Stars example
+#' library(stars)
+#' # Create a stars object from a data frame
+#' precip_df <- NOAA_df_1990[NOAA_df_1990$proc == 'Precip', ] %>%
+#'   filter(date >= "1992-02-01" & date <= "1992-02-05")
+#' precip <- precip_df[ ,c('lat', 'lon', 'date', 'z')]
+#' st_precip <- st_as_stars(precip, dims = c("lon", "lat", "date"))
+#' semist <- semivariogram(st_precip)
+#' autoplot(semist)
+#'
+#' @export
+semivariogram <- function(x,
+                          latitude_linear = TRUE,
+                          longitude_linear = TRUE,
+                          missing_value = -9999,
+                          width = 80,
+                          cutoff = 1000,
+                          tlagmax = 6,
+                          ...){
+  UseMethod("semivariogram")
+}
+
+#' @rdname semivariogram
 #' @export
 semivariogram.data.frame <- function(x,
                                      latitude_linear = TRUE,
@@ -116,23 +157,7 @@ semivariogram.data.frame <- function(x,
 }
 
 
-#' Computes the semi-variogram using a stars object
-#'
-#' Computes the semi-variogram using a stars object. A 3 dimensional stars object is used with
-#' the first 2 for locations and the third for time.
-#'
-#' @inheritParams semivariogram
-#'
-#' @examples
-#' library(dplyr)
-#' library(stars)
-#' # Create a stars object from a data frame
-#' precip_df <- NOAA_df_1990[NOAA_df_1990$proc == 'Precip', ] %>%
-#'   filter(date >= "1992-02-01" & date <= "1992-02-28")
-#' precip <- precip_df[ ,c('lat', 'lon', 'date', 'z')]
-#' st_precip <- st_as_stars(precip, dims = c("lon", "lat", "date"))
-#' semivariogram(st_precip)
-#'
+#' @rdname semivariogram
 #' @export
 semivariogram.stars <- function(x,
                                 latitude_linear = TRUE,
@@ -172,3 +197,14 @@ semivariogram.stars <- function(x,
                             values_df)
 
 }
+
+#' @rdname semivariogram
+#' @export
+autoplot.semivariogramobj<- function(object, ...){
+  # display the empirical semi-variogram
+  vv <- object$variogram
+  color_pal <- rev(grDevices::colorRampPalette(RColorBrewer::brewer.pal(9, "YlOrRd"))(16))
+  plot(vv, col = color_pal)
+}
+
+

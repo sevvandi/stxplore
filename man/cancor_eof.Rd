@@ -31,7 +31,7 @@ cancor_eof(x, lag, n_eof, ...)
 
 \item{...}{Other arguments currently ignored.}
 
-\item{values_df}{The dataframe of dimension \code{length(times) x length(locations)} containing the quantity of interest.}
+\item{values_df}{For dataframes: the dataframe of dimension \code{length(times) x length(locations)} containing the quantity of interest.}
 
 \item{object}{autoplot parameter: the output of the function `cancor_eof'.}
 

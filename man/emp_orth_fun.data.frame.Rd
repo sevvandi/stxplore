@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{The dataframe or stars object. If it is a dataframe, then it should have the locations.}
 
-\item{values_df}{The dataframe of dimension \code{length(times) x length(locations)} containing the quantity of interest.}
+\item{values_df}{For dataframes: the dataframe of dimension \code{length(times) x length(locations)} containing the quantity of interest.}
 
 \item{...}{Other arguments that need to be used for datafames  or currently ignored.}
 }
