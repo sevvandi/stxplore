@@ -61,9 +61,6 @@
     <loc>https://sevvandi.github.io/stxplore/reference/autoplot.spatialcov.html</loc>
   </url>
   <url>
-    <loc>https://sevvandi.github.io/stxplore/reference/autoplot.spatialmeans.html</loc>
-  </url>
-  <url>
     <loc>https://sevvandi.github.io/stxplore/reference/autoplot.temporalmeans.html</loc>
   </url>
   <url>
@@ -136,13 +133,7 @@
     <loc>https://sevvandi.github.io/stxplore/reference/semivariogram.stars.html</loc>
   </url>
   <url>
-    <loc>https://sevvandi.github.io/stxplore/reference/spatial_means.data.frame.html</loc>
-  </url>
-  <url>
     <loc>https://sevvandi.github.io/stxplore/reference/spatial_means.html</loc>
-  </url>
-  <url>
-    <loc>https://sevvandi.github.io/stxplore/reference/spatial_means.stars.html</loc>
   </url>
   <url>
     <loc>https://sevvandi.github.io/stxplore/reference/spatial_snapshots.data.frame.html</loc>
