@@ -1,32 +1,70 @@
-#' Computes empirical spatial covariance using a dataframe as input
+#' Computes empirical spatial covariance using a dataframe or a stars object
 #'
+#' @description
 #' Computes empirical spatial covariance by removing trends and examining residuals. It can compute lag-0 or log-1
 #' empirical covariance either by latitude or longitude. You can split up the spatial domain by latitude or
 #' longitude and plot the covariance for each longitudinal/latitudinal strips.
 #'
 #' @inheritParams spatial_snapshots
 #' @inheritParams spatial_snapshots.data.frame
-#' @inheritParams emp_spatial_cov
+#'
+#' @param lat_or_lon_strips Takes the values \code{lat} or \code{lon}. The value \code{lat} produces latitudinal strips,
+#'       i.e., covariance plots over longitude for different latitudinal strips. The value \code{lon} produces longitudinal
+#'       strips, i.e., covariance plots over latitude for different longitudinal strips.
+#' @param quadratic_time If \code{TRUE}  a linear model with quadratic time is fitted and residuals computed. If \code{FALSE}
+#'       the model is fitted with linear space and time coefficients.
+#' @param quadratic_space  If \code{TRUE}  a linear model with quadratic space is fitted and residuals computed. If \code{FALSE}
+#'       the model is fitted with linear space and time coefficients.
+#' @param num_strips The number of latitudinal/longitudinal strips to produce. This is used when plotting using autoplot.
+#' @param lag Lag can be either 0 or 1.
+#' @param object For autoplot: the output of the function `emp_spatial_cov'.
+#' @param xlab For autoplot: the label for x-axis.
+#' @param ... Other arguments currently ignored.
+#'
+#' @return A spatialcov object with empirical covariance data organised spatially according to the
+#' number of strips and the lagged covariance.
 #'
 #' @examples
+#' # Dataframe example
 #' library(dplyr)
 #' data(NOAA_df_1990)
 #' Tmax <- filter(NOAA_df_1990,
 #'   proc == "Tmax" &
-#'   month %in% 5:9 &
+#'   month %in% 5:6 &
 #'   year == 1993)
 #' Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
-#' emp_spatial_cov(Tmax,
-#'                 lat_or_lon_strips = "lon",
-#'                 num_strips = 4,
-#'                 lag = 1,
+#' emp_df <- emp_spatial_cov(Tmax,
 #'                 lat_col = "lat",
 #'                 lon_col = "lon",
 #'                 t_col ="t",
-#'                 z_col = "z")
+#'                 z_col = "z",
+#'                 lat_or_lon_strips = "lon",
+#'                 num_strips = 4,
+#'                 lag = 1)
+#' autoplot(emp_df)
 #'
+#' # Stars example
+#' library(stars)
+#' # Create a stars object from a data frame
+#' precip_df <- NOAA_df_1990[NOAA_df_1990$proc == 'Precip', ] %>%
+#'   filter(date >= "1992-02-01" & date <= "1992-02-05")
+#' precip <- precip_df[ ,c('lat', 'lon', 'date', 'z')]
+#' st_precip <- st_as_stars(precip, dims = c("lon", "lat", "date"))
+#' emp_spatial_cov(st_precip)
 #' @importFrom graphics par
 #' @importFrom stats cov lm
+#' @export
+emp_spatial_cov <- function(x,
+                            lat_or_lon_strips = "lon",
+                            quadratic_time = FALSE,
+                            quadratic_space = FALSE,
+                            num_strips = 1,
+                            lag = 0,
+                            ...){
+  UseMethod("emp_spatial_cov")
+}
+
+#' @rdname emp_spatial_cov
 #' @export
 emp_spatial_cov.data.frame <- function(x,
                                        lat_or_lon_strips = "lon",
@@ -144,32 +182,7 @@ emp_spatial_cov.data.frame <- function(x,
 }
 
 
-#' Computes empirical spatial covariance using a stars object
-#'
-#' Computes empirical spatial covariance by removing trends and examining residuals. It can compute lag-0 or log-1
-#' empirical covariance either by latitude or longitude. You can split up the spatial domain by latitude or
-#' longitude and plot the covariance for each longitudinal/latitudinal strips.
-#'
-#' @inheritParams spatial_snapshots
-#' @inheritParams spatial_snapshots.data.frame
-#' @inheritParams emp_spatial_cov
-#'
-#' @examples
-#' \dontrun{
-#' library(stars)
-#' library(dplyr)
-#' library(units)
-#' prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
-#' prec <- read_ncdf(prec_file)
-#' prec2 <- prec %>%
-#'          slice(time,  1:3)
-#' emp_spatial_cov(prec2,
-#'                 lat_or_lon_strips = "lon",
-#'                 num_strips = 4,
-#'                 lag = 1)
-#' }
-#' @importFrom graphics par
-#' @importFrom stats cov lm
+#' @rdname emp_spatial_cov
 #' @export
 emp_spatial_cov.stars <- function(x,
                                   lat_or_lon_strips = "lon",
@@ -200,3 +213,32 @@ emp_spatial_cov.stars <- function(x,
                              z_col = 4,
                              ...)
 }
+
+#' @rdname emp_spatial_cov
+#' @export
+autoplot.spatialcov <- function(object,
+                                xlab = "Latitude",
+                                ...){
+
+  Lag_cov <- object$lag_cov
+  spat_df <- object$spatial_df
+  num_strips <- object$num_strips
+
+  if(num_strips == 1){
+    plot_cov_strips(Lag_cov, spat_df, xlab = xlab)
+  }else if(num_strips == 2){
+    op <- par(mfrow = c(1,2))
+    on.exit(par(op))
+    plot_cov_strips(Lag_cov, spat_df, xlab = xlab)
+  }else if(num_strips == 3){
+    op <- par(mfrow = c(1,3))
+    on.exit(par(op))
+    plot_cov_strips(Lag_cov, spat_df, xlab = xlab)
+  }else if(num_strips == 4){
+    op <- par(mfrow = c(2,2), mai = c(0.8, 0.8, 0.1, 0.3))
+    on.exit(par(op))
+    plot_cov_strips(Lag_cov, spat_df, xlab = xlab)
+  }
+}
+
+
