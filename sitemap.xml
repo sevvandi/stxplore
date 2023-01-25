@@ -52,9 +52,6 @@
     <loc>https://sevvandi.github.io/stxplore/reference/autoplot.hovmoller.html</loc>
   </url>
   <url>
-    <loc>https://sevvandi.github.io/stxplore/reference/autoplot.spatialcov.html</loc>
-  </url>
-  <url>
     <loc>https://sevvandi.github.io/stxplore/reference/autoplot.temporalmeans.html</loc>
   </url>
   <url>
@@ -73,13 +70,7 @@
     <loc>https://sevvandi.github.io/stxplore/reference/emp_orth_fun.html</loc>
   </url>
   <url>
-    <loc>https://sevvandi.github.io/stxplore/reference/emp_spatial_cov.data.frame.html</loc>
-  </url>
-  <url>
     <loc>https://sevvandi.github.io/stxplore/reference/emp_spatial_cov.html</loc>
-  </url>
-  <url>
-    <loc>https://sevvandi.github.io/stxplore/reference/emp_spatial_cov.stars.html</loc>
   </url>
   <url>
     <loc>https://sevvandi.github.io/stxplore/reference/hovmoller.data.frame.html</loc>
