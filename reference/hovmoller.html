@@ -14,7 +14,7 @@ The function autoplot can plot this object."><!-- mathjax --><script src="https:
     
     <a class="navbar-brand me-2" href="../index.html">stxplore</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -153,13 +153,15 @@ Hovmoller plat, while <code>lon</code> plots the longitudinal Hovmoller plot.</p
 <span class="r-in"><span><span class="va">Tmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">NOAA_df_1990</span>,</span></span>
 <span class="r-in"><span>  <span class="va">proc</span> <span class="op">==</span> <span class="st">"Tmax"</span> <span class="op">&amp;</span></span></span>
 <span class="r-in"><span>  <span class="va">month</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">5</span><span class="op">:</span><span class="fl">9</span> <span class="op">&amp;</span></span></span>
-<span class="r-in"><span>  <span class="va">year</span> <span class="op">==</span> <span class="fl">1993</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">year</span> <span class="op">==</span> <span class="fl">1993</span> <span class="op">&amp;</span></span></span>
+<span class="r-in"><span>  <span class="va">id</span> <span class="op">&lt;</span> <span class="fl">4000</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">Tmax</span><span class="op">$</span><span class="va">t</span> <span class="op">&lt;-</span> <span class="va">Tmax</span><span class="op">$</span><span class="va">julian</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">Tmax</span><span class="op">$</span><span class="va">julian</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span><span class="va">hov</span> <span class="op">&lt;-</span> <span class="fu">hovmoller</span><span class="op">(</span>lat_or_lon <span class="op">=</span> <span class="st">"lat"</span>,</span></span>
 <span class="r-in"><span>          x <span class="op">=</span> <span class="va">Tmax</span>,</span></span>
 <span class="r-in"><span>          lat_or_lon_col <span class="op">=</span> <span class="st">'lat'</span>,</span></span>
 <span class="r-in"><span>          t_col <span class="op">=</span> <span class="st">'t'</span>,</span></span>
 <span class="r-in"><span>          z_col <span class="op">=</span> <span class="st">'z'</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Consider reducing xlen to eliminate empty patches."</span>
 <span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">hov</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="hovmoller-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
@@ -174,24 +176,25 @@ Hovmoller plat, while <code>lon</code> plots the longitudinal Hovmoller plot.</p
 <span class="r-msg co"><span class="r-pr">#&gt;</span> No projection information found in nc file. </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  Coordinate variable units found to be degrees, </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  assuming WGS84 Lat/Lon.</span>
-<span class="r-in"><span><span class="va">hov</span> <span class="op">&lt;-</span> <span class="fu">hovmoller</span><span class="op">(</span><span class="va">prec</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">prec2</span> <span class="op">&lt;-</span> <span class="va">prec</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="va">time</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">hov</span> <span class="op">&lt;-</span> <span class="fu">hovmoller</span><span class="op">(</span><span class="va">prec2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">hov</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $hov_df</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 575 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 125 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   lat_or_lon [25]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    lat_or_lon t                          z</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494;">[kg/m^2]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>       32.4 2018-09-13 <span style="color: #949494;">19:00:00</span>    1.94 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>       32.4 2018-09-13 <span style="color: #949494;">20:00:00</span>    1.39 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>       32.4 2018-09-13 <span style="color: #949494;">21:00:00</span>    4.54 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>       32.4 2018-09-13 <span style="color: #949494;">22:00:00</span>    4.85 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>       32.4 2018-09-13 <span style="color: #949494;">23:00:00</span>    2.66 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>       32.4 2018-09-14 <span style="color: #949494;">00:00:00</span>    2.70 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>       32.4 2018-09-14 <span style="color: #949494;">01:00:00</span>    1.60 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>       32.4 2018-09-14 <span style="color: #949494;">02:00:00</span>    0.346</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>       32.4 2018-09-14 <span style="color: #949494;">03:00:00</span>    0.221</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>       32.4 2018-09-14 <span style="color: #949494;">04:00:00</span>    1.31 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 565 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>       32.4 2018-09-13 <span style="color: #949494;">19:00:00</span>     1.94</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>       32.4 2018-09-13 <span style="color: #949494;">20:00:00</span>     1.39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>       32.4 2018-09-13 <span style="color: #949494;">21:00:00</span>     4.54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>       32.4 2018-09-13 <span style="color: #949494;">22:00:00</span>     4.85</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>       32.4 2018-09-13 <span style="color: #949494;">23:00:00</span>     2.66</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>       32.7 2018-09-13 <span style="color: #949494;">19:00:00</span>     1.60</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>       32.7 2018-09-13 <span style="color: #949494;">20:00:00</span>     2.13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>       32.7 2018-09-13 <span style="color: #949494;">21:00:00</span>     5.31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>       32.7 2018-09-13 <span style="color: #949494;">22:00:00</span>     4.59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>       32.7 2018-09-13 <span style="color: #949494;">23:00:00</span>     2.29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 115 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       lat_or_lon                  z                   t</span>
@@ -33528,13 +33531,13 @@ Hovmoller plat, while <code>lon</code> plots the longitudinal Hovmoller plot.</p
 <span class="r-out co"><span class="r-pr">#&gt;</span> 33331   34.58929  0.000000 [kg/m^2] 2018-09-13 22:00:00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 33332   34.57391  0.000000 [kg/m^2] 2018-09-13 22:00:00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 33333   34.55852  0.000000 [kg/m^2] 2018-09-13 22:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [ reached 'max' / getOption("max.print") -- omitted 202785 rows ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [ reached 'max' / getOption("max.print") -- omitted 17997 rows ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $xlab</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Latitude"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hovmoller.stars(x = prec)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hovmoller.stars(x = prec2)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "hovmoller"</span>
