@@ -298,7 +298,7 @@ Let’s check the correlation between these t</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">nPC</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">pc1</span>, <span class="va">pc2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2.300647e-16</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 1.855043e-16</span></span></code></pre></div>
 <p>The matrix below shows the correlation between the first 3 PC time
 series. The off diagonal elements are very close to zero.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
@@ -309,10 +309,10 @@ series. The off diagonal elements are very close to zero.</p>
 <span></span>
 <span><span class="va">cormat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">pcs</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
 <span><span class="va">cormat</span></span>
-<span><span class="co">#&gt;              X1           X2           X3</span></span>
-<span><span class="co">#&gt; X1 1.000000e+00 2.300647e-16 5.085021e-17</span></span>
-<span><span class="co">#&gt; X2 2.300647e-16 1.000000e+00 4.691998e-18</span></span>
-<span><span class="co">#&gt; X3 5.085021e-17 4.691998e-18 1.000000e+00</span></span></code></pre></div>
+<span><span class="co">#&gt;               X1            X2            X3</span></span>
+<span><span class="co">#&gt; X1  1.000000e+00  1.855043e-16 -4.702445e-17</span></span>
+<span><span class="co">#&gt; X2  1.855043e-16  1.000000e+00 -1.252749e-16</span></span>
+<span><span class="co">#&gt; X3 -4.702445e-17 -1.252749e-16  1.000000e+00</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="spatio-temporal-canonical-correlation-analysis">Spatio-temporal Canonical Correlation Analysis<a class="anchor" aria-label="anchor" href="#spatio-temporal-canonical-correlation-analysis"></a>
