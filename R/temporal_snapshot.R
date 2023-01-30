@@ -1,15 +1,19 @@
-#' Plots temporal snapshots of data for specific spatial locations using a dataframe as input.
+#' Plots temporal snapshots of data for specific spatial locations using a dataframe or a stars object.
 #'
 #' This function plots temporal snapshos for specific spatial locations. The location id sample
 #' need to be given as a function argument.
 #'
-#'@inheritParams temporal_snapshots
+#'@inheritParams spatial_snapshots
 #'@inheritParams spatial_snapshots.data.frame
 #'@param id_col The column of the location id.
 #'@param id_sample The sample of location ids to be plotted
 #'@param ... Other arguments currently ignored.
+#'@param xvals For stars objects: the set of xvalues to plot.
+#'@param yvals For stars objects: the set of yvalues to plot. These two lengths need to be the same.
+#'@param precision For stars objects: set to 0, if the given values are compared with the integer values in the stars object.
 #'
 #'@examples
+#'# Dataframe example
 #'library(dplyr)
 #'data(NOAA_df_1990)
 #'Tmax <- filter(NOAA_df_1990,
@@ -24,7 +28,28 @@
 #'                   z_col = 'z',
 #'                   id_col = 'id',
 #'                   id_sample = ids)
+#'
+#'
+#'# stars example
+#'library(stars)
+#'tif = system.file("tif/L7_ETMs.tif", package = "stars")
+#'x <- read_stars(tif)
+#'xvals <- c(288876.0,289047.0)
+#'yvals <- c(9120405, 9120006)
+#'temporal_snapshots(x,
+#'                   xvals = xvals,
+#'                   yvals = yvals)
 #'@export
+temporal_snapshots <- function(x,
+                               xlab = "x",
+                               ylab = "y",
+                               title = "",
+                               ...){
+  UseMethod("temporal_snapshots")
+}
+
+#' @rdname temporal_snapshots
+#' @export
 temporal_snapshots.data.frame <- function(x,
                                          xlab="Time",
                                          ylab ="Value",
@@ -75,27 +100,8 @@ temporal_snapshots.data.frame <- function(x,
 }
 
 
-#' Plots temporal snapshots of data for specific spatial locations using a stars object as input.
-#'
-#' This function plots temporal snapshos for specific spatial locations. The location x and y
-#' indices need to be given.
-#'
-#'@inheritParams temporal_snapshots
-#'@param xvals The set of xvalues to plot.
-#'@param yvals The set of yvalues to plot. These two lengths need to be the same.
-#'@param precision Set to 0, if the given values are compared with the integer values in the stars object.
-#'@param ... Other arguments currently ignored.
-#'
-#'@examples
-#'library(stars)
-#'tif = system.file("tif/L7_ETMs.tif", package = "stars")
-#'x <- read_stars(tif)
-#'xvals <- c(288876.0,289047.0)
-#'yvals <- c(9120405, 9120006)
-#'temporal_snapshots(x,
-#'                   xvals = xvals,
-#'                   yvals = yvals)
-#'@export
+#' @rdname temporal_snapshots
+#' @export
 temporal_snapshots.stars <- function(x,
                                      xlab="Time",
                                      ylab ="Value",
