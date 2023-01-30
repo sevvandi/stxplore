@@ -1,14 +1,21 @@
-#' Computes the data structure for the Hovmoller plots using a dataframe as input
+#' Computes the data structure for the Hovmoller plots
 #'
 #' This function creates the data structure for Hovmoller plots for either latitude or longitude.
+#' This function can take either a stars object or a dataframe. Input arguments differ for each case.
+#' The function autoplot can plot this object.
 #'
-#' @inheritParams hovmoller
+#' @inheritParams spatial_snapshots
 #' @inheritParams spatial_snapshots.data.frame
 #' @param lat_or_lon Needs to be either \code{lat} or \code{lon}. \code{lat} plots the latitudinal
 #' Hovmoller plat, while \code{lon} plots the longitudinal Hovmoller plot.
-#' @param lat_or_lon_col The column or the column name corresponding to the latitude/longitude.
+#' @param xlen The length of the xaxis for latitude/longitude.
+#' @param lat_or_lon_col For dataframes: the column or the column name corresponding to the latitude/longitude.
+#' @param object For autoplot: the output of the function `hovmoller'.
+#' @param ... Other arguments currently ignored.
+#'
 #'
 #' @examples
+#' # dataframe examples
 #' library(dplyr)
 #' data(NOAA_df_1990)
 #' Tmax <- filter(NOAA_df_1990,
@@ -16,12 +23,30 @@
 #'   month %in% 5:9 &
 #'   year == 1993)
 #' Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
-#' hovmoller(lat_or_lon = "lat",
+#' hov <- hovmoller(lat_or_lon = "lat",
 #'           x = Tmax,
 #'           lat_or_lon_col = 'lat',
 #'           t_col = 't',
 #'           z_col = 'z')
+#' autoplot(hov)
 #'
+#' # stars examples
+#' library(stars)
+#' prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
+#' prec <- read_ncdf(prec_file)
+#' hov <- hovmoller(prec)
+#' hov
+#' @importFrom rlang .data
+#' @export hovmoller
+hovmoller <- function(x,
+                      lat_or_lon ="lat",
+                      xlen = NULL,
+                      ...){
+  UseMethod("hovmoller")
+}
+
+
+#' @rdname hovmoller
 #' @export
 hovmoller.data.frame <- function(x,
                                  lat_or_lon ="lat",
@@ -93,22 +118,7 @@ hovmoller.data.frame <- function(x,
 
 }
 
-
-
-
-#' Computes the data structure for the Hovmoller plots using a stars object as input
-#'
-#' This function creates the data structure for Hovmoller plots for either latitude or longitude.
-#'
-#' @inheritParams hovmoller
-#'
-#' @examples
-#' library(stars)
-#' prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
-#' prec <- read_ncdf(prec_file)
-#' hov <- hovmoller(prec)
-#' hov
-#'
+#' @rdname hovmoller
 #' @export
 hovmoller.stars <- function(x,
                             lat_or_lon ="lat",
@@ -174,4 +184,39 @@ hovmoller.stars <- function(x,
 
 
 }
+
+
+#' @rdname hovmoller
+#' @export
+#' @export
+autoplot.hovmoller <- function(object,
+                               ylab = "Day",
+                               xlab = NULL,
+                               title = "",
+                               palette = "Spectral",
+                               legend_title="z",
+                               ...){
+
+  lat_or_lon <- t <- z <- NULL
+  df2_Hov <- object$hov_df
+  df2_Hov$z <- as.numeric(df2_Hov$z)
+  df2_Hov <- as.data.frame(df2_Hov)
+
+  if(is.null(xlab)){
+    xlab <- object$xlab
+  }
+
+  # Produce a tiled plot where each tile corresponding to
+  # latitude and time is filled with z
+  ggplot(df2_Hov) +
+    geom_tile(aes(x = lat_or_lon, y = t, fill = z)) +             # produce tiles with fill colour, z
+    scale_fill_distiller(palette = palette, guide = "colourbar") +
+    ylab(ylab) +
+    xlab(xlab) +                                           # label the x-axis
+    guides(fill=guide_legend(title=legend_title)) +        # specify legend title
+    theme_bw()                                             # black and white theme
+
+}
+
+
 
