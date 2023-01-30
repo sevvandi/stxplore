@@ -22,7 +22,8 @@
 #' Tmax <- filter(NOAA_df_1990,
 #'   proc == "Tmax" &
 #'   month %in% 5:9 &
-#'   year == 1993)
+#'   year == 1993 &
+#'   id < 4000)
 #' Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
 #' hov <- hovmoller(lat_or_lon = "lat",
 #'           x = Tmax,
@@ -35,7 +36,8 @@
 #' library(stars)
 #' prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
 #' prec <- read_ncdf(prec_file)
-#' hov <- hovmoller(prec)
+#' prec2 <- prec %>% slice(time, 1:5)
+#' hov <- hovmoller(prec2)
 #' hov
 #' @importFrom rlang .data
 #' @export hovmoller
@@ -218,6 +220,4 @@ autoplot.hovmoller <- function(object,
     theme_bw()                                             # black and white theme
 
 }
-
-
 

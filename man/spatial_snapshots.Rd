@@ -83,8 +83,9 @@ library(dplyr)
 data(NOAA_df_1990)
 Tmax <- filter(NOAA_df_1990,
   proc == "Tmax" &
-  month \%in\% 5:9 &
-  year == 1993)
+  month \%in\% 5:7 &
+  year == 1993 &
+  id < 4000)
 Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
 Tmax_days <- subset(Tmax, t \%in\% c(1, 15, 30))
 spatial_snapshots(Tmax_days,

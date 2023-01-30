@@ -1,7 +1,7 @@
 Package: stxplore
 Type: Package
 Title: Exploration of Spatio-Temporal Data
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: c(
   person("Sevvandi", "Kandanaarachchi", email = "sevvandik@gmail.com",
   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0337-0395")),
@@ -12,7 +12,7 @@ Authors@R: c(
  )
 Maintainer: Sevvandi Kandanaarachchi <sevvandik@gmail.com>
 Description: A set of statistical tools for spatio-temporal data exploration. 
-    Includes multiple simple plotting functions, covariance computations and 
+    Includes simple plotting functions, covariance computations and 
     computations similar to PCA. Can use both dataframes and stars objects for
     all plots and computations.
 License: GPL (>= 3)
