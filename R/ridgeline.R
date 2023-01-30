@@ -1,12 +1,17 @@
 #' Ridgeline plots grouped by an attribute using a dataframe as an input.
 #'
 #' Plots ridgeline plots grouped by latitude/longitude or time.
+#' This function can take either a stars object or a dataframe.
+#' Input arguments differ for each case.
 #'
-#' @inheritParams ridgeline
+#' @inheritParams spatial_snapshots
 #' @inheritParams spatial_snapshots.data.frame
-#' @param group_col The column name of the group column.
+#' @param num_grps The number of levels for the ridgeline plot.
+#' @param group_col For dataframes: the column name of the group column.
+#' @param group_dim For stars objects: the dimension for the grouping variable.
 #'
 #' @examples
+#' # Dataframe example
 #' library(dplyr)
 #' data(NOAA_df_1990)
 #' TmaxJan <- filter(NOAA_df_1990,
@@ -19,8 +24,40 @@
 #'       xlab = 'Maximum Temperature',
 #'       ylab = 'Latitude Intervals')
 #'
+#' # stars examples
+#' library(stars)
+#' library(units)
+#'
+#' # stars Example 1
+#' tif = system.file("tif/olinda_dem_utm25s.tif", package = "stars")
+#' x <- read_stars(tif)
+#' dim(x)
+#' ridgeline(x, group_dim = 1)
+#' ridgeline(x, group_dim = 2)
+#'
+#'
+#' # stars Example 2
+#' tif = system.file("tif/lc.tif", package = "stars")
+#' x <- read_stars(tif)
+#' ridgeline(x, group_dim = 1)
+#' ridgeline(x, group_dim = 2)
+#'
 #' @importFrom ggplot2 scale_fill_viridis_c stat
 #' @importFrom ggridges geom_density_ridges_gradient
+#' @export
+ridgeline <- function(x,
+                      num_grps = 10,
+                      xlab = "Value",
+                      ylab = "Group Intervals",
+                      title = "",
+                      legend_title = "z",
+                      ...){
+  UseMethod("ridgeline")
+}
+
+
+
+#' @rdname ridgeline
 #' @export
 ridgeline.data.frame <- function(x,
                                  num_grps = 10,
@@ -62,40 +99,7 @@ ridgeline.data.frame <- function(x,
 
 
 
-#' Ridgeline plots grouped by an attribute using a stars object as input.
-#'
-#' Plots ridgeline plots grouped by latitude/longitude or time.
-#'
-#' @inheritParams ridgeline
-#' @param group_dim The dimension for the grouping variable.
-#'
-#' @examples
-#' library(stars)
-#' library(dplyr)
-#' library(units)
-#'
-#' # Example 1
-#' prec_file = system.file("nc/test_stageiv_xyt.nc", package = "stars")
-#' prec <- read_ncdf(prec_file)
-#' ridgeline(prec, group_dim = 1)
-#'
-#'
-#' # Example 2
-#' tif = system.file("tif/olinda_dem_utm25s.tif", package = "stars")
-#' x <- read_stars(tif)
-#' dim(x)
-#' ridgeline(x, group_dim = 1)
-#' ridgeline(x, group_dim = 2)
-#'
-#'
-#' # Example 3
-#' tif = system.file("tif/lc.tif", package = "stars")
-#' x <- read_stars(tif)
-#' ridgeline(x, group_dim = 1)
-#' ridgeline(x, group_dim = 2)
-#'
-#' @importFrom ggplot2 scale_fill_viridis_c stat
-#' @importFrom ggridges geom_density_ridges_gradient
+#' @rdname ridgeline
 #' @export
 ridgeline.stars <- function(x,
                             num_grps = 10,

@@ -56,6 +56,9 @@ temporal_snapshots(x, xlab = "x", ylab = "y", title = "", ...)
 
 \item{precision}{For stars objects: set to 0, if the given values are compared with the integer values in the stars object.}
 }
+\value{
+A ggplot.
+}
 \description{
 This function plots temporal snapshos for specific spatial locations. The location id sample
 need to be given as a function argument.

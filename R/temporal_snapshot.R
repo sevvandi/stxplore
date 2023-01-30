@@ -12,6 +12,8 @@
 #'@param yvals For stars objects: the set of yvalues to plot. These two lengths need to be the same.
 #'@param precision For stars objects: set to 0, if the given values are compared with the integer values in the stars object.
 #'
+#'@return A ggplot.
+#'
 #'@examples
 #'# Dataframe example
 #'library(dplyr)

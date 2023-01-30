@@ -43,6 +43,10 @@ temporal_means(x, ...)
 
 \item{title}{The graph title.}
 }
+\value{
+An object of class temporalmeans containing the averages and the original data
+in two dataframes.
+}
 \description{
 This function computes temporal empirical means averaged per time unit.
 This function can take either a stars object or a dataframe. Input arguments

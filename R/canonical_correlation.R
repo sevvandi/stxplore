@@ -1,15 +1,43 @@
-#' Computes transformed variables from Canonical Correlation Analysis using a dataframe
+#' Computes transformed variables from Canonical Correlation Analysis using a dataframe or a stars object
 #'
-#' Computes Canonical Correlation Analysis (CCA) using 2 datasets.
+#' Computes Canonical Correlation Analysis (CCA) using 2 datasets. The autoplot function
+#' plots the output.
 #'
-#' @inheritParams canonical_correlation
+#' @param x1 The first dataframe or stars object.
+#' @param x2 The second dataframe or stars objext. The dimensions of both datasets need to be the same.
+#' @param ... Other arguments that need to be used for datafames or currently ignored.
+#' @param object  For autoplot: the output of the function `cannonical_correlation'.
+#' @param xlab For autoplot: the xlabel to appear on CCA plot.
+#' @param ... Other arguments currently ignored.
+#'
+#' @return A canonical correlation object.
 #'
 #' @examples
+#' # Dataframe example
 #' df1 <- SSTdatashort[1:100, ]
 #' df2 <- SSTdatashort[401:500, ]
-#' canonical_correlation(df1, df2)
+#' ccor <- canonical_correlation(df1, df2)
+#' autoplot(ccor)
+#'
+#' # stars example
+#' library(stars)
+#' tif = system.file("tif/olinda_dem_utm25s.tif", package = "stars")
+#' x <- read_stars(tif)
+#' x1 <- x[[1]][1:50, 1:50]
+#' x2 <- x[[1]][51:100, 1:50]
+#' stx1 <- st_as_stars(x1)
+#' stx2 <- st_as_stars(x2)
+#' canonical_correlation(stx1, stx2)
 #'
 #' @importFrom stats cancor
+#' @export
+canonical_correlation <- function(x1,
+                                  x2,
+                                  ...){
+  UseMethod("canonical_correlation")
+}
+
+#' @rdname canonical_correlation
 #' @export
 canonical_correlation.data.frame <- function(x1,
                                              x2,
@@ -59,22 +87,7 @@ canonical_correlation.data.frame <- function(x1,
 
 }
 
-#' Computes transformed variables from Canonical Correlation Analysis using a stars object
-#'
-#' Computes Canonical Correlation Analysis (CCA) using 2 datasets.
-#'
-#' @inheritParams canonical_correlation
-#'
-#' @examples
-#' library(stars)
-#' tif = system.file("tif/olinda_dem_utm25s.tif", package = "stars")
-#' x <- read_stars(tif)
-#' x1 <- x[[1]][1:50, 1:50]
-#' x2 <- x[[1]][51:100, 1:50]
-#' stx1 <- st_as_stars(x1)
-#' stx2 <- st_as_stars(x2)
-#' canonical_correlation(stx1, stx2)
-#' @importFrom stats cancor
+#' @rdname canonical_correlation
 #' @export
 canonical_correlation.stars <- function(x1,
                                         x2,
@@ -97,3 +110,26 @@ canonical_correlation.stars <- function(x1,
 
   canonical_correlation.data.frame(df1, df2)
 }
+
+#' @rdname canonical_correlation
+#' @export
+autoplot.cancor <- function(object,
+                            xlab = "Time",
+                            ...){
+
+  t <- ts <- Variable <- NULL
+  CCA_df <- object$cancor_df
+
+  # Now plot
+  sst_cca <- ggplot(CCA_df, aes(x=t, y=ts, colour = Variable)) + geom_line(size = 0.8) +
+    scale_color_manual(values = c("dark blue", "dark red")) +
+    ylab("CCA  variables")  +
+    xlab(xlab)  +
+    theme_bw() +
+    ggtitle("Canonical Correlation Analysis")
+
+  sst_cca
+
+}
+
+

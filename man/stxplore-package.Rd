@@ -5,7 +5,7 @@
 \alias{stxplore-package}
 \title{stxplore: Exploration of Spatio-Temporal Data}
 \description{
-More about what it does (maybe more than one line) Use four spaces when indenting paragraphs within the Description.
+A set of statistical tools for spatio-temporal data exploration. Includes multiple simple plotting functions, covariance computations and computations similar to PCA. Can use both dataframes and stars objects for all plots and computations.
 }
 \seealso{
 Useful links:

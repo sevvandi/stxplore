@@ -11,8 +11,10 @@ Authors@R: c(
   role = c("ctb"), comment = c(ORCID = "0000-0002-4164-6866"))
  )
 Maintainer: Sevvandi Kandanaarachchi <sevvandik@gmail.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: A set of statistical tools for spatio-temporal data exploration. 
+    Includes multiple simple plotting functions, covariance computations and 
+    computations similar to PCA. Can use both dataframes and stars objects for
+    all plots and computations.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

@@ -11,6 +11,9 @@
 #' @param object For autoplot: the output of the function `temporal_means'.
 #' @param legend_title For autoplot: the title for the legend.
 #'
+#' @return An object of class temporalmeans containing the averages and the original data
+#' in two dataframes.
+#'
 #' @examples
 #' # dataframe example
 #' data(NOAA_df_1990)

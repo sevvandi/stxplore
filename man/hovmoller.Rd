@@ -59,6 +59,9 @@ Hovmoller plat, while \code{lon} plots the longitudinal Hovmoller plot.}
 
 \item{legend_title}{The title for the legend.}
 }
+\value{
+An object of hovmoller class containing the original data and the Hovmoller data.
+}
 \description{
 This function creates the data structure for Hovmoller plots for either latitude or longitude.
 This function can take either a stars object or a dataframe. Input arguments differ for each case.

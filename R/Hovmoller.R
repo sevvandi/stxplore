@@ -13,6 +13,7 @@
 #' @param object For autoplot: the output of the function `hovmoller'.
 #' @param ... Other arguments currently ignored.
 #'
+#' @return An object of hovmoller class containing the original data and the Hovmoller data.
 #'
 #' @examples
 #' # dataframe examples
