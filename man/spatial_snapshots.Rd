@@ -83,22 +83,23 @@ library(dplyr)
 data(NOAA_df_1990)
 Tmax <- filter(NOAA_df_1990,
   proc == "Tmax" &
-  month \%in\% 5:7 &
+  month == 5 &
   year == 1993 &
   id < 4000)
 Tmax$t <- Tmax$julian - min(Tmax$julian) + 1
-Tmax_days <- subset(Tmax, t \%in\% c(1, 15, 30))
+Tmax_days <- subset(Tmax, t \%in\% c(1, 15))
 spatial_snapshots(Tmax_days,
   lat_col = 'lat',
   lon_col = 'lon',
   t_col = 't',
   z_col = 'z',
-  title = "Maximum Temperature for 3 days ")
+  title = "Maximum Temperature for 2 days ")
 
 # stars example
 library(stars)
 tif = system.file("tif/L7_ETMs.tif", package = "stars")
 x <- read_stars(tif)
-spatial_snapshots(x)
+x2 <- x \%>\% slice(band, 1:2)
+spatial_snapshots(x2)
 
 }
