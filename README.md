@@ -8,6 +8,8 @@
 [![R-CMD-check](https://github.com/sevvandi/stxplore/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sevvandi/stxplore/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
+# stxplore <a href="https://sevvandi.github.io/stxplore/"><img src="man/figures/logo.jpg" align="right" height="138" /></a>
+
 The goal of stxplore is to explore spatio-temporal data. It can take in
 either dataframes or stars objects. It is a tool for exploratory data
 analysis.

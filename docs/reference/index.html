@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">stxplore</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,99 +94,29 @@
         <dd>Data from of NASA Earth Observations at https://neo.gsfc.nasa.gov</dd>
       </dl><dl><dt>
           
-          <code><a href="autoplot.cancor.html">autoplot(<i>&lt;cancor&gt;</i>)</a></code> 
-        </dt>
-        <dd>Plots Canonical Correlation Analysis variables from cannonical_correlation function.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="autoplot.emporthfun.html">autoplot(<i>&lt;emporthfun&gt;</i>)</a></code> 
-        </dt>
-        <dd>Plots empirical orthogonal function from emp_orth_fun</dd>
-      </dl><dl><dt>
-          
-          <code><a href="autoplot.hovmoller.html">autoplot(<i>&lt;hovmoller&gt;</i>)</a></code> 
-        </dt>
-        <dd>Hovmoller plots for latitude or longitude</dd>
-      </dl><dl><dt>
-          
-          <code><a href="autoplot.semivariogramobj.html">autoplot(<i>&lt;semivariogramobj&gt;</i>)</a></code> 
-        </dt>
-        <dd>Plots the semi-variogram computed from the semivariogram algorithm</dd>
-      </dl><dl><dt>
-          
-          <code><a href="autoplot.spatialcov.html">autoplot(<i>&lt;spatialcov&gt;</i>)</a></code> 
-        </dt>
-        <dd>Plots empirical spatial covariance using emp_spatial_cov function</dd>
-      </dl><dl><dt>
-          
-          <code><a href="autoplot.temporalmeans.html">autoplot(<i>&lt;temporalmeans&gt;</i>)</a></code> 
-        </dt>
-        <dd>Plots temporal empirical means computed from temporal_means function</dd>
-      </dl><dl><dt>
-          
           <code><a href="cancor_eof.html">cancor_eof()</a></code> <code><a href="cancor_eof.html">autoplot(<i>&lt;cancoreof&gt;</i>)</a></code> 
         </dt>
         <dd>Performs CCA  using Empirical Orthogonal Functions (EOFs) from a lagged dataset</dd>
       </dl><dl><dt>
           
-          <code><a href="canonical_correlation.html">canonical_correlation()</a></code> 
+          <code><a href="canonical_correlation.html">canonical_correlation()</a></code> <code><a href="canonical_correlation.html">autoplot(<i>&lt;cancor&gt;</i>)</a></code> 
         </dt>
-        <dd>Generic function to computes transformed variables from Canonical Correlation Analysis</dd>
+        <dd>Computes transformed variables from Canonical Correlation Analysis using a dataframe or a stars object</dd>
       </dl><dl><dt>
           
-          <code><a href="canonical_correlation.data.frame.html">canonical_correlation(<i>&lt;data.frame&gt;</i>)</a></code> 
+          <code><a href="emp_orth_fun.html">emp_orth_fun()</a></code> <code><a href="emp_orth_fun.html">autoplot(<i>&lt;emporthfun&gt;</i>)</a></code> 
         </dt>
-        <dd>Computes transformed variables from Canonical Correlation Analysis using a dataframe</dd>
+        <dd>Computes empirical orthogonal functions using a dataframe or a stars object.</dd>
       </dl><dl><dt>
           
-          <code><a href="canonical_correlation.stars.html">canonical_correlation(<i>&lt;stars&gt;</i>)</a></code> 
+          <code><a href="emp_spatial_cov.html">emp_spatial_cov()</a></code> <code><a href="emp_spatial_cov.html">autoplot(<i>&lt;spatialcov&gt;</i>)</a></code> 
         </dt>
-        <dd>Computes transformed variables from Canonical Correlation Analysis using a stars object</dd>
+        <dd>Computes empirical spatial covariance using a dataframe or a stars object</dd>
       </dl><dl><dt>
           
-          <code><a href="emp_orth_fun.html">emp_orth_fun()</a></code> 
+          <code><a href="hovmoller.html">hovmoller()</a></code> <code><a href="hovmoller.html">autoplot(<i>&lt;hovmoller&gt;</i>)</a></code> 
         </dt>
-        <dd>Computes empirical orthogonal functions</dd>
-      </dl><dl><dt>
-          
-          <code><a href="emp_orth_fun.data.frame.html">emp_orth_fun(<i>&lt;data.frame&gt;</i>)</a></code> 
-        </dt>
-        <dd>Computes empirical orthogonal functions using a dataframe</dd>
-      </dl><dl><dt>
-          
-          <code><a href="emp_orth_fun.stars.html">emp_orth_fun(<i>&lt;stars&gt;</i>)</a></code> 
-        </dt>
-        <dd>Computes empirical orthogonal functions for a stars object</dd>
-      </dl><dl><dt>
-          
-          <code><a href="emp_spatial_cov.html">emp_spatial_cov()</a></code> 
-        </dt>
-        <dd>Generic function to compute empirical spatial covariance</dd>
-      </dl><dl><dt>
-          
-          <code><a href="emp_spatial_cov.data.frame.html">emp_spatial_cov(<i>&lt;data.frame&gt;</i>)</a></code> 
-        </dt>
-        <dd>Computes empirical spatial covariance using a dataframe as input</dd>
-      </dl><dl><dt>
-          
-          <code><a href="emp_spatial_cov.stars.html">emp_spatial_cov(<i>&lt;stars&gt;</i>)</a></code> 
-        </dt>
-        <dd>Computes empirical spatial covariance using a stars object</dd>
-      </dl><dl><dt>
-          
-          <code><a href="hovmoller.html">hovmoller()</a></code> 
-        </dt>
-        <dd>Generic function to compute the data structure for Hovmoller plots</dd>
-      </dl><dl><dt>
-          
-          <code><a href="hovmoller.data.frame.html">hovmoller(<i>&lt;data.frame&gt;</i>)</a></code> 
-        </dt>
-        <dd>Computes the data structure for the Hovmoller plots using a dataframe as input</dd>
-      </dl><dl><dt>
-          
-          <code><a href="hovmoller.stars.html">hovmoller(<i>&lt;stars&gt;</i>)</a></code> 
-        </dt>
-        <dd>Computes the data structure for the Hovmoller plots using a stars object as input</dd>
+        <dd>Computes the data structure for the Hovmoller plots</dd>
       </dl><dl><dt>
           
           <code><a href="locs.html">locs</a></code> 
@@ -196,32 +126,12 @@
           
           <code><a href="ridgeline.html">ridgeline()</a></code> 
         </dt>
-        <dd>Generic function for ridgeline plots grouped by an attribute.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ridgeline.data.frame.html">ridgeline(<i>&lt;data.frame&gt;</i>)</a></code> 
-        </dt>
         <dd>Ridgeline plots grouped by an attribute using a dataframe as an input.</dd>
       </dl><dl><dt>
           
-          <code><a href="ridgeline.stars.html">ridgeline(<i>&lt;stars&gt;</i>)</a></code> 
+          <code><a href="semivariogram.html">semivariogram()</a></code> <code><a href="semivariogram.html">autoplot(<i>&lt;semivariogramobj&gt;</i>)</a></code> 
         </dt>
-        <dd>Ridgeline plots grouped by an attribute using a stars object as input.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="semivariogram.html">semivariogram()</a></code> 
-        </dt>
-        <dd>Generic function to compute the semi-variogram</dd>
-      </dl><dl><dt>
-          
-          <code><a href="semivariogram.data.frame.html">semivariogram(<i>&lt;data.frame&gt;</i>)</a></code> 
-        </dt>
-        <dd>Computes the semi-variogram using a dataframe as input</dd>
-      </dl><dl><dt>
-          
-          <code><a href="semivariogram.stars.html">semivariogram(<i>&lt;stars&gt;</i>)</a></code> 
-        </dt>
-        <dd>Computes the semi-variogram using a stars object</dd>
+        <dd>Computes the semi-variogram using a dataframe or a stars object.</dd>
       </dl><dl><dt>
           
           <code><a href="spatial_means.html">spatial_means()</a></code> <code><a href="spatial_means.html">autoplot(<i>&lt;spatialmeans&gt;</i>)</a></code> 
@@ -231,47 +141,17 @@
           
           <code><a href="spatial_snapshots.html">spatial_snapshots()</a></code> 
         </dt>
-        <dd>Generic function to plot spatial snapshots of data through time</dd>
+        <dd>Plots spatial snapshots of data through time using a dataframe or a stars object.</dd>
       </dl><dl><dt>
           
-          <code><a href="spatial_snapshots.data.frame.html">spatial_snapshots(<i>&lt;data.frame&gt;</i>)</a></code> 
+          <code><a href="temporal_means.html">temporal_means()</a></code> <code><a href="temporal_means.html">autoplot(<i>&lt;temporalmeans&gt;</i>)</a></code> 
         </dt>
-        <dd>Plots spatial snapshots of data through time using a dataframe as input.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="spatial_snapshots.stars.html">spatial_snapshots(<i>&lt;stars&gt;</i>)</a></code> 
-        </dt>
-        <dd>Plots spatial snapshots of data through time using a stars object as input.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="temporal_means.html">temporal_means()</a></code> 
-        </dt>
-        <dd>Generic function to compute temporal empirical means</dd>
-      </dl><dl><dt>
-          
-          <code><a href="temporal_means.data.frame.html">temporal_means(<i>&lt;data.frame&gt;</i>)</a></code> 
-        </dt>
-        <dd>Computes temporal empirical means using a dataframe as input</dd>
-      </dl><dl><dt>
-          
-          <code><a href="temporal_means.stars.html">temporal_means(<i>&lt;stars&gt;</i>)</a></code> 
-        </dt>
-        <dd>Computes temporal empirical means using a stars object as input</dd>
+        <dd>Computes temporal empirical means using a dataframe or a stars object.</dd>
       </dl><dl><dt>
           
           <code><a href="temporal_snapshots.html">temporal_snapshots()</a></code> 
         </dt>
-        <dd>Generic function to plot temporal snapshots of data for specific spatial locations</dd>
-      </dl><dl><dt>
-          
-          <code><a href="temporal_snapshots.data.frame.html">temporal_snapshots(<i>&lt;data.frame&gt;</i>)</a></code> 
-        </dt>
-        <dd>Plots temporal snapshots of data for specific spatial locations using a dataframe as input.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="temporal_snapshots.stars.html">temporal_snapshots(<i>&lt;stars&gt;</i>)</a></code> 
-        </dt>
-        <dd>Plots temporal snapshots of data for specific spatial locations using a stars object as input.</dd>
+        <dd>Plots temporal snapshots of data for specific spatial locations using a dataframe or a stars object.</dd>
       </dl></div>
   </main></div>
 
