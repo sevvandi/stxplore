@@ -108,7 +108,7 @@ hovmoller.data.frame <- function(x,
     dplyr::summarise(z = mean(z, na.rm = TRUE))
 
   if(length(unique(df2_Hov$lat_or_lon)) < xlen){
-    print("Consider reducing xlen to eliminate empty patches.")
+    message("Consider reducing xlen to eliminate empty patches.")
   }
 
   structure(list(
@@ -175,7 +175,7 @@ hovmoller.stars <- function(x,
     dplyr::summarise(z = mean(z, na.rm = TRUE))
 
   if(length(unique(df2_Hov$lat_or_lon)) < xlen){
-    print("Consider reducing xlen to eliminate empty patches.")
+    message("Consider reducing xlen to eliminate empty patches.")
   }
 
   structure(list(

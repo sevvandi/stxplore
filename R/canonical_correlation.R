@@ -62,7 +62,7 @@ canonical_correlation.data.frame <- function(x1,
   nn <- dim(df1)[1]
   dd <- dim(df1)[2]
   if(nn < dd){
-    print('Rows less than columns. Using the transpose to perform CCA')
+    message('Rows less than columns. Using the transpose to perform CCA')
     df1 <- t(df1)
     df2 <- t(df2)
   }

@@ -60,6 +60,9 @@ ridgeline(
 
 \item{group_dim}{For stars objects: the dimension for the grouping variable.}
 }
+\value{
+A ggplot object.
+}
 \description{
 Plots ridgeline plots grouped by latitude/longitude or time.
 This function can take either a stars object or a dataframe.

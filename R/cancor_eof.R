@@ -72,7 +72,7 @@ cancor_eof.data.frame <- function(x,
   if(missing(values_df)){
     stop("Empty dataframe values_df. Please give an N x T dataframe with values of the quantity you are interested in.  ")
   }
-  print("Canonical Correlation Analysis is carried out using a lagged dataset.")
+  message("Canonical Correlation Analysis is carried out using a lagged dataset.")
 
   SW1 <- Variable <- lat <- lon <- ts <- EOF <- nPC <- NULL
 

@@ -5,7 +5,7 @@
 \alias{stxplore-package}
 \title{stxplore: Exploration of Spatio-Temporal Data}
 \description{
-A set of statistical tools for spatio-temporal data exploration. Includes simple plotting functions, covariance computations and computations similar to PCA. Can use both dataframes and stars objects for all plots and computations.
+A set of statistical tools for spatio-temporal data exploration. Includes simple plotting functions, covariance calculations and computations similar to principal component analysis for spatio-temporal data. Can use both dataframes and stars objects for all plots and computations. For more details refer 'Spatio-Temporal Statistics with R' (Christopher K. Wikle, Andrew Zammit-Mangion, Noel Cressie, 2019, ISBN:9781138711136).
 }
 \seealso{
 Useful links:

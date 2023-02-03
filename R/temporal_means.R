@@ -133,7 +133,6 @@ autoplot.temporalmeans <- function(object,
 
   num_obs <- dim(df)[1]
   if(num_obs > 50000){  # More than 50000 data points
-    set.seed(1)
     ss <- sample(num_obs, 50000)
     df <- df[ss, ]
   }

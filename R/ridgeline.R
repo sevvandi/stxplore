@@ -10,6 +10,8 @@
 #' @param group_col For dataframes: the column name of the group column.
 #' @param group_dim For stars objects: the dimension for the grouping variable.
 #'
+#' @return A ggplot object.
+#'
 #' @examples
 #' # Dataframe example
 #' library(dplyr)
