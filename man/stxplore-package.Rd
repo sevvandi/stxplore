@@ -19,12 +19,13 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Petra Kunhert \email{petra.kuhnert@data61.csiro.au} (\href{https://orcid.org/0000-0001-9070-0091}{ORCID})
+  \item Petra Kuhnert \email{petra.kuhnert@data61.csiro.au} (\href{https://orcid.org/0000-0001-9070-0091}{ORCID})
 }
 
 Other contributors:
 \itemize{
   \item Andrew Zammit-Mangion \email{azm@uow.edu.au} (\href{https://orcid.org/0000-0002-4164-6866}{ORCID}) [contributor]
+  \item Christopher Wikle \email{wiklec@missouri.edu} [contributor]
 }
 
 }
