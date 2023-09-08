@@ -86,6 +86,7 @@ spatial_means.data.frame <- function(x,
   value <- mu_emp <- NULL
 
   df2 <- data.frame(y = y, x = x, value = z, t = t)
+  colnames(df2) <- c("y", "x", "value", "t")
 
   spat_av <- dplyr::group_by(df2, x, y) %>%           # group by lon-lat
     dplyr::summarise(mu_emp = mean(value, na.rm = TRUE))                     # mean in each lon-lat box

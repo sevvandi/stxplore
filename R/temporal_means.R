@@ -74,6 +74,7 @@ temporal_means.data.frame <- function(x,
   time <- NULL
 
   df2 <- data.frame(z = z, time = t, id = id)
+  colnames(df2) <- c("z", "time", "id")
 
   df_av <- dplyr::group_by(df2, time) %>%
     dplyr::summarise(meanz = mean(z))
@@ -140,10 +141,9 @@ autoplot.temporalmeans <- function(object,
   meanz <- time <- NULL
 
   p <- ggplot() +
-    geom_line(data = df,
+    geom_point(data = df,
               aes(x = df[ ,2],
                   y = df[ ,1],
-                  group = df[ ,3],
                   colour = "blue"),
               alpha = 0.04) +
     geom_line(data = df_av,
