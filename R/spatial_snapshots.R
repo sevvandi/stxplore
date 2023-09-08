@@ -106,6 +106,7 @@ spatial_snapshots.data.frame <- function(x,
   t <- df[ ,t_col]
 
   df2 <- data.frame(lat = lat, lon = lon, z = z, t = t)
+  colnames(df2) <- c("lat", "lon", "z", "t")
 
   bbox <- ggmap::make_bbox(lat = lat, lon = lon, data = df2)
   if(!ifxy){
