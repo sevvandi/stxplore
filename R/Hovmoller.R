@@ -88,6 +88,7 @@ hovmoller.data.frame <- function(x,
   t <- df[ ,t_col]
 
   df2 <- data.frame(lat_or_lon = lat_or_lon, z = z, t = t)
+  colnames(df2) <- c("lat_or_lon", "z", "t")
 
   if(is.null(xlen)){
     xlen <- min(25, length(unique(lat_or_lon)))
