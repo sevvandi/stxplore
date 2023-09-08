@@ -172,7 +172,7 @@ locations? The temporal_means functions gives the insights.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tem</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/temporal_means.html">temporal_means</a></span><span class="op">(</span><span class="va">aerosol_australia</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">tem</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 6567 rows containing missing values (`geom_line()`).</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Removed 10667 rows containing missing values (`geom_point()`).</span></span></code></pre></div>
 <p><img src="stxplore_stars_files/figure-html/tempmeans-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -262,6 +262,14 @@ how similar observations close by (in time and space) are how dissimilar
 observations far away are.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">semi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/semivariogram.html">semivariogram</a></span><span class="op">(</span><span class="va">aerosol_region</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,</span></span>
+<span><span class="co">#&gt; which was just loaded, will retire in October 2023.</span></span>
+<span><span class="co">#&gt; Please refer to R-spatial evolution reports for details, especially</span></span>
+<span><span class="co">#&gt; https://r-spatial.org/r/2023/05/15/evolution4.html.</span></span>
+<span><span class="co">#&gt; It may be desirable to make the sf package available;</span></span>
+<span><span class="co">#&gt; package maintainers should consider adding sf to Suggests:.</span></span>
+<span><span class="co">#&gt; The sp package is now running under evolution status 2</span></span>
+<span><span class="co">#&gt;      (status 2 uses the sf package in place of rgdal)</span></span>
 <span><span class="co">#&gt; Warning in variogramST(formula = object, locations = locations, data = data, :</span></span>
 <span><span class="co">#&gt; strictly irregular time steps were assumed to be regular</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">semi</span><span class="op">)</span></span></code></pre></div>
