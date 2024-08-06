@@ -51,4 +51,5 @@ Suggests:
     maps,
     cubelyr
 VignetteBuilder: knitr
-URL: https://sevvandi.github.io/stxplore/
+URL: https://sevvandi.github.io/stxplore/, https://github.com/sevvandi/stxplore
+BugReports: https://github.com/sevvandi/stxplore/issues
